@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "30825389039",
+    "project_id": "wasfaty-patient",
+    "storage_bucket": "wasfaty-patient.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30825389039:android:1ff22112f1373c26d5341a",
+        "android_client_info": {
+          "package_name": "rev.wasfaty.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30825389039-8ieq9rqu7b326nj37nunaso9nsmlbnv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLPnuol26KZfc7oeQf0vTiZq9QBJzEd0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30825389039-8ieq9rqu7b326nj37nunaso9nsmlbnv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30825389039:android:28f262520041e405d5341a",
+        "android_client_info": {
+          "package_name": "rev.wasfaty.livreur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30825389039-8ieq9rqu7b326nj37nunaso9nsmlbnv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLPnuol26KZfc7oeQf0vTiZq9QBJzEd0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30825389039-8ieq9rqu7b326nj37nunaso9nsmlbnv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30825389039:android:691e5ef2ec3bc833d5341a",
+        "android_client_info": {
+          "package_name": "rev.wasfaty.patient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30825389039-8ieq9rqu7b326nj37nunaso9nsmlbnv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLPnuol26KZfc7oeQf0vTiZq9QBJzEd0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30825389039-8ieq9rqu7b326nj37nunaso9nsmlbnv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30825389039:android:28376c5835823914d5341a",
+        "android_client_info": {
+          "package_name": "rev.wasfaty.pharmacie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30825389039-8ieq9rqu7b326nj37nunaso9nsmlbnv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLPnuol26KZfc7oeQf0vTiZq9QBJzEd0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30825389039-8ieq9rqu7b326nj37nunaso9nsmlbnv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

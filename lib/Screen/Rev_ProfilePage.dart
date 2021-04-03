@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wasfaty_liv/Screen/auth/Rev_LoginPage.dart';
 
 import '../Functions/Auth/Rev_Auth.dart';
 import '../Screen/profile/Rev_phoneUpdate.dart';
@@ -129,8 +131,12 @@ class _Rev_ProfilePageState extends State<Rev_ProfilePage> {
                   isfile: false,
                   image: "assets/profile/logout.png",
                   label: "SE DECONNECTER",
-                  onpressed: () {
-                    // Rev_Auth().signOut(context: context);
+                  onpressed: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.clear();
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => LoginPage()));
                   },
                 ),
                 Text(

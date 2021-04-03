@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wasfaty_liv/Screen/auth/Rev_LoginPage.dart';
 import '../Screen/Rev_ProfilePage.dart';
 
 import '../Screen/Rev_HomePage.dart';
@@ -126,7 +128,15 @@ class Rev_Drawer extends StatelessWidget {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        onTap: () {},
+                        onTap: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.clear();
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()));
+                        },
                       ),
                     ),
                   ]),

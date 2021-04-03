@@ -4,6 +4,7 @@ import '../../Models/livreur.dart';
 import '../../Screen/Rev_HomePage.dart';
 import '../../Widget/Rev_Button.dart';
 import '../../Widget/Rev_TextFeild.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Rev_SignUp.dart';
 
@@ -26,6 +27,9 @@ class _LoginPageState extends State<LoginPage> {
   Livreur livreur = new Livreur();
 
   bool co = false;
+
+  String id;
+  bool logged = false;
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +76,16 @@ class _LoginPageState extends State<LoginPage> {
                               .collection("Livreur")
                               .snapshots()
                               .listen((event) {
-                            event.docs.forEach((element) {
+                            event.docs.forEach((element) async {
                               if (element.data()['email'].toString() == email &&
                                   element.data()['password'].toString() ==
                                       mdp) {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                logged = true;
+                                id = element.data()['id'];
+                                await prefs.setBool('logged', logged);
+                                await prefs.setString('uid', id);
                                 print(element.data()["id"]);
                                 FirebaseFirestore.instance
                                     .collection("Livreur")
@@ -87,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => Rev_HomePage(
-                                            id: element.data()['id'],
+                                            id: id,
                                           )),
                                 );
                               }

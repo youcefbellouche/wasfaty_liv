@@ -43,7 +43,7 @@ class Rev_Auth {
       "password": livreur.password,
       "adresse": livreur.adresse,
       "active": false,
-      "ouvert": false,
+      "Disbonible": false,
     }).then((value) async {
       id = value.id;
       await FirebaseFirestore.instance

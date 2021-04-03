@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'Screen/Rev_HomePage.dart';
+import 'Screen/Rev_HomePageOFF.dart';
 import 'Screen/auth/Rev_LoginPage.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +40,7 @@ class _HomeConnectState extends State<HomeConnect> {
   @override
   void initState() {
     super.initState();
+    GetConnect();
     getLocalData();
   }
 
@@ -50,11 +52,36 @@ class _HomeConnectState extends State<HomeConnect> {
     }
     if (logged) {
       id = prefs.getString('id');
+      print("in main $id ");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: logged ? Rev_HomePage(id: id) : LoginPage());
+    return Scaffold(
+      body: isInternetOn
+          ? logged
+              ? Rev_HomePage(id: id)
+              : LoginPage()
+          : Rev_HomePageOFF(),
+    );
+  }
+
+  // ignore: non_constant_identifier_names
+  void GetConnect() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        isInternetOn = false;
+      });
+    } else if (connectivityResult == ConnectivityResult.mobile) {
+      setState(() {
+        isInternetOn = true;
+      });
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      setState(() {
+        isInternetOn = true;
+      });
+    }
   }
 }

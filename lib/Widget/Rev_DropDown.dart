@@ -17,7 +17,7 @@ class _Rev_DropDownState extends State<Rev_DropDown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(10),
       height: 60,
       child: DropdownSearch<String>(
         dropdownSearchDecoration: InputDecoration(

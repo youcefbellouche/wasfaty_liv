@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../Models/order.dart';
-import '../../Screen/Rev_OrderInfo.dart';
+import 'package:wasfaty_liv/Models/order.dart';
+import 'package:wasfaty_liv/Screen/Order/Rev_OrderInfo.dart';
 
 class Rev_OrderCard extends StatefulWidget {
   Order order;
@@ -58,7 +58,7 @@ class _Rev_OrderCardState extends State<Rev_OrderCard> {
                   height: 180 * 0.16,
                   child: Center(
                       child: Text(
-                    'adresse du client :',
+                    'Type de Livraison :',
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ))),
@@ -70,7 +70,7 @@ class _Rev_OrderCardState extends State<Rev_OrderCard> {
                       borderRadius: BorderRadius.all(
                         Radius.circular(5),
                       )),
-                  child: Center(child: Text(widget.order.adresse))),
+                  child: Center(child: Text(widget.order.livraison))),
               Container(
                   height: 180 * 0.16,
                   child: Center(

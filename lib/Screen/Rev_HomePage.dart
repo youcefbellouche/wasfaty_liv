@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../Widget/Rev_Appbar.dart';
-import '../Widget/Rev_Drawer.dart';
-import '../Widget/Rev_RoundButton.dart';
+
+import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
+import 'package:wasfaty_liv/Widget/Rev_Drawer.dart';
 
 import 'Order/Rev_newOrder.dart';
 
@@ -22,96 +22,34 @@ class _Rev_HomePageState extends State<Rev_HomePage> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.id);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print("azeaz ${widget.id}");
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: Rev_Drawer(id: widget.id),
-      appBar: Rev_Appbar(
-        context,
-        AppBar().preferredSize.height,
-        openDrawer,
-        Icon(
-          Icons.menu,
-          color: Theme.of(context).primaryColor,
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.09,
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+          key: _scaffoldKey,
+          drawer: Rev_Drawer(id: widget.id),
+          appBar: Rev_Appbar(
+            context,
+            AppBar().preferredSize.height,
+            openDrawer,
+            Icon(
+              Icons.menu,
+              color: Theme.of(context).primaryColor,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Rev_RoundButton(
-                        isfile: false,
-                        image: page == 0
-                            ? "assets/home/nouvelles/new_0.png"
-                            : "assets/home/nouvelles/new_1.png",
-                        label: "ALARM",
-                        onpressed: () {
-                          setState(() {
-                            page = 0;
-                          });
-                        }),
-                    Text(
-                      "Nouvelles",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Rev_RoundButton(
-                        isfile: false,
-                        image: page == 1
-                            ? "assets/home/traitement/traitement_0.png"
-                            : "assets/home/traitement/traitement_1.png",
-                        label: "Commande a L'Étranger",
-                        onpressed: () {
-                          setState(() {
-                            page = 1;
-                          });
-                        }),
-                    Text(
-                      "Valide",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            page == 0
-                ? Rev_newOrder(
-                    id: widget.id,
-                    where: "en traitement",
-                  )
-                : Rev_newOrder(
-                    id: widget.id,
-                    where: "valide",
-                  )
-          ],
-        ),
-      ),
+          ),
+          body: 
+              Rev_newOrder(
+                id: widget.id,
+                where: "en livraison",
+              
+          )),
     );
   }
 }

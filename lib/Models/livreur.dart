@@ -1,16 +1,28 @@
 class Livreur {
-  // ajout de membre de la meme famille
-  String id;
   String name;
-  String phone;
-  String email;
+  String id;
+  bool active;
   String password;
-  String adresse;
+  String phone;
+  String adress;
+  String email;
+  bool suspendue;
   Livreur(
-      {this.id,
-      this.name,
-      this.phone,
-      this.email,
+      {this.name,
+      this.suspendue,
       this.password,
-      this.adresse});
+      this.phone,
+      this.adress,
+      this.email,
+      this.active});
+  Livreur.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    id = json['id'];
+    suspendue = json['suspendue'];
+    password = json['password'];
+    adress = json['adresse'];
+    phone = json['phone'];
+    active = json['active'];
+    email = json['email'];
+  }
 }

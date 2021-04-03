@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../Models/livreur.dart';
-import '../../Screen/Rev_HomePage.dart';
-import '../../Widget/Rev_Button.dart';
-import '../../Widget/Rev_TextFeild.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wasfaty_liv/Models/livreur.dart';
+import 'package:wasfaty_liv/Widget/Rev_Button.dart';
+import 'package:wasfaty_liv/Widget/Rev_TextFeild.dart';
 
+import '../Rev_HomePage.dart';
 import 'Rev_SignUp.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,18 +14,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // ignore: non_constant_identifier_names
   TextEditingController controller_email;
 
+  // ignore: non_constant_identifier_names
   TextEditingController controller_pass;
 
   final _formKey = GlobalKey<FormState>();
-
   String email;
-
   String mdp;
-
-  Livreur livreur = new Livreur();
-
+  Livreur phar = new Livreur();
   bool co = false;
 
   String id;
@@ -51,13 +49,12 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     Rev_TextFeild(
-                      label: "E-mail ou Numéro de tél",
+                      label: "E-mail",
                       textEditingController: controller_email,
                       mdp: false,
                       onChanged: (value) => email = value,
-                      validator: (input) => !input.contains('@')
-                          ? "L'Email doit être valide"
-                          : null,
+                      validator: (input) =>
+                          !input.contains('@') ? "L'Email" : null,
                     ),
                     Rev_TextFeild(
                       label: "Mot de Passe",
@@ -72,34 +69,39 @@ class _LoginPageState extends State<LoginPage> {
                       label: "Se Connecter",
                       onpressed: () async {
                         if (_formKey.currentState.validate()) {
-                          await FirebaseFirestore.instance
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          FirebaseFirestore.instance
                               .collection("Livreur")
                               .snapshots()
                               .listen((event) {
-                            event.docs.forEach((element) async {
-                              if (element.data()['email'].toString() == email &&
-                                  element.data()['password'].toString() ==
-                                      mdp) {
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                logged = true;
-                                id = element.data()['id'];
-                                await prefs.setBool('logged', logged);
-                                await prefs.setString('uid', id);
-                                print(element.data()["id"]);
-                                FirebaseFirestore.instance
-                                    .collection("Livreur")
-                                    .doc(element.data()['id'])
-                                    .update({
-                                  "ouvert": true,
-                                });
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Rev_HomePage(
-                                            id: id,
-                                          )),
-                                );
+                            event.docs.forEach((element) {
+                              Livreur model =
+                                  Livreur.fromJson(element.data());
+                              if (model.email == email &&
+                                  model.password == mdp) {
+                                if (model.suspendue) {
+                                  activPop(context,
+                                      "Votre compte est Suspendue !\nVeuillez nous contacter pour plus d'information");
+                                } else {
+                                  if (model.active) {
+                                    logged = true;
+                                    id = model.id;
+                                    prefs.setBool('logged', logged);
+                                    prefs.setString('id', id);
+                                    print("in  login $id");
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Rev_HomePage(
+                                                id: id,
+                                              )),
+                                    );
+                                  } else {
+                                    activPop(context,
+                                        "Votre compte n'est pas encore Vadlidé !\nVous serez contacter prochainement");
+                                  }
+                                }
                               }
                             });
                           });
@@ -126,5 +128,54 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  activPop(context, text) {
+    return showDialog(
+        context: context,
+        builder: (con) {
+          return Container(
+            color: Colors.grey[300],
+            child: SimpleDialog(
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              children: [
+                Center(
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ButtonTheme(
+                      child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0))),
+                              color: Colors.greenAccent,
+                              child: Text('ok'),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ]),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }

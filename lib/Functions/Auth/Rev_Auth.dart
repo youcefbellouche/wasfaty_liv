@@ -141,7 +141,6 @@ class Rev_Auth {
                 context,
                 MaterialPageRoute(
                     builder: (context) => Rev_HomePage(
-                          id: result.user.uid,
                         )),
               );
               return true;
@@ -207,6 +206,7 @@ class Rev_Auth {
         "type": "Livreur",
         "id": fuser.uid,
         "wilaya": wilaya,
+        "disponible": false,
         "daira": daira,
         "active": false,
         "suspendue": false,

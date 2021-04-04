@@ -5,7 +5,7 @@ import 'Screen/Rev_HomePage.dart';
 import 'Screen/Rev_HomePageOFF.dart';
 import 'Screen/auth/Rev_LoginPage.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +34,7 @@ class HomeConnect extends StatefulWidget {
   _HomeConnectState createState() => _HomeConnectState();
 }
 
-class _HomeConnectState extends State<HomeConnect> {
+class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
   bool isInternetOn = true;
   var result = FirebaseAuth.instance.currentUser;
 
@@ -42,6 +42,35 @@ class _HomeConnectState extends State<HomeConnect> {
   void initState() {
     super.initState();
     GetConnect();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) return;
+
+    final isdown = state == AppLifecycleState.detached;
+
+    if (isInternetOn && result != null) {
+      if (isdown) {
+        print("background");
+        await FirebaseFirestore.instance
+            .collection("Livreur")
+            .doc(FirebaseAuth.instance.currentUser.uid)
+            .update({
+          "disponible": false,
+        });
+      }
+    }
   }
 
   @override
@@ -49,7 +78,7 @@ class _HomeConnectState extends State<HomeConnect> {
     return Scaffold(
       body: isInternetOn
           ? result != null
-              ? Rev_HomePage(id: result.uid)
+              ? Rev_HomePage()
               : LoginPage()
           : Rev_HomePageOFF(),
     );

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wasfaty_liv/Models/order.dart';
 import 'package:wasfaty_liv/Widget/Rev_Button.dart';
 import 'package:wasfaty_liv/Widget/Rev_Orderdetails.dart';
@@ -181,10 +180,6 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                               ),
                               Rev_Button(
                                 onpressed: () async {
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-
-                                  String uid = prefs.getString('id');
                                   await FirebaseFirestore.instance
                                       .collection(widget.collection)
                                       .doc(widget.order.orderId)
@@ -197,9 +192,8 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Rev_HomePage(
-                                                id: uid,
-                                              )));
+                                          builder: (context) =>
+                                              Rev_HomePage()));
                                 },
                                 label: "Terminer",
                                 color: Colors.green,
@@ -283,11 +277,6 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                               onPressed: () async {
                                 // print('envoyer');
                                 if (_formKey.currentState.validate()) {
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-
-                                  String uid = prefs.getString('id');
-
                                   await FirebaseFirestore.instance
                                       .collection(widget.collection)
                                       .doc(widget.order.orderId)
@@ -304,9 +293,8 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Rev_HomePage(
-                                                id: uid,
-                                              )));
+                                          builder: (context) =>
+                                              Rev_HomePage()));
                                 }
                               },
                             ),

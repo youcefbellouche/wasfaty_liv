@@ -1,13 +1,39 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wasfaty_liv/Screen/auth/Rev_LoginPage.dart';
 import '../Screen/Rev_ProfilePage.dart';
 import 'package:wasfaty_liv/Screen/Rev_Historique.dart';
 import '../Screen/Rev_HomePage.dart';
 
-class Rev_Drawer extends StatelessWidget {
-  Rev_Drawer({this.id});
-  final String id;
+class Rev_Drawer extends StatefulWidget {
+
+
+  @override
+  _Rev_DrawerState createState() => _Rev_DrawerState();
+}
+
+class _Rev_DrawerState extends State<Rev_Drawer> {
+  bool status = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getOuvert();
+  }
+
+  Future<void> getOuvert() async {
+    FirebaseFirestore.instance
+        .collection("Livreur")
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .get()
+        .then((value) {
+      setState(() {
+        status = value.data()['disponible'];
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +48,54 @@ class Rev_Drawer extends StatelessWidget {
             child: ListView(
               children: [
                 Container(
+                  padding: EdgeInsets.only(top: 10),
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                        Theme.of(context).primaryColor.withOpacity(0.7),
+                        Theme.of(context).primaryColor,
+                      ])),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Switch(
+                        activeColor: Colors.lightGreenAccent,
+                        inactiveThumbColor: Colors.redAccent,
+                        value: status,
+                        onChanged: (value) async {
+                          print("VALUE : $value");
+                          setState(() {
+                            status = value;
+                          });
+                          await FirebaseFirestore.instance
+                              .collection("Livreur")
+                              .doc(FirebaseAuth.instance.currentUser.uid)
+                              .update({
+                            "disponible": status,
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        height: 9.0,
+                      ),
+                      Text(
+                        status
+                            ? 'Vous êtes disponible'
+                            : "Vous n'êtes pas disponible",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
                   height: MediaQuery.of(context).size.height,
                   color: Theme.of(context).primaryColor,
-                  padding: EdgeInsets.only(top: 100.0),
+                  padding: EdgeInsets.only(top: 20.0),
                   child: Column(children: [
                     Container(
                       color: Color(0xff1b6053),
@@ -44,7 +115,7 @@ class Rev_Drawer extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    Rev_HomePage(id: this.id)),
+                                    Rev_HomePage()),
                           );
                         },
                       ),
@@ -64,12 +135,10 @@ class Rev_Drawer extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         onTap: () {
-                          print(id);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Rev_ProfilePage(
-                                    )),
+                                builder: (context) => Rev_ProfilePage()),
                           );
                         },
                       ),
@@ -110,7 +179,7 @@ class Rev_Drawer extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      Rev_Historique(id: id)));
+                                      Rev_Historique()));
                         },
                       ),
                     ),
@@ -132,9 +201,13 @@ class Rev_Drawer extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         onTap: () async {
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          prefs.clear();
+                          await FirebaseFirestore.instance
+                              .collection("Livreur")
+                              .doc(FirebaseAuth.instance.currentUser.uid)
+                              .update({
+                            "disponible": false,
+                          });
+
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

@@ -5,8 +5,7 @@ import 'package:wasfaty_liv/Widget/Rev_Drawer.dart';
 import 'Order/Rev_newOrder.dart';
 
 class Rev_Historique extends StatefulWidget {
-  String id;
-  Rev_Historique({this.id});
+
   @override
   _Rev_HistoriqueState createState() => _Rev_HistoriqueState();
 }
@@ -24,7 +23,7 @@ class _Rev_HistoriqueState extends State<Rev_Historique> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("in historique ${widget.id}");
+
   }
 
   @override
@@ -33,7 +32,7 @@ class _Rev_HistoriqueState extends State<Rev_Historique> {
       length: 2,
       child: Scaffold(
           key: _scaffoldKey,
-          drawer: Rev_Drawer(id: widget.id),
+          drawer: Rev_Drawer(),
           appBar: Rev_Appbar(
             context,
             AppBar().preferredSize.height,

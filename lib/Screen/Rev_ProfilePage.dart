@@ -1,25 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wasfaty_liv/Screen/auth/Rev_LoginPage.dart';
 
-import '../Functions/Auth/Rev_Auth.dart';
-import '../Screen/profile/Rev_phoneUpdate.dart';
-
-import '../Widget/Rev_Appbar.dart';
-import '../Widget/Rev_Drawer.dart';
-import '../Widget/Rev_RoundButton.dart';
-import './profile/Rev_PasswordUpdate.dart';
+import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
+import 'package:wasfaty_liv/Screen/profile/Rev_PasswordUpdate.dart';
+import 'package:wasfaty_liv/Screen/profile/Rev_phoneUpdate.dart';
+import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
+import 'package:wasfaty_liv/Widget/Rev_Drawer.dart';
+import 'package:wasfaty_liv/Widget/Rev_RoundButton.dart';
 
 class Rev_ProfilePage extends StatefulWidget {
   @override
   _Rev_ProfilePageState createState() => _Rev_ProfilePageState();
-  final String id;
-  Rev_ProfilePage({this.id});
 }
 
 class _Rev_ProfilePageState extends State<Rev_ProfilePage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  String uid = FirebaseAuth.instance.currentUser.uid;
+  User currentUser = FirebaseAuth.instance.currentUser;
+
   void openDrawer() {
     _scaffoldKey.currentState.openDrawer();
   }
@@ -38,118 +36,96 @@ class _Rev_ProfilePageState extends State<Rev_ProfilePage> {
           color: Theme.of(context).primaryColor,
         ),
       ),
-      body: Container(
-        child: GridView(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.8,
+      body: Center(
+        child: Container(
+          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+          child: GridView(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1,
+              childAspectRatio: 2,
+            ),
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Rev_RoundButton(
+                    isfile: false,
+                    image: "assets/profile/pass.png",
+                    label: "Changer Votre Mot de Passe",
+                    onpressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Rev_PasswordUpdate(
+                                    currentUser: currentUser,
+                                  )));
+                    },
+                  ),
+                  Text(
+                    'CHANGER VOTRE\nMOT DE PASSE',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Rev_RoundButton(
+                    isfile: false,
+                    image: "assets/profile/phone.png",
+                    label: "CHANGER VOTRE NUMERO DE TELEPHONE",
+                    onpressed: () async {
+                      String oldphone;
+                      oldphone = await Rev_Auth().getPhone();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Rev_phoneUpdate(
+                                    uid: uid,
+                                    oldphone: oldphone,
+                                  )));
+                    },
+                  ),
+                  Text(
+                    'CHANGER VOTRE\nNUM DE TELEPHONE',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Rev_RoundButton(
+                    isfile: false,
+                    image: "assets/profile/logout.png",
+                    label: "SE DECONNECTER",
+                    onpressed: () {
+                      Rev_Auth().signOut(context: context);
+                    },
+                  ),
+                  Text(
+                    'SE DECONNECTER',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
+            ],
           ),
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Rev_RoundButton(
-                  isfile: false,
-                  image: "assets/profile/pass.png",
-                  label: "Changer Votre Mot de Passe",
-                  onpressed: () async {
-                    print(this.widget.id);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Rev_PasswordUpdate(
-                                  id: this.widget.id,
-                                )));
-                  },
-                ),
-                Text(
-                  'CHANGER VOTRE MOT DE PASSE',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                )
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Rev_RoundButton(
-                  isfile: false,
-                  image: "assets/profile/adresse.png",
-                  label: "Changer votre Addresse",
-                  onpressed: () async {},
-                ),
-                Text(
-                  'CHANGER VOTRE ADDRESSE',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                )
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Rev_RoundButton(
-                  isfile: false,
-                  image: "assets/profile/phone.png",
-                  label: "CHANGER VOTRE NUMERO DE TELEPHONE",
-                  onpressed: () async {
-                    String oldphone;
-                    oldphone = await Rev_Auth().getPhone(this.widget.id);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Rev_phoneUpdate(
-                                  id: this.widget.id,
-                                  oldphone: oldphone,
-                                )));
-                  },
-                ),
-                Text(
-                  'CHANGER VOTRE NUM DE TELEPHONE',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                )
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Rev_RoundButton(
-                  isfile: false,
-                  image: "assets/profile/logout.png",
-                  label: "SE DECONNECTER",
-                  onpressed: () async {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    prefs.clear();
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => LoginPage()));
-                  },
-                ),
-                Text(
-                  'SE DECONNECTER',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                )
-              ],
-            ),
-          ],
         ),
       ),
     );

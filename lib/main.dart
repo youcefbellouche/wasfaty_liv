@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Screen/Rev_HomePage.dart';
@@ -35,33 +36,20 @@ class HomeConnect extends StatefulWidget {
 
 class _HomeConnectState extends State<HomeConnect> {
   bool isInternetOn = true;
-  bool logged = false;
-  String id;
+  var result = FirebaseAuth.instance.currentUser;
+
   @override
   void initState() {
     super.initState();
     GetConnect();
-    getLocalData();
-  }
-
-  Future<void> getLocalData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    logged = prefs.getBool('logged');
-    if (logged == null) {
-      logged = false;
-    }
-    if (logged) {
-      id = prefs.getString('id');
-      print("in main $id ");
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: isInternetOn
-          ? logged
-              ? Rev_HomePage(id: id)
+          ? result != null
+              ? Rev_HomePage(id: result.uid)
               : LoginPage()
           : Rev_HomePageOFF(),
     );

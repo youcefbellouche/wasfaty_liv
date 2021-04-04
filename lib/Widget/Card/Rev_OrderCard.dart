@@ -4,8 +4,9 @@ import 'package:wasfaty_liv/Screen/Order/Rev_OrderInfo.dart';
 
 class Rev_OrderCard extends StatefulWidget {
   Order order;
+  String collection;
 
-  Rev_OrderCard({this.order});
+  Rev_OrderCard({this.order, this.collection});
   @override
   _Rev_OrderCardState createState() => _Rev_OrderCardState();
 }
@@ -23,10 +24,10 @@ class _Rev_OrderCardState extends State<Rev_OrderCard> {
               MaterialPageRoute(
                   builder: (context) => Rev_OrderInfo(
                         order: widget.order,
+                        collection : widget.collection,
                       )));
         },
         child: Container(
-          // width: MediaQuery.of(context).size.width * 0.9,
           height: 180,
           decoration: BoxDecoration(
               border:
@@ -58,7 +59,7 @@ class _Rev_OrderCardState extends State<Rev_OrderCard> {
                   height: 180 * 0.16,
                   child: Center(
                       child: Text(
-                    'Type de Livraison :',
+                    'Type de Commande :',
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ))),
@@ -70,12 +71,12 @@ class _Rev_OrderCardState extends State<Rev_OrderCard> {
                       borderRadius: BorderRadius.all(
                         Radius.circular(5),
                       )),
-                  child: Center(child: Text(widget.order.livraison))),
+                  child: Center(child: Text(widget.collection))),
               Container(
                   height: 180 * 0.16,
                   child: Center(
                       child: Text(
-                    'status :',
+                    'Prix :',
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ))),
@@ -87,7 +88,7 @@ class _Rev_OrderCardState extends State<Rev_OrderCard> {
                       borderRadius: BorderRadius.all(
                         Radius.circular(5),
                       )),
-                  child: Center(child: Text(widget.order.status))),
+                  child: Center(child: Text("${widget.order.devis} DA"))),
             ],
           ),
         ),

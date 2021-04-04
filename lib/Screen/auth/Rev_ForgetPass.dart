@@ -4,21 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
 import 'package:wasfaty_liv/Widget/Rev_Button.dart';
 import 'package:wasfaty_liv/Widget/Rev_TextFeild.dart';
-import 'Rev_ForgetPass.dart';
 
-import 'Rev_SignUp.dart';
-
-class LoginPage extends StatefulWidget {
+class ForgetPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _ForgetPageState createState() => _ForgetPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ForgetPageState extends State<ForgetPage> {
   TextEditingController controller_email;
-  TextEditingController controller_pass;
   final _formKey = GlobalKey<FormState>();
   String email;
-  String mdp;
   Rev_Auth auth = new Rev_Auth();
   bool loading = false;
 
@@ -58,6 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                       key: _formKey,
                       child: Column(
                         children: [
+                          Text("Donner l'email de votre compte"),
                           Rev_TextFeild(
                             label: "E-mail",
                             textEditingController: controller_email,
@@ -67,44 +63,14 @@ class _LoginPageState extends State<LoginPage> {
                                 ? "L'Email doit être valide"
                                 : null,
                           ),
-                          Rev_TextFeild(
-                            label: "Mot de Passe",
-                            textEditingController: controller_pass,
-                            mdp: true,
-                            onChanged: (value) => mdp = value,
-                            validator: (input) => input.length < 6
-                                ? "Donner un mot de passe valide"
-                                : null,
-                          ),
                           Rev_Button(
-                            label: "Se Connecter",
+                            label: "Confirmer",
                             onpressed: () async {
-                              signin(context: context, email: email, mdp: mdp);
+                              auth.passwordReset(
+                                  email: email, context: context);
                             },
                             color: Theme.of(context).primaryColor,
                           ),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SignUpPage()),
-                                );
-                              },
-                              child: Text(
-                                "S'inscrire",
-                              )),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ForgetPage()),
-                                );
-                              },
-                              child: Text(
-                                "J'ai oublié(e) le mot de pass ?",
-                              ))
                         ],
                       ),
                     ),
@@ -113,18 +79,5 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           );
-  }
-
-  signin({String email, String mdp, BuildContext context}) async {
-    if (_formKey.currentState.validate()) {
-      setState(() {
-        loading = true;
-      });
-      if (!await auth.signIn(context: context, email: email, mdp: mdp)) {
-        setState(() {
-          loading = false;
-        });
-      }
-    }
   }
 }

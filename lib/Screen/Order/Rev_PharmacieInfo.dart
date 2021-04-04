@@ -62,6 +62,6 @@ class _Rev_PharmacieInfoState extends State<Rev_PharmacieInfo> {
                   : Center(child: CircularProgressIndicator());
             },
           )
-        : Center(child: Text("cettte commande n'a pas encore de pharmacie"));
+        : Center(child: Text("cettte commande n'a pas de pharmacie"));
   }
 }

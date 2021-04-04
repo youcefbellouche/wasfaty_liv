@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
 import 'package:wasfaty_liv/Widget/Rev_Drawer.dart';
 
@@ -21,13 +20,9 @@ class _Rev_HomePageState extends State<Rev_HomePage> {
     _scaffoldKey.currentState.openDrawer();
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print(widget.id);
-  }
 
+
+ 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -44,11 +39,8 @@ class _Rev_HomePageState extends State<Rev_HomePage> {
               color: Theme.of(context).primaryColor,
             ),
           ),
-          body: 
-              Rev_newOrder(
-                id: widget.id,
-                where: "en livraison",
-              
+          body: Rev_newOrder(
+            where: "en livraison",
           )),
     );
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wasfaty_liv/Screen/auth/Rev_LoginPage.dart';
 import '../Screen/Rev_ProfilePage.dart';
-
+import 'package:wasfaty_liv/Screen/Rev_Historique.dart';
 import '../Screen/Rev_HomePage.dart';
 
 class Rev_Drawer extends StatelessWidget {
@@ -69,7 +69,6 @@ class Rev_Drawer extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Rev_ProfilePage(
-                                      id: id,
                                     )),
                           );
                         },
@@ -107,7 +106,11 @@ class Rev_Drawer extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         onTap: () {
-                          print('orders');
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Rev_Historique(id: id)));
                         },
                       ),
                     ),

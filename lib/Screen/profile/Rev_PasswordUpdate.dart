@@ -1,16 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../Functions/Auth/Rev_Auth.dart';
-import '../../Widget/Rev_Appbar.dart';
+import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
+import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
+
 
 import '../../Widget/Rev_Button.dart';
 import '../../Widget/Rev_TextFeild.dart';
 import '../Rev_HomePage.dart';
 
 class Rev_PasswordUpdate extends StatefulWidget {
-  final String id;
+  final User currentUser;
 
-  Rev_PasswordUpdate({this.id});
+  Rev_PasswordUpdate({this.currentUser});
 
   @override
   _Rev_PasswordUpdateState createState() => _Rev_PasswordUpdateState();
@@ -77,16 +78,14 @@ class _Rev_PasswordUpdateState extends State<Rev_PasswordUpdate> {
                   ),
                   Rev_Button(
                     label: "Changer le mot de pass",
-                    onpressed: () async {
+                    onpressed: () {
                       if (_formKey.currentState.validate()) {
-                        Rev_Auth().updatePassword(mdp, newmdp, this.widget.id);
-                        print(this.widget.id);
+                        auth.updateUserPassword(newmdp, mdp);
+                        print(FirebaseAuth.instance.currentUser.email);
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Rev_HomePage(
-                                      id: this.widget.id,
-                                    )));
+                                builder: (context) => Rev_HomePage()));
                       }
                     },
                     color: Theme.of(context).primaryColor,

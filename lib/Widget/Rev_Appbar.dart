@@ -28,14 +28,9 @@ Widget Rev_Appbar(
                 height: 100,
                 width: 100,
                 child: Center(
-                //     child: Image(
-                //   image: AssetImage("assets/logo.png"),
-                // )
-                child: Text('Commandes',style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17
-                ),),
+                    child: Image(
+                  image: AssetImage("assets/logo.png"),
+                )
                 ),
               )
             ],

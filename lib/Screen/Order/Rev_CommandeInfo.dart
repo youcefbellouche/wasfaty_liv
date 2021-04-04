@@ -115,6 +115,8 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                     Rev_Orderdetails(
                         label: "N° de Commande :", info: widget.order.orderId),
                     Rev_Orderdetails(
+                        label: "Prix Total :", info: widget.order.devis),
+                    Rev_Orderdetails(
                         label: "Nom complet du client :",
                         info: snapshot.data['name']),
                     Rev_OrderdetailsButton(
@@ -122,17 +124,47 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                         info: snapshot.data['tel'],
                         phone: snapshot.data['tel']),
                     Rev_Orderdetails(
-                      label: "Email du client :",
-                      info: snapshot.data['email'],
-                    ),
-                    Rev_Orderdetails(
                         label: "Nom complet du patient :",
                         info: widget.order.bname),
                     Rev_Orderdetails(
                         label: "Generique", info: widget.order.generique),
                     Rev_Orderdetails(
-                        label: "Moyen de livraison :",
-                        info: widget.order.livraison),
+                        label: "Date de Commande :",
+                        info: DateTime.fromMillisecondsSinceEpoch(
+                                widget.order.date)
+                            .toString()),
+                    Rev_Orderdetails(
+                        label: "Statut :", info: widget.order.status),
+                    widget.order.dateAnnuler != null
+                        ? Rev_Orderdetails(
+                            label: "La Commande a été annuler le :",
+                            info: DateTime.fromMillisecondsSinceEpoch(
+                                    widget.order.dateAnnuler)
+                                .toString())
+                        : Container(),
+                    widget.order.dateTeminer != null
+                        ? Rev_Orderdetails(
+                            label: "La Commande a été effectuée le :",
+                            info: DateTime.fromMillisecondsSinceEpoch(
+                                    widget.order.dateTeminer)
+                                .toString())
+                        : Container(),
+                    widget.order.annulerBy != null
+                        ? Rev_Orderdetails(
+                            label: "Annuler Par :",
+                            info: widget.order.annulerBy)
+                        : Container(),
+                    widget.order.noteAnnuler != null
+                        ? Rev_Orderdetails(
+                            label: "Note d'annulation :",
+                            info: widget.order.noteAnnuler)
+                        : Container(),
+                    Rev_Orderdetails(
+                        label: "Wilaya :", info: widget.order.wilaya),
+                    widget.order.daira != null
+                        ? Rev_Orderdetails(
+                            label: "Daira :", info: widget.order.daira)
+                        : Container(),
                     Rev_Orderdetails(
                         label: "Adresse :", info: widget.order.adresse),
                     SizedBox(height: 10),
@@ -144,12 +176,30 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                                 onpressed: () async {
                                   anulOrder(context);
                                 },
-                                label: "Refuser",
+                                label: "Annuler",
                                 color: Colors.redAccent,
                               ),
                               Rev_Button(
-                                onpressed: () {
-                                  print('test');
+                                onpressed: () async {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+
+                                  String uid = prefs.getString('id');
+                                  await FirebaseFirestore.instance
+                                      .collection(widget.collection)
+                                      .doc(widget.order.orderId)
+                                      .update({
+                                    "status": "terminer",
+                                    "DateTerminer":
+                                        DateTime.now().millisecondsSinceEpoch
+                                  });
+
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Rev_HomePage(
+                                                id: uid,
+                                              )));
                                 },
                                 label: "Terminer",
                                 color: Colors.green,
@@ -200,8 +250,11 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                   Rev_TextFeild(
                     onChanged: (value) => noteA = value,
                     textEditingController: noteController,
+                    validator: (input) => input.isEmpty
+                        ? "Donner la raison de l'annulation de la commande "
+                        : null,
                     label: "Note",
-                    textInputType: TextInputType.number,
+                    textInputType: TextInputType.text,
                     mdp: false,
                   ),
                   Padding(
@@ -228,20 +281,33 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                               color: Colors.greenAccent,
                               child: Text('Envoyer'),
                               onPressed: () async {
-                                print('envoyer');
-                                await FirebaseFirestore.instance
-                                    .collection("Commande")
-                                    .doc(widget.order.orderId)
-                                    .update({
-                                  "status": "annuler",
-                                  "noteAnnuler": noteA,
-                                  "annulerBy": "livreur"
-                                });
-                                Navigator.pop(context);
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Rev_HomePage()));
+                                // print('envoyer');
+                                if (_formKey.currentState.validate()) {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+
+                                  String uid = prefs.getString('id');
+
+                                  await FirebaseFirestore.instance
+                                      .collection(widget.collection)
+                                      .doc(widget.order.orderId)
+                                      .update({
+                                    "status": "annuler",
+                                    "noteAnnuler": noteA,
+                                    "annulerBy": "livreur",
+                                    "DateAnnuler":
+                                        DateTime.now().millisecondsSinceEpoch,
+                                  });
+
+                                  Navigator.pop(context);
+
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Rev_HomePage(
+                                                id: uid,
+                                              )));
+                                }
                               },
                             ),
                           ]),

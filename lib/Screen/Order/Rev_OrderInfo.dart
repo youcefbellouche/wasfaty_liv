@@ -5,12 +5,13 @@ import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
 import 'Rev_CommandeInfo.dart';
 import 'Rev_PharmacieInfo.dart';
 
-
 class Rev_OrderInfo extends StatefulWidget {
   Order order;
+  String collection;
 
   Rev_OrderInfo({
     this.order,
+    this.collection,
   });
 
   @override
@@ -48,14 +49,14 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
                   Tab(
                     text: "Commande",
                   ),
-                  Tab(text: "Livreur")
+                  Tab(text: "Pharmacie")
                 ]),
           ),
           body: TabBarView(
             children: [
               Rev_CommandeInfo(
                 order: widget.order,
-                collection: "Commande",
+                collection: widget.collection,
               ),
               Rev_PharmacieInfo(
                 pharmacieid: widget.order.pharmacieid,

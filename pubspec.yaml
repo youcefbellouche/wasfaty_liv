@@ -32,6 +32,8 @@ dependencies:
   firebase_storage: ^7.0.0
   connectivity: ^2.0.2
   url_launcher: ^5.7.10
+  firebase_messaging: ^6.0.16
+
 
 
 

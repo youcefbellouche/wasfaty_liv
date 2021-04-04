@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wasfaty_liv/Screen/auth/Rev_LoginPage.dart';
 import '../Screen/Rev_ProfilePage.dart';
 import 'package:wasfaty_liv/Screen/Rev_Historique.dart';
 import '../Screen/Rev_HomePage.dart';
+import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
 
 class Rev_Drawer extends StatefulWidget {
 
@@ -208,10 +208,8 @@ class _Rev_DrawerState extends State<Rev_Drawer> {
                             "disponible": false,
                           });
 
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
+                                                    Rev_Auth().signOut(context: context);
+
                         },
                       ),
                     ),

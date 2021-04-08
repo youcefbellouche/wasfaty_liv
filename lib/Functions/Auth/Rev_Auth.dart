@@ -2,12 +2,9 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:wasfaty_liv/Screen/Rev_ProfilePage.dart';
 import 'package:wasfaty_liv/Screen/auth/Rev_LoginPage.dart';
-import '../../Models/livreur.dart';
 import '../../Screen/Rev_HomePage.dart';
 
 class Rev_Auth {
@@ -37,7 +34,13 @@ class Rev_Auth {
     }
   }
 
-  void signOut({BuildContext context}) {
+  void signOut({BuildContext context}) async {
+    await FirebaseFirestore.instance
+        .collection("Livreur")
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .update({
+      "disponible": false,
+    });
     FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => LoginPage()));
@@ -139,9 +142,7 @@ class Rev_Auth {
             if (type.data()["active"]) {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => Rev_HomePage(
-                        )),
+                MaterialPageRoute(builder: (context) => Rev_HomePage()),
               );
               return true;
             } else {

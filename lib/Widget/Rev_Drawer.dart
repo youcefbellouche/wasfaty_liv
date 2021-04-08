@@ -7,8 +7,6 @@ import '../Screen/Rev_HomePage.dart';
 import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
 
 class Rev_Drawer extends StatefulWidget {
-
-
   @override
   _Rev_DrawerState createState() => _Rev_DrawerState();
 }
@@ -114,8 +112,7 @@ class _Rev_DrawerState extends State<Rev_Drawer> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    Rev_HomePage()),
+                                builder: (context) => Rev_HomePage()),
                           );
                         },
                       ),
@@ -178,8 +175,7 @@ class _Rev_DrawerState extends State<Rev_Drawer> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      Rev_Historique()));
+                                  builder: (context) => Rev_historique()));
                         },
                       ),
                     ),
@@ -200,16 +196,8 @@ class _Rev_DrawerState extends State<Rev_Drawer> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        onTap: () async {
-                          await FirebaseFirestore.instance
-                              .collection("Livreur")
-                              .doc(FirebaseAuth.instance.currentUser.uid)
-                              .update({
-                            "disponible": false,
-                          });
-
-                                                    Rev_Auth().signOut(context: context);
-
+                        onTap: () {
+                          Rev_Auth().signOut(context: context);
                         },
                       ),
                     ),

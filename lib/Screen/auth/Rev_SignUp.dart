@@ -1,16 +1,12 @@
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
 import 'package:wasfaty_liv/Models/livreur.dart';
 import 'package:wasfaty_liv/Widget/Rev_Button.dart';
 import 'package:wasfaty_liv/Widget/Rev_DropDown.dart';
-import 'package:wasfaty_liv/Widget/Rev_RoundButton.dart';
 import 'package:wasfaty_liv/Widget/Rev_TextFeild.dart';
-import 'package:image_picker/image_picker.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -35,9 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
   String phone;
   String mdp;
 
-  File _imageFileO = null;
-  bool isfileO = false;
-  String imageFileName;
+
   bool loading = false;
 
   bool condition = false;
@@ -90,19 +84,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       SizedBox(
                           height: 140, child: Image.asset("assets/logo.png")),
-                      // Rev_RoundButton(
-                      //   isfile: isfileO,
-                      //   file: _imageFileO,
-                      //   image: "assets/form/takepic.png",
-                      //   label: "Photo de Profile",
-                      //   onpressed: () {
-                      //     print("Prendre en photo une ordonnance");
-                      //     takeImage(context);
-                      //   },
-                      //   onpressedP: () {
-                      //     verifyImage(context, _imageFileO, false);
-                      //   },
-                      // ),
                       Form(
                           key: _formKey,
                           child: Column(
@@ -300,123 +281,5 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  takeImage(context) {
-    return showDialog(
-        context: context,
-        builder: (con) {
-          return SimpleDialog(
-            title: Text('Photo de Profile',
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold)),
-            children: [
-              SimpleDialogOption(
-                child: Text(
-                  "Utiliser l'appareil Photo ",
-                  style: TextStyle(
-                    color: Theme.of(context).accentColor,
-                  ),
-                ),
-                onPressed: () {
-                  pickImageWithCameraO(context);
-                },
-              ),
-              SimpleDialogOption(
-                child: Text(
-                  "Prendre Une Photo dans la Galerie",
-                  style: TextStyle(
-                    color: Theme.of(context).accentColor,
-                  ),
-                ),
-                onPressed: () {
-                  pickImageWithGallery(context);
-                },
-              ),
-              SimpleDialogOption(
-                  child: Text(
-                    "Annuler ",
-                    style: TextStyle(color: Colors.redAccent),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  })
-            ],
-          );
-        });
-  }
 
-  Future pickImageWithGallery(
-    BuildContext context,
-  ) async {
-    final pickedFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _imageFileO = File(pickedFile.path);
-    });
-    isfileO = true;
-    Navigator.pop(context);
-  }
-
-  Future pickImageWithCameraO(
-    BuildContext context,
-  ) async {
-    final pickedFile = await ImagePicker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      _imageFileO = File(pickedFile.path);
-    });
-    isfileO = true;
-    Navigator.pop(context);
-  }
-
-  verifyImage(context, file, chifa) {
-    return showDialog(
-        context: context,
-        builder: (con) {
-          return SimpleDialog(
-            backgroundColor: Colors.transparent,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0))),
-            children: [
-              Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 2, color: Colors.grey)),
-                  child: Image.file(file, fit: BoxFit.cover)),
-              Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20.0))),
-                      color: Colors.redAccent,
-                      child: Text(
-                        'Annuler',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20.0))),
-                      color: Colors.green,
-                      child: Text(
-                        'Changer de photo',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        takeImage(context);
-
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ]),
-            ],
-          );
-        });
-  }
 }

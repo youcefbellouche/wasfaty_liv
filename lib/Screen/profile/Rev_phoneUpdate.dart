@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
@@ -6,7 +5,6 @@ import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
 
 import '../../Widget/Rev_Button.dart';
 import '../../Widget/Rev_TextFeild.dart';
-import '../Rev_HomePage.dart';
 
 class Rev_phoneUpdate extends StatefulWidget {
   final String uid;

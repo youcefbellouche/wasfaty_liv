@@ -212,6 +212,7 @@ class Rev_Auth {
         "active": false,
         "suspendue": false,
         "name": name,
+        "Time": DateTime.now().millisecondsSinceEpoch,
         "phone": phone,
         "email": email,
         "adresse": adresse,

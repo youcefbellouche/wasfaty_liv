@@ -7,8 +7,11 @@ import 'package:wasfaty_liv/Models/livreur.dart';
 import 'package:wasfaty_liv/Widget/Rev_Button.dart';
 import 'package:wasfaty_liv/Widget/Rev_DropDown.dart';
 import 'package:wasfaty_liv/Widget/Rev_TextFeild.dart';
+import 'package:wasfaty_liv/models/Wilaya.Dart';
 
 class SignUpPage extends StatefulWidget {
+  List<Wilaya> wilayas;
+  SignUpPage({this.wilayas});
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -23,7 +26,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   Rev_Auth auth = new Rev_Auth();
 
-  Livreur pharmacie;
   String email;
   String name;
   String adresse;
@@ -31,28 +33,24 @@ class _SignUpPageState extends State<SignUpPage> {
   String phone;
   String mdp;
 
-
+  File _imageFileO = null;
+  bool isfileO = false;
+  String imageFileName;
   bool loading = false;
 
   bool condition = false;
-  List<String> wilays = ['Alger'];
-  List<String> algerDayra = [
-    "Bab El Oued",
-    "Baraki",
-    "Bir Mourad Raïs",
-    "Birtouta",
-    "Bouzareah",
-    "Chéraga",
-    "Dar El Beïda",
-    "Draria",
-    "El Harrach",
-    "Hussein Dey",
-    "Rouïba",
-    "Sidi M'Hamed",
-    "Zéralda",
-  ];
+  List<String> wilays = new List<String>();
+  void initState() {
+    super.initState();
+    widget.wilayas.forEach((element) {
+      wilays.add(element.name);
+    });
+  }
+
+  List<String> dayra = new List<String>();
   String valueW;
   String dairaA;
+  bool choosewil = false;
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +82,19 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       SizedBox(
                           height: 140, child: Image.asset("assets/logo.png")),
+                      // Rev_RoundButton(
+                      //   isfile: isfileO,
+                      //   file: _imageFileO,
+                      //   image: "assets/form/takepic.png",
+                      //   label: "Photo de Profile",
+                      //   onpressed: () {
+                      //     print("Prendre en photo une ordonnance");
+                      //     takeImage(context);
+                      //   },
+                      //   onpressedP: () {
+                      //     verifyImage(context, _imageFileO, false);
+                      //   },
+                      // ),
                       Form(
                           key: _formKey,
                           child: Column(
@@ -116,23 +127,26 @@ class _SignUpPageState extends State<SignUpPage> {
                                 valuew: valueW,
                                 wil: wilays,
                                 onchanged: (value) {
-                                  if (value == "Alger") {
-                                    setState(() {
-                                      valueW = value;
+                                  valueW = value.toString();
+                                  int i = widget.wilayas.indexWhere(
+                                      (element) => element.name == value);
+
+                                  setState(() {
+                                    dayra = new List<String>();
+                                    widget.wilayas[i].com.forEach((element) {
+                                      dayra.add(element);
                                     });
-                                  } else {
-                                    setState(() {
-                                      dairaA = null;
-                                    });
-                                  }
+                                    choosewil = true;
+                                    dairaA = null;
+                                  });
                                 },
                                 hint: "Wilaya",
                               ),
                               SizedBox(height: 10),
-                              valueW == "Alger"
+                              choosewil
                                   ? Rev_DropDown(
                                       valuew: dairaA,
-                                      wil: algerDayra,
+                                      wil: dayra,
                                       onchanged: (value) => dairaA = value,
                                       hint: "Daira",
                                     )
@@ -280,6 +294,4 @@ class _SignUpPageState extends State<SignUpPage> {
       print(e.toString());
     }
   }
-
-
 }

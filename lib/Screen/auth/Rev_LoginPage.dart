@@ -4,6 +4,7 @@ import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
 import 'package:wasfaty_liv/Widget/Rev_Button.dart';
 import 'package:wasfaty_liv/Widget/Rev_TextFeild.dart';
 import 'Rev_ForgetPass.dart';
+import 'package:wasfaty_liv/models/Wilaya.Dart';
 
 import 'Rev_SignUp.dart';
 
@@ -83,11 +84,13 @@ class _LoginPageState extends State<LoginPage> {
                             color: Theme.of(context).primaryColor,
                           ),
                           TextButton(
-                              onPressed: () {
+                              onPressed: () async {
+                                List<Wilaya> wil = await Wilaya().getwilaya();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignUpPage()),
+                                      builder: (context) =>
+                                          SignUpPage(wilayas: wil)),
                                 );
                               },
                               child: Text(

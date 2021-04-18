@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wasfaty_liv/Models/stat.dart';
-
 import '../Rev_Orderdetails.dart';
 import '../Rev_RoundButton.dart';
 
 class Rev_stat extends StatefulWidget {
+  @required
+  String msg;
+  @required
   Future<DocumentSnapshot> path;
-  Rev_stat({this.path});
+  Rev_stat({this.path, this.msg});
   @override
   _Rev_statState createState() => _Rev_statState();
 }
@@ -33,13 +35,12 @@ class _Rev_statState extends State<Rev_stat> {
                           children: [
                             stat.nbrCommandeLOCAL != null
                                 ? Rev_Orderdetails(
-                                    label: "Nombre de Commande en algérie:",
+                                    label: "Nombre de Commande :",
                                     info: stat.nbrCommandeLOCAL.toString())
                                 : Container(),
                             stat.nbrCommandeTerminerLOCAL != null
                                 ? Rev_Orderdetails(
-                                    label:
-                                        "Nombre de Commande terminer en algérie:",
+                                    label: "Nombre de Commande terminer :",
                                     info: stat.nbrCommandeTerminerLOCAL
                                         .toString())
                                 : Container(),
@@ -58,7 +59,7 @@ class _Rev_statState extends State<Rev_stat> {
                             image: "assets/vide.png",
                           ),
                           Text(
-                            'Vous n\'avez pas les statistiques de cette année',
+                            widget.msg,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -78,7 +79,7 @@ class _Rev_statState extends State<Rev_stat> {
                       image: "assets/vide.png",
                     ),
                     Text(
-                      'Vous n\'avez pas les statistiques de cette année',
+                      widget.msg,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

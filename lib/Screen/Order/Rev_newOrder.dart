@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wasfaty_liv/Models/order.dart';
 import 'package:wasfaty_liv/Widget/Card/Rev_OrderCard.dart';
+import 'package:wasfaty_liv/Widget/Rev_RoundButton.dart';
 
 class Rev_newOrder extends StatefulWidget {
   String where;
@@ -13,9 +14,6 @@ class Rev_newOrder extends StatefulWidget {
 }
 
 class _Rev_newOrderState extends State<Rev_newOrder> {
-  
-
-
   Order model;
 
   @override
@@ -25,7 +23,8 @@ class _Rev_newOrderState extends State<Rev_newOrder> {
       child: FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance
             .collection("Commande")
-            .where("livreurId", isEqualTo: FirebaseAuth.instance.currentUser.uid)
+            .where("livreurId",
+                isEqualTo: FirebaseAuth.instance.currentUser.uid)
             .where("status", isEqualTo: widget.where)
             .get(),
         builder: (context, snapshot1) {
@@ -34,7 +33,8 @@ class _Rev_newOrderState extends State<Rev_newOrder> {
               : FutureBuilder<QuerySnapshot>(
                   future: FirebaseFirestore.instance
                       .collection("Commande_etr")
-                      .where("livreurId", isEqualTo: FirebaseAuth.instance.currentUser.uid)
+                      .where("livreurId",
+                          isEqualTo: FirebaseAuth.instance.currentUser.uid)
                       .where("status", isEqualTo: widget.where)
                       .get(),
                   builder: (cotnext, snapshot2) {
@@ -44,13 +44,30 @@ class _Rev_newOrderState extends State<Rev_newOrder> {
                           )
                         : snapshot2.data.docs.length == 0 &&
                                 snapshot1.data.docs.length == 0
-                            ? Text('pas de commande')
+                            ? Center(
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                    Rev_RoundButton(
+                                      isfile: false,
+                                      image: "assets/vide.png",
+                                    ),
+                                    Text(
+                                      'Vous n\'avez pas de commande',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    )
+                                  ]))
                             : SingleChildScrollView(
                                 child: ListView(
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
                                 children: [
-
                                   ListView.builder(
                                     scrollDirection: Axis.vertical,
                                     itemCount: snapshot1.data.docs.length,

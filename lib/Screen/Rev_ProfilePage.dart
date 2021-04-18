@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
 import 'package:wasfaty_liv/Screen/profile/Rev_PasswordUpdate.dart';
 import 'package:wasfaty_liv/Screen/profile/Rev_phoneUpdate.dart';
@@ -38,7 +37,6 @@ class _Rev_ProfilePageState extends State<Rev_ProfilePage> {
       ),
       body: Center(
         child: Container(
-          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
           child: GridView(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,

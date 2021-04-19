@@ -6,6 +6,7 @@ import 'package:wasfaty_liv/Models/order.dart';
 import 'package:wasfaty_liv/Widget/Card/Rev_OrderCard.dart';
 import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
 import 'package:wasfaty_liv/Widget/Rev_Drawer.dart';
+import 'package:wasfaty_liv/Widget/Rev_RoundButton.dart';
 
 class Rev_historique extends StatefulWidget {
   @override
@@ -116,7 +117,26 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                     ? Center(child: CircularProgressIndicator())
                                     : snapshot2.data.docs.length == 0 &&
                                             snapshot1.data.docs.length == 0
-                                        ? Text('pas de commande')
+                                        ? Center(
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                Rev_RoundButton(
+                                                  isfile: false,
+                                                  image: "assets/vide.png",
+                                                ),
+                                                Text(
+                                                  'Vous n\'avez pas de commande',
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                )
+                                              ]))
                                         : SingleChildScrollView(
                                             child: ListView(
                                             shrinkWrap: true,
@@ -184,7 +204,30 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                             child: CircularProgressIndicator())
                                         : snapshot2.data.docs.length == 0 &&
                                                 snapshot1.data.docs.length == 0
-                                            ? Text('pas de commande')
+                                            ? Center(
+                                                child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                    Rev_RoundButton(
+                                                      isfile: false,
+                                                      image: "assets/vide.png",
+                                                    ),
+                                                    Text(
+                                                      'Vous n\'avez pas de commande',
+                                                      style: TextStyle(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    )
+                                                  ]))
                                             : SingleChildScrollView(
                                                 child: ListView(
                                                 shrinkWrap: true,
@@ -265,7 +308,30 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                             child: CircularProgressIndicator())
                                         : snapshot2.data.docs.length == 0 &&
                                                 snapshot1.data.docs.length == 0
-                                            ? Text('pas de commande')
+                                            ? Center(
+                                                child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                    Rev_RoundButton(
+                                                      isfile: false,
+                                                      image: "assets/vide.png",
+                                                    ),
+                                                    Text(
+                                                      'Vous n\'avez pas de commande',
+                                                      style: TextStyle(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    )
+                                                  ]))
                                             : SingleChildScrollView(
                                                 child: ListView(
                                                 shrinkWrap: true,

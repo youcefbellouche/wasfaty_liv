@@ -5,6 +5,7 @@ import '../Screen/Rev_ProfilePage.dart';
 import 'package:wasfaty_liv/Screen/Rev_Historique.dart';
 import '../Screen/Rev_HomePage.dart';
 import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
+import 'package:wasfaty_liv/Screen/Rev_Statistiques.dart';
 
 class Rev_Drawer extends StatefulWidget {
   @override
@@ -154,7 +155,13 @@ class _Rev_DrawerState extends State<Rev_Drawer> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Rev_Statistiques()),
+                          );
+                        },
                       ),
                     ),
                     SizedBox(height: 30),

@@ -114,7 +114,8 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                     Rev_Orderdetails(
                         label: "N° de Commande :", info: widget.order.orderId),
                     Rev_Orderdetails(
-                        label: "Prix Total :", info: widget.order.devis),
+                        label: "Prix Total :",
+                        info: "${widget.order.devis} DA"),
                     Rev_Orderdetails(
                         label: "Nom complet du client :",
                         info: snapshot.data['name']),

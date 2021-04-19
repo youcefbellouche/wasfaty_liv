@@ -47,8 +47,9 @@ class _Rev_StatistiquesState extends State<Rev_Statistiques> {
                   time = await showDatePicker(
                       context: context,
                       initialDate: _pick,
-                      firstDate: DateTime(1910),
-                      lastDate: _pick,
+                      firstDate: DateTime(2020, 10, 7),
+                      lastDate: DateTime(DateTime.now().year,
+                          DateTime.now().month, DateTime.now().day),
                       builder: (BuildContext context, Widget child) {
                         return Theme(
                           child: child,
@@ -65,11 +66,10 @@ class _Rev_StatistiquesState extends State<Rev_Statistiques> {
 
                   setState(() {
                     if (time != null) {
-                      timeN = feild.format(time);
-                      print(timeN);
-                      print(time.year);
-                      print(time.month);
-                      print(time.day);
+                      print("youcef time item $time");
+                      _pick = time;
+                    } else {
+                      time = DateTime.now();
                     }
                   });
                 },

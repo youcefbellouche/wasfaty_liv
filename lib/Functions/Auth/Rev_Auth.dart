@@ -132,7 +132,6 @@ class Rev_Auth {
         //     .update({"token": token});
 
         // print(token);
-        print("youcef type test ${type.data()["type"]}");
         if (type.data()["type"] == "Livreur") {
           if (type.data()["suspendue"]) {
             activPop(context,
@@ -157,7 +156,6 @@ class Rev_Auth {
         }
       }
     } catch (e) {
-      print(e.toString());
       showDialog(
           context: context,
           builder: (_) => AlertDialog(
@@ -199,7 +197,6 @@ class Rev_Auth {
         _auth.user.updateProfile(displayName: name);
       });
 
-      print("done1");
       await FirebaseFirestore.instance
           .collection("Livreur")
           .doc(fuser.uid)

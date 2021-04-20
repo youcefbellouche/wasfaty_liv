@@ -64,7 +64,6 @@ class _Rev_DrawerState extends State<Rev_Drawer> {
                         inactiveThumbColor: Colors.redAccent,
                         value: status,
                         onChanged: (value) async {
-                          print("VALUE : $value");
                           setState(() {
                             status = value;
                           });

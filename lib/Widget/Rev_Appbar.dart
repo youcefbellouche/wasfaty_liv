@@ -25,7 +25,7 @@ Widget Rev_Appbar(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(40)),
                     child: IconButton(icon: revIcon, onPressed: openDrawer)),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.245),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.235),
                 Container(
                   child: Center(
                       child: Image(

@@ -37,29 +37,30 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
               color: Theme.of(context).primaryColor,
             ),
           ),
-          bottomSheet: Container(
-            decoration: BoxDecoration(
-                border: Border.all(
-                    width: 2.0, color: Theme.of(context).accentColor)),
-            child: TabBar(
-                unselectedLabelColor: Colors.grey,
-                labelColor: Theme.of(context).primaryColor,
-                indicatorColor: Theme.of(context).accentColor,
-                tabs: [
-                  Tab(
-                    text: "Commande",
-                  ),
-                  Tab(text: "Pharmacie")
-                ]),
-          ),
-          body: TabBarView(
+          body: Column(
             children: [
-              Rev_CommandeInfo(
-                order: widget.order,
-                collection: widget.collection,
-              ),
-              Rev_PharmacieInfo(
-                pharmacieid: widget.order.pharmacieid,
+              TabBar(
+                  unselectedLabelColor: Colors.grey,
+                  labelColor: Theme.of(context).primaryColor,
+                  indicatorColor: Theme.of(context).accentColor,
+                  tabs: [
+                    Tab(
+                      text: "Commande",
+                    ),
+                    Tab(text: "Pharmacie")
+                  ]),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    Rev_CommandeInfo(
+                      order: widget.order,
+                      collection: widget.collection,
+                    ),
+                    Rev_PharmacieInfo(
+                      pharmacieid: widget.order.pharmacieid,
+                    ),
+                  ],
+                ),
               ),
             ],
           )),

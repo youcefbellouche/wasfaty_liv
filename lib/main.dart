@@ -62,7 +62,6 @@ class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
 
     if (isInternetOn && result != null) {
       if (isdown) {
-        print("background");
         await FirebaseFirestore.instance
             .collection("Livreur")
             .doc(FirebaseAuth.instance.currentUser.uid)

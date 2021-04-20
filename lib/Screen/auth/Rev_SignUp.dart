@@ -82,19 +82,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       SizedBox(
                           height: 140, child: Image.asset("assets/logo.png")),
-                      // Rev_RoundButton(
-                      //   isfile: isfileO,
-                      //   file: _imageFileO,
-                      //   image: "assets/form/takepic.png",
-                      //   label: "Photo de Profile",
-                      //   onpressed: () {
-                      //     print("Prendre en photo une ordonnance");
-                      //     takeImage(context);
-                      //   },
-                      //   onpressedP: () {
-                      //     verifyImage(context, _imageFileO, false);
-                      //   },
-                      // ),
                       Form(
                           key: _formKey,
                           child: Column(
@@ -258,7 +245,6 @@ class _SignUpPageState extends State<SignUpPage> {
       loading = true;
     });
     try {
-      print('1 try');
       if (!await auth.signUp(
           wilaya: wilaya,
           file: file,

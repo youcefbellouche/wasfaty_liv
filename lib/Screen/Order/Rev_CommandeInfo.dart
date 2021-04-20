@@ -276,7 +276,6 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                               color: Colors.greenAccent,
                               child: Text('Envoyer'),
                               onPressed: () async {
-                                // print('envoyer');
                                 if (_formKey.currentState.validate()) {
                                   await FirebaseFirestore.instance
                                       .collection(widget.collection)

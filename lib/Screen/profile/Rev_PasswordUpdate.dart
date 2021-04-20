@@ -81,7 +81,6 @@ class _Rev_PasswordUpdateState extends State<Rev_PasswordUpdate> {
                     onpressed: () {
                       if (_formKey.currentState.validate()) {
                         auth.updateUserPassword(newmdp, mdp);
-                        print(FirebaseAuth.instance.currentUser.email);
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

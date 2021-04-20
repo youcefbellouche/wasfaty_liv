@@ -77,7 +77,6 @@ class _Rev_historiqueState extends State<Rev_historique> {
                       onSelected: (sortBy) {
                         setState(() {
                           filtre = sortBy;
-                          print(sortBy);
                         });
                       },
                       icon: Icon(Icons.tune),

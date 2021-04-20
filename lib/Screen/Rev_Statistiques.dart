@@ -79,14 +79,9 @@ class _Rev_StatistiquesState extends State<Rev_Statistiques> {
                       });
 
                   setState(() {
-<<<<<<< HEAD
                     if (time != null) {
-                      print("youcef time item $time");
                       _pick = time;
                     } else {
-=======
-                    if (time == null) {
->>>>>>> 4ec848250889274d81ebf7419c481c454a07d8f5
                       time = DateTime.now();
                     }
                   });

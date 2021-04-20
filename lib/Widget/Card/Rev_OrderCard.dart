@@ -18,7 +18,6 @@ class _Rev_OrderCardState extends State<Rev_OrderCard> {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
-          print(widget.order.orderId);
           Navigator.push(
               context,
               MaterialPageRoute(

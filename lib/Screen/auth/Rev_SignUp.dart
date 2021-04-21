@@ -10,8 +10,7 @@ import 'package:wasfaty_liv/Widget/Rev_TextFeild.dart';
 import 'package:wasfaty_liv/models/Wilaya.Dart';
 
 class SignUpPage extends StatefulWidget {
-  List<Wilaya> wilayas;
-  SignUpPage({this.wilayas});
+  SignUpPage();
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -39,12 +38,20 @@ class _SignUpPageState extends State<SignUpPage> {
   bool loading = false;
 
   bool condition = false;
-  List<String> wilays = new List<String>();
+  List<String> wilaya = new List<String>();
+  List<Wilaya> wil = new List<Wilaya>();
   void initState() {
     super.initState();
-    widget.wilayas.forEach((element) {
-      wilays.add(element.name);
-    });
+    getwill();
+  }
+
+  getwill() async {
+    wil = await Wilaya().getwilaya(context);
+    if (wil != null) {
+      wil.forEach((element) {
+        wilaya.add(element.name);
+      });
+    }
   }
 
   List<String> dayra = new List<String>();
@@ -112,15 +119,15 @@ class _SignUpPageState extends State<SignUpPage> {
                                   }),
                               Rev_DropDown(
                                 valuew: valueW,
-                                wil: wilays,
+                                wil: wilaya,
                                 onchanged: (value) {
                                   valueW = value.toString();
-                                  int i = widget.wilayas.indexWhere(
+                                  int i = wil.indexWhere(
                                       (element) => element.name == value);
 
                                   setState(() {
                                     dayra = new List<String>();
-                                    widget.wilayas[i].com.forEach((element) {
+                                    wil[i].com.forEach((element) {
                                       dayra.add(element);
                                     });
                                     choosewil = true;

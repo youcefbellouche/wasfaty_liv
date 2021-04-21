@@ -36,7 +36,7 @@ class Wilaya {
                 children: [
                   Center(
                     child: Text(
-                      "Erreur !",
+                      "Problème de connexion !",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 17,

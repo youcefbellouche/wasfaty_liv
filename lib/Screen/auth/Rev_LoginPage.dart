@@ -85,7 +85,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           TextButton(
                               onPressed: () async {
-                                List<Wilaya> wil = await Wilaya().getwilaya();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

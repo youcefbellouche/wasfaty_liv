@@ -52,7 +52,7 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                           : MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
                           child: Column(
                             children: [
                               Text(
@@ -80,7 +80,8 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                         ),
                         widget.order.carteChifa != null
                             ? Padding(
-                                padding: const EdgeInsets.all(12.0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 12, 0, 12),
                                 child: Column(
                                   children: [
                                     Text(
@@ -202,7 +203,6 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                             ],
                           )
                         : Container(),
-                    SizedBox(height: 70),
                   ],
                 ),
               )

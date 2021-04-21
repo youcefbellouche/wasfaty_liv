@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wasfaty_liv/Widget/Rev_Orderdetails.dart';
 import 'package:wasfaty_liv/Widget/Rev_OrderdetailsButton.dart';
+import 'package:wasfaty_liv/Widget/Rev_vide.dart';
 
 class Rev_PharmacieInfo extends StatefulWidget {
   String pharmacieid;
@@ -16,7 +17,6 @@ class _Rev_PharmacieInfoState extends State<Rev_PharmacieInfo> {
   void ofPage() {
     Navigator.pop(context);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +62,9 @@ class _Rev_PharmacieInfoState extends State<Rev_PharmacieInfo> {
                   : Center(child: CircularProgressIndicator());
             },
           )
-        : Center(child: Text("cettte commande n'a pas de pharmacie"));
+        : Rev_vide(
+            msg: "Cette commande n'a pas de Pharmacie",
+            img: "assets/vide.png",
+          );
   }
 }

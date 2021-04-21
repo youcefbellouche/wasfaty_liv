@@ -23,7 +23,7 @@ class _Rev_OrderCardState extends State<Rev_OrderCard> {
               MaterialPageRoute(
                   builder: (context) => Rev_OrderInfo(
                         order: widget.order,
-                        collection : widget.collection,
+                        collection: widget.collection,
                       )));
         },
         child: Container(
@@ -70,7 +70,10 @@ class _Rev_OrderCardState extends State<Rev_OrderCard> {
                       borderRadius: BorderRadius.all(
                         Radius.circular(5),
                       )),
-                  child: Center(child: Text(widget.collection))),
+                  child: Center(
+                      child: Text(widget.collection == "Commande"
+                          ? "Commande Local"
+                          : "Commande de l'étrenger"))),
               Container(
                   height: 180 * 0.16,
                   child: Center(

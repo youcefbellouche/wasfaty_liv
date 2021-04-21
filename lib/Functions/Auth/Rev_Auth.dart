@@ -2,12 +2,15 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:wasfaty_liv/Screen/Rev_ProfilePage.dart';
 import 'package:wasfaty_liv/Screen/auth/Rev_LoginPage.dart';
 import '../../Screen/Rev_HomePage.dart';
 
 class Rev_Auth {
+  FirebaseMessaging fcm = FirebaseMessaging();
+
   Future<bool> validateCurrentPassword(String pass) async {
     return await validatePassword(pass);
   }
@@ -17,7 +20,7 @@ class Rev_Auth {
     if (valide == false) {
       return;
     }
-    var firebaseuser = await FirebaseAuth.instance.currentUser;
+    var firebaseuser = FirebaseAuth.instance.currentUser;
     firebaseuser.updatePassword(newPass);
   }
 
@@ -118,7 +121,7 @@ class Rev_Auth {
 
   Future<bool> signIn({String email, String mdp, BuildContext context}) async {
     try {
-      // String token = await fcm.getToken();
+      String token = await fcm.getToken();
       var result = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: mdp);
       var type = await FirebaseFirestore.instance
@@ -126,12 +129,11 @@ class Rev_Auth {
           .doc(result.user.uid)
           .get();
       if (result != null) {
-        // await FirebaseFirestore.instance
-        //     .collection("Patients")
-        //     .doc(result.user.uid)
-        //     .update({"token": token});
+        await FirebaseFirestore.instance
+            .collection("Patients")
+            .doc(result.user.uid)
+            .update({"token": token});
 
-        // print(token);
         if (type.data()["type"] == "Livreur") {
           if (type.data()["suspendue"]) {
             activPop(context,
@@ -196,6 +198,7 @@ class Rev_Auth {
         fuser = _auth.user;
         _auth.user.updateProfile(displayName: name);
       });
+      String token = await fcm.getToken();
 
       await FirebaseFirestore.instance
           .collection("Livreur")
@@ -213,7 +216,7 @@ class Rev_Auth {
         "phone": phone,
         "email": email,
         "adresse": adresse,
-        // "token": token
+        "token": token
       });
 
       Navigator.pushReplacement(

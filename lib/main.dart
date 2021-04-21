@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           hoverColor: const Color(0xff218171),
         ),
         debugShowCheckedModeBanner: false,
-        title: 'Wasfaty Pharmacie',
+        title: 'Wasfaty Livreur',
         home: HomeConnect());
   }
 }

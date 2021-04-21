@@ -20,13 +20,13 @@ class _Rev_newOrderState extends State<Rev_newOrder> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(bottom: 60),
-      child: FutureBuilder<QuerySnapshot>(
-        future: FirebaseFirestore.instance
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
             .collection("Commande")
             .where("livreurId",
                 isEqualTo: FirebaseAuth.instance.currentUser.uid)
             .where("status", isEqualTo: widget.where)
-            .get(),
+            .snapshots(),
         builder: (context, snapshot1) {
           return !snapshot1.hasData
               ? Center(child: CircularProgressIndicator())

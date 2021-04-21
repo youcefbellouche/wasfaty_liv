@@ -129,15 +129,16 @@ class Rev_Auth {
           .doc(result.user.uid)
           .get();
       if (result != null) {
-        await FirebaseFirestore.instance
-            .collection("Patients")
-            .doc(result.user.uid)
-            .update({"token": token});
-
         if (type.data()["type"] == "Livreur") {
+          await FirebaseFirestore.instance
+              .collection("Livreur")
+              .doc(result.user.uid)
+              .update({"token": token});
           if (type.data()["suspendue"]) {
+            FirebaseAuth.instance.signOut();
             activPop(context,
                 "Votre compte est Suspendue !\nVeuillez nous contacter pour plus d'information");
+
             return false;
           } else {
             if (type.data()["active"]) {
@@ -147,13 +148,14 @@ class Rev_Auth {
               );
               return true;
             } else {
+              FirebaseAuth.instance.signOut();
               activPop(context,
                   "Votre compte n'est pas encore Vadlider !\nVous serez contacter prochainement");
               return false;
             }
           }
         } else {
-          signOut(context: context);
+          FirebaseAuth.instance.signOut();
           return false;
         }
       }

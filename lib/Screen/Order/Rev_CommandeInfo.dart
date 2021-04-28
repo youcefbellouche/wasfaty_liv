@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:wasfaty_liv/Models/order.dart';
 import 'package:wasfaty_liv/Widget/Rev_Button.dart';
+import 'package:wasfaty_liv/Widget/Rev_GalleryN.dart';
 import 'package:wasfaty_liv/Widget/Rev_Orderdetails.dart';
 import 'package:wasfaty_liv/Widget/Rev_OrderdetailsButton.dart';
 import 'package:wasfaty_liv/Widget/Rev_TextFeild.dart';
@@ -12,8 +13,10 @@ import '../Rev_HomePage.dart';
 class Rev_CommandeInfo extends StatefulWidget {
   Order order;
   String collection;
+  List<String> ord;
+  List<String> chif;
 
-  Rev_CommandeInfo({this.order, this.collection});
+  Rev_CommandeInfo({this.order, this.collection, this.ord, this.chif});
 
   @override
   _Rev_CommandeInfoState createState() => _Rev_CommandeInfoState();
@@ -47,7 +50,7 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                   children: [
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: widget.order.carteChifa != null
+                      mainAxisAlignment: widget.chif.isNotEmpty
                           ? MainAxisAlignment.spaceEvenly
                           : MainAxisAlignment.center,
                       children: [
@@ -66,11 +69,10 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                                   height:
                                       MediaQuery.of(context).size.height * 0.3,
                                   child: InkWell(
-                                    onTap: () => verifyImage(
-                                        context, widget.order.ordonnance),
+                                    onTap: () =>
+                                        verifyImage(context, widget.ord),
                                     child: Image(
-                                      image:
-                                          NetworkImage(widget.order.ordonnance),
+                                      image: NetworkImage(widget.ord[0]),
                                     ),
                                   ),
                                 ),
@@ -78,7 +80,7 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                             ],
                           ),
                         ),
-                        widget.order.carteChifa != null
+                        widget.chif.isNotEmpty
                             ? Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(0, 12, 0, 12),
@@ -97,11 +99,10 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                                             MediaQuery.of(context).size.height *
                                                 0.3,
                                         child: InkWell(
-                                          onTap: () => verifyImage(
-                                              context, widget.order.ordonnance),
+                                          onTap: () =>
+                                              verifyImage(context, widget.chif),
                                           child: Image(
-                                            image: NetworkImage(
-                                                widget.order.carteChifa),
+                                            image: NetworkImage(widget.chif[0]),
                                           ),
                                         ),
                                       ),
@@ -220,10 +221,24 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20.0))),
             children: [
-              Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 2, color: Colors.grey)),
-                  child: Image.network(file, fit: BoxFit.cover)),
+              Stack(children: [
+                Container(
+                    height: 500,
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 2, color: Colors.grey)),
+                    child: Rev_galleryN(
+                      images: file,
+                    )),
+                file.length > 1
+                    ? Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "${file.length} images disponible",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )
+                    : Container(),
+              ]),
             ],
           );
         });

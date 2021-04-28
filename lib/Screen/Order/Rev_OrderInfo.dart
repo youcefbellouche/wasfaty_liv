@@ -23,6 +23,22 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
     Navigator.pop(context);
   }
 
+  List<String> ord = new List<String>();
+  List<String> chif = new List<String>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.order.ordonnance.forEach((elementO) {
+      ord.add(elementO.toString());
+    });
+    if (widget.order.carteChifa.length != 0) {
+      widget.order.carteChifa.forEach((elementC) {
+        chif.add(elementC.toString());
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -54,7 +70,9 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
                   children: [
                     Rev_CommandeInfo(
                       order: widget.order,
-                      collection: widget.collection,
+                      collection: "Commande",
+                      chif: chif,
+                      ord: ord,
                     ),
                     Rev_PharmacieInfo(
                       pharmacieid: widget.order.pharmacieid,

@@ -4,11 +4,12 @@ class Order {
   int dateTeminer;
   int dateAnnuler;
   String bname;
+  int bDate;
   String adresse;
-  String carteChifa;
+  List carteChifa;
   String annulerBy;
   String noteAnnuler;
-  String ordonnance;
+  List ordonnance;
   String status;
   String livraison;
   String uid;
@@ -21,6 +22,7 @@ class Order {
   Order(
       {this.bname,
       this.livreurid,
+      this.bDate,
       this.generique,
       this.dateAnnuler,
       this.dateTeminer,
@@ -43,14 +45,19 @@ class Order {
     orderId = json['OrderId'];
     pharmacieid = json['pharmacieId'];
     date = json['Time'];
+    bDate = json['date de naissance du beneficiaire'];
     dateTeminer = json['DateTerminer'];
     dateAnnuler = json['DateAnnuler'];
     devis = json['devis'];
     bname = json['bname'];
     livraison = json['Livraison'];
     adresse = json['adresse'];
-    carteChifa = json['carteChifa'];
-    ordonnance = json['ordonnance'];
+    json['carteChifa'] == null
+        ? carteChifa = new List()
+        : carteChifa = json['carteChifa'];
+    json['ordonnance'] == null
+        ? ordonnance = new List()
+        : ordonnance = json['ordonnance'];
     status = json['status'];
     noteAnnuler = json['noteAnnuler'];
     annulerBy = json['annulerBy'];

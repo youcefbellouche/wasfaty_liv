@@ -227,6 +227,43 @@ class Rev_Auth {
       );
       return true;
     } catch (e) {
+      if (e.toString().contains("[firebsa_auth/email-already-in-use]")) {
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  content: Text(
+                    "L'email que vous avez utilliser\nest deja utilliser dans une autre application Wasfaty",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  actions: [
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("ok")),
+                  ],
+                ));
+      } else {
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  content: Text(
+                    "il y a un probleme",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  actions: [
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("ok")),
+                  ],
+                ));
+      }
       return false;
     }
   }

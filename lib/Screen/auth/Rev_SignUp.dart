@@ -265,23 +265,6 @@ class _SignUpPageState extends State<SignUpPage> {
         setState(() {
           loading = false;
         });
-        showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  content: Text(
-                    "il y a un probleme",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  actions: [
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text("ok")),
-                  ],
-                ));
       }
     } catch (e) {
       print(e.toString());

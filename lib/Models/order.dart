@@ -15,6 +15,7 @@ class Order {
   String uid;
   String devis;
   String pharmacieid;
+  List<dynamic> alarmIds;
   String wilaya;
   String daira;
   String livreurid;
@@ -28,6 +29,7 @@ class Order {
       this.dateTeminer,
       this.annulerBy,
       this.noteAnnuler,
+      this.alarmIds,
       this.devis,
       this.date,
       this.carteChifa,
@@ -44,6 +46,7 @@ class Order {
   Order.fromJson(Map<String, dynamic> json) {
     orderId = json['OrderId'];
     pharmacieid = json['pharmacieId'];
+    alarmIds = json['alarmIds'];
     date = json['Time'];
     bDate = json['date de naissance du beneficiaire'];
     dateTeminer = json['DateTerminer'];

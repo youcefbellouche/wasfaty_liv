@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
+import 'Rev_vide.dart';
+
 class Rev_DropDown extends StatefulWidget {
   List<String> wil;
   String valuew;
   Function onchanged;
   String hint;
+  Function validator;
 
-  Rev_DropDown({this.wil, this.valuew, this.onchanged,this.hint});
+  Rev_DropDown(
+      {this.wil, this.valuew, this.onchanged, this.hint, this.validator});
 
   @override
   _Rev_DropDownState createState() => _Rev_DropDownState();
@@ -17,11 +21,19 @@ class _Rev_DropDownState extends State<Rev_DropDown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(10),
-      height: 60,
+      margin: const EdgeInsets.all(12),
       child: DropdownSearch<String>(
+        validator: widget.validator,
+        emptyBuilder: (BuildContext context, String test) {
+          return Rev_vide(
+            img: "assets/vide.png",
+          );
+        },
+        errorBuilder: (BuildContext context, String test, dynamic t) {
+          return Container();
+        },
         dropdownSearchDecoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(20),
+          contentPadding: const EdgeInsets.only(top: 5, bottom: 5, left: 12),
           suffixIcon: const Icon(
             Icons.arrow_drop_down,
             color: Colors.black,
@@ -30,11 +42,23 @@ class _Rev_DropDownState extends State<Rev_DropDown> {
           suffixStyle: const TextStyle(color: Colors.black),
           fillColor: Colors.white,
           filled: true,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.0),
+            borderSide: const BorderSide(
+              color: Color(0xff218171),
+            ),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.0),
+            borderSide: const BorderSide(
+              color: const Color(0xff218171),
+            ),
+          ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(20.0),
             borderSide: const BorderSide(
               color: const Color(0xfff94620),
-              width: 0.5,
+              width: 1,
             ),
           ),
           border: OutlineInputBorder(

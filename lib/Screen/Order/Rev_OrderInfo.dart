@@ -4,6 +4,7 @@ import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
 
 import 'Rev_CommandeInfo.dart';
 import 'Rev_PharmacieInfo.dart';
+import 'Rev_AlarmList.dart';
 
 class Rev_OrderInfo extends StatefulWidget {
   Order order;
@@ -42,7 +43,7 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
           appBar: Rev_Appbar(
             context,
@@ -63,7 +64,8 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
                     Tab(
                       text: "Commande",
                     ),
-                    Tab(text: "Pharmacie")
+                    Tab(text: "Pharmacie"),
+                    Tab(text: "Alarm"),
                   ]),
               Expanded(
                 child: TabBarView(
@@ -76,6 +78,10 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
                     ),
                     Rev_PharmacieInfo(
                       pharmacieid: widget.order.pharmacieid,
+                    ),
+                    Rev_AlarmList(
+                      orderId: widget.order.orderId,
+                      patientId: widget.order.uid,
                     ),
                   ],
                 ),

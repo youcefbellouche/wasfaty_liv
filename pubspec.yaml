@@ -33,6 +33,7 @@ dependencies:
   url_launcher: ^5.7.10
   photo_view: ^0.10.3
   http: 0.12.2
+  cached_network_image: ^2.5.1
   firebase_messaging: ^6.0.16
 
 

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -67,12 +68,14 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                               Center(
                                 child: Container(
                                   height:
-                                      MediaQuery.of(context).size.height * 0.3,
+                                      MediaQuery.of(context).size.height * 0.2,
                                   child: InkWell(
                                     onTap: () =>
                                         verifyImage(context, widget.ord),
-                                    child: Image(
-                                      image: NetworkImage(widget.ord[0]),
+                                    child: CachedNetworkImage(
+                                      imageUrl: widget.ord[0],
+                                      placeholder: _loader,
+                                      errorWidget: _error,
                                     ),
                                   ),
                                 ),
@@ -97,12 +100,14 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                                       child: Container(
                                         height:
                                             MediaQuery.of(context).size.height *
-                                                0.3,
+                                                0.2,
                                         child: InkWell(
                                           onTap: () =>
                                               verifyImage(context, widget.chif),
-                                          child: Image(
-                                            image: NetworkImage(widget.chif[0]),
+                                          child: CachedNetworkImage(
+                                            imageUrl: widget.chif[0],
+                                            placeholder: _loader,
+                                            errorWidget: _error,
                                           ),
                                         ),
                                       ),
@@ -321,5 +326,22 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
             ),
           );
         });
+  }
+
+  Widget _loader(BuildContext context, String url) {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget _error(context, url, error) {
+    print(error);
+    return Center(
+      child: Icon(
+        Icons.error_outline,
+        size: 30,
+        color: Colors.green,
+      ),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
@@ -20,7 +21,7 @@ class Rev_galleryN extends StatelessWidget {
             scrollPhysics: const BouncingScrollPhysics(),
             builder: (BuildContext context, int index) {
               return PhotoViewGalleryPageOptions(
-                imageProvider: NetworkImage(images[index]),
+                imageProvider: CachedNetworkImageProvider(images[index]),
                 initialScale: PhotoViewComputedScale.contained * 0.8,
                 heroAttributes: PhotoViewHeroAttributes(tag: index),
               );

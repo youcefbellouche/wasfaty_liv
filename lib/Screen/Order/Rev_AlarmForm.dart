@@ -298,6 +298,16 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
                           time.hour, time.minute);
                       alarm.hours = newDate;
                     });
+                    List<int> tmpId = new List<int>();
+                    tmpId.add(alarm.id);
+                    for (int i = 0; i < alarm.dure; i++) {
+                      setState(() {
+                        alarm.id += 1;
+                        tmpId.add(alarm.id);
+                      });
+                      print('date de lalarm : ${alarm.hours}');
+                    }
+                    tmpId.removeLast();
                     await FirebaseFirestore.instance
                         .collection("Patients")
                         .doc(widget.patientId)
@@ -305,6 +315,7 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
                         .doc(alarm.id.toString())
                         .set({
                       "id": alarm.id,
+                      "ids": tmpId,
                       "nom du medicament": alarm.medicament,
                       "type du medicament": alarm.medicType,
                       "note": alarm.note,

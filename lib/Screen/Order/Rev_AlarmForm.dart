@@ -291,7 +291,6 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
                 label: "Valider",
                 onpressed: () async {
                   if (_formKey.currentState.validate()) {
-                    print('validate');
                     setState(() {
                       alarm.id = Random().nextInt(10000000);
                       newDate = new DateTime(timeD.year, timeD.month, timeD.day,
@@ -299,13 +298,13 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
                       alarm.hours = newDate;
                     });
                     List<int> tmpId = new List<int>();
+                    int tmp = alarm.id;
                     tmpId.add(alarm.id);
                     for (int i = 0; i < alarm.dure; i++) {
                       setState(() {
-                        alarm.id += 1;
-                        tmpId.add(alarm.id);
+                        tmp += 1;
+                        tmpId.add(tmp);
                       });
-                      print('date de lalarm : ${alarm.hours}');
                     }
                     tmpId.removeLast();
                     await FirebaseFirestore.instance

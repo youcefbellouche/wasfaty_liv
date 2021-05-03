@@ -25,12 +25,18 @@ Widget Rev_Appbar(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(40)),
                     child: IconButton(icon: revIcon, onPressed: openDrawer)),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.235),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.2),
                 Container(
                   child: Center(
-                      child: Image(
-                    image: AssetImage("assets/logo.png"),
-                  )),
+                    child: Text(
+                      'Wasfaty Livreur',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 17),
+                    ),
+                  ),
                 )
               ],
             ),

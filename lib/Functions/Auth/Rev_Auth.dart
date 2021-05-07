@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:wasfaty_liv/Screen/Rev_ProfilePage.dart';
 import 'package:wasfaty_liv/Screen/auth/Rev_LoginPage.dart';
+import 'package:wasfaty_liv/Screen/auth/Rev_VerifierMail.dart';
 import '../../Screen/Rev_HomePage.dart';
 
 class Rev_Auth {
@@ -141,17 +142,25 @@ class Rev_Auth {
 
             return false;
           } else {
-            if (type.data()["active"]) {
+            if (result.user.emailVerified) {
+              if (type.data()["active"]) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Rev_HomePage()),
+                );
+                return true;
+              } else {
+                FirebaseAuth.instance.signOut();
+                activPop(context,
+                    "Votre compte n'est pas encore Vadlider !\nVous serez contacter prochainement");
+                return false;
+              }
+            } else {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => Rev_HomePage()),
+                MaterialPageRoute(builder: (context) => Rev_VerifierMail()),
               );
               return true;
-            } else {
-              FirebaseAuth.instance.signOut();
-              activPop(context,
-                  "Votre compte n'est pas encore Vadlider !\nVous serez contacter prochainement");
-              return false;
             }
           }
         } else {

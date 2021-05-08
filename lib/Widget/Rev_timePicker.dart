@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class Rev_timePicker extends StatefulWidget {
   @required
-  TimeOfDay time;
+  TimeOfDay? time;
   @required
-  TimeOfDay pick;
+  TimeOfDay? pick;
   @required
-  Function onchanged;
+  Function? onchanged;
   @required
-  String label;
-  Function validator;
-  TextEditingController controller;
+  String? label;
+  Function? validator;
+  TextEditingController? controller;
   Rev_timePicker(
       {this.time,
       this.pick,
@@ -40,19 +40,19 @@ class _Rev_timePickerState extends State<Rev_timePicker> {
   );
   @override
   Widget build(BuildContext context) {
-    TimeOfDay timeN;
+    TimeOfDay? timeN;
     return Container(
       padding: EdgeInsets.all(12),
       child: TextFormField(
         controller: widget.controller,
-        validator: widget.validator,
+        validator: widget.validator as String? Function(String?)?,
         readOnly: true,
         onTap: () async {
           timeN = await showTimePicker(
               context: context,
-              builder: (BuildContext context, Widget child) {
+              builder: (BuildContext context, Widget? child) {
                 return Theme(
-                  child: child,
+                  child: child!,
                   data: ThemeData.light().copyWith(
                     colorScheme: ColorScheme.fromSwatch(
                       primarySwatch: kPrimaryColor,
@@ -65,12 +65,12 @@ class _Rev_timePickerState extends State<Rev_timePicker> {
               },
               initialEntryMode: TimePickerEntryMode.input,
               initialTime: TimeOfDay.now());
-          widget.onchanged(timeN);
+          widget.onchanged!(timeN);
         },
         textAlign: TextAlign.center,
         decoration: InputDecoration(
           labelText: widget.label,
-          hintText: "${widget.time.format(context)}",
+          hintText: "${widget.time!.format(context)}",
           hintStyle: TextStyle(color: Colors.black),
           labelStyle: const TextStyle(color: Colors.black),
           border: OutlineInputBorder(

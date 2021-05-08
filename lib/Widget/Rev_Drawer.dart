@@ -13,7 +13,7 @@ class Rev_Drawer extends StatefulWidget {
 }
 
 class _Rev_DrawerState extends State<Rev_Drawer> {
-  bool status = false;
+  bool? status = false;
 
   @override
   void initState() {
@@ -25,11 +25,11 @@ class _Rev_DrawerState extends State<Rev_Drawer> {
   Future<void> getOuvert() async {
     FirebaseFirestore.instance
         .collection("Livreur")
-        .doc(FirebaseAuth.instance.currentUser.uid)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) {
       setState(() {
-        status = value.data()['disponible'];
+        status = value.data()!['disponible'];
       });
     });
   }
@@ -62,14 +62,14 @@ class _Rev_DrawerState extends State<Rev_Drawer> {
                       Switch(
                         activeColor: Colors.lightGreenAccent,
                         inactiveThumbColor: Colors.redAccent,
-                        value: status,
+                        value: status!,
                         onChanged: (value) async {
                           setState(() {
                             status = value;
                           });
                           await FirebaseFirestore.instance
                               .collection("Livreur")
-                              .doc(FirebaseAuth.instance.currentUser.uid)
+                              .doc(FirebaseAuth.instance.currentUser!.uid)
                               .update({
                             "disponible": status,
                           });
@@ -79,7 +79,7 @@ class _Rev_DrawerState extends State<Rev_Drawer> {
                         height: 9.0,
                       ),
                       Text(
-                        status
+                        status!
                             ? 'Vous êtes disponible'
                             : "Vous n'êtes pas disponible",
                         style: TextStyle(

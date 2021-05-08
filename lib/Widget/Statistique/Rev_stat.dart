@@ -6,9 +6,9 @@ import '../Rev_RoundButton.dart';
 
 class Rev_stat extends StatefulWidget {
   @required
-  String msg;
+  String? msg;
   @required
-  Future<DocumentSnapshot> path;
+  Future<DocumentSnapshot>? path;
   Rev_stat({this.path, this.msg});
   @override
   _Rev_statState createState() => _Rev_statState();
@@ -26,14 +26,14 @@ class _Rev_statState extends State<Rev_stat> {
                 child: CircularProgressIndicator(),
               );
             case ConnectionState.done:
-              Stat stat = snapshot.data.exists
-                  ? Stat.fromJson(snapshot.data.data())
+              Stat? stat = snapshot.data!.exists
+                  ? Stat.fromJson(snapshot.data!.data() as Map<String, dynamic>)
                   : null;
-              return snapshot.data.exists
+              return snapshot.data!.exists
                   ? snapshot.hasData
                       ? Column(
                           children: [
-                            stat.nbrCommandeLOCAL != null
+                            stat!.nbrCommandeLOCAL != null
                                 ? Rev_Orderdetails(
                                     label: "Nombre de Commande :",
                                     info: stat.nbrCommandeLOCAL.toString())
@@ -59,7 +59,7 @@ class _Rev_statState extends State<Rev_stat> {
                             image: "assets/vide.png",
                           ),
                           Text(
-                            widget.msg,
+                            widget.msg!,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -79,7 +79,7 @@ class _Rev_statState extends State<Rev_stat> {
                       image: "assets/vide.png",
                     ),
                     Text(
-                      widget.msg,
+                      widget.msg!,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

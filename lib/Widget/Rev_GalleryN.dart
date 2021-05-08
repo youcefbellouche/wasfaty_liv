@@ -7,7 +7,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class Rev_galleryN extends StatelessWidget {
-  List<String> images;
+  List<String>? images;
 
   Rev_galleryN({this.images});
   @override
@@ -21,12 +21,12 @@ class Rev_galleryN extends StatelessWidget {
             scrollPhysics: const BouncingScrollPhysics(),
             builder: (BuildContext context, int index) {
               return PhotoViewGalleryPageOptions(
-                imageProvider: CachedNetworkImageProvider(images[index]),
+                imageProvider: CachedNetworkImageProvider(images![index]),
                 initialScale: PhotoViewComputedScale.contained * 0.8,
                 heroAttributes: PhotoViewHeroAttributes(tag: index),
               );
             },
-            itemCount: images.length,
+            itemCount: images!.length,
             loadingBuilder: (context, event) => Center(
               child: Container(
                 width: 20.0,
@@ -35,7 +35,7 @@ class Rev_galleryN extends StatelessWidget {
                   backgroundColor: Colors.white,
                   value: event == null
                       ? 0
-                      : event.cumulativeBytesLoaded / event.expectedTotalBytes,
+                      : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
                 ),
               ),
             ),

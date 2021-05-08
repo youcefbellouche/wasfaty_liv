@@ -7,8 +7,8 @@ import '../../Widget/Rev_Button.dart';
 import '../../Widget/Rev_TextFeild.dart';
 
 class Rev_phoneUpdate extends StatefulWidget {
-  final String uid;
-  final String oldphone;
+  final String? uid;
+  final String? oldphone;
 
   Rev_phoneUpdate({this.uid, this.oldphone});
 
@@ -17,14 +17,14 @@ class Rev_phoneUpdate extends StatefulWidget {
 }
 
 class _Rev_phoneUpdateState extends State<Rev_phoneUpdate> {
-  TextEditingController controller_pass;
-  TextEditingController controller_newPass;
-  TextEditingController controller_confirmNewPass;
+  TextEditingController? controller_pass;
+  TextEditingController? controller_newPass;
+  TextEditingController? controller_confirmNewPass;
 
   final _formKey = GlobalKey<FormState>();
-  User fuser;
+  User? fuser;
 
-  String newphone;
+  String? newphone;
   bool loading = false;
 
   Rev_Auth auth = new Rev_Auth();
@@ -58,7 +58,7 @@ class _Rev_phoneUpdateState extends State<Rev_phoneUpdate> {
                 Icons.arrow_back,
                 color: Theme.of(context).primaryColor,
               ),
-            ),
+            ) as PreferredSizeWidget?,
             body: Center(
               child: ListView(
                 children: [
@@ -94,7 +94,7 @@ class _Rev_phoneUpdateState extends State<Rev_phoneUpdate> {
                             textInputType: TextInputType.number,
                             onChanged: (value) => newphone = value,
                             validator: (input) {
-                              if ((!input.startsWith("05") &&
+                              if ((!input!.startsWith("05") &&
                                       !input.startsWith("07") &&
                                       !input.startsWith("06")) ||
                                   input.length != 10) {
@@ -107,7 +107,7 @@ class _Rev_phoneUpdateState extends State<Rev_phoneUpdate> {
                             setState(() {
                               loading = true;
                             });
-                            if (_formKey.currentState.validate()) {
+                            if (_formKey.currentState!.validate()) {
                               if (widget.oldphone != newphone) {
                                 auth.updatePhoneNum(
                                     phone: newphone,

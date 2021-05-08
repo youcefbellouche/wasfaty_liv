@@ -16,19 +16,19 @@ class Rev_Auth {
     return await validatePassword(pass);
   }
 
-  void updateUserPassword(String newPass, String oldPass) async {
+  void updateUserPassword(String? newPass, String oldPass) async {
     var valide = await validateCurrentPassword(oldPass);
     if (valide == false) {
       return;
     }
-    var firebaseuser = FirebaseAuth.instance.currentUser;
-    firebaseuser.updatePassword(newPass);
+    var firebaseuser = FirebaseAuth.instance.currentUser!;
+    firebaseuser.updatePassword(newPass!);
   }
 
   Future<bool> validatePassword(String pass) async {
-    var firebaseUser = FirebaseAuth.instance.currentUser;
-    var credential =
-        EmailAuthProvider.credential(email: firebaseUser.email, password: pass);
+    var firebaseUser = FirebaseAuth.instance.currentUser!;
+    var credential = EmailAuthProvider.credential(
+        email: firebaseUser.email!, password: pass);
     try {
       var result = await firebaseUser.reauthenticateWithCredential(credential);
       return result.user != null;
@@ -38,10 +38,10 @@ class Rev_Auth {
     }
   }
 
-  void signOut({BuildContext context}) async {
+  void signOut({required BuildContext context}) async {
     await FirebaseFirestore.instance
         .collection("Livreur")
-        .doc(FirebaseAuth.instance.currentUser.uid)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({
       "disponible": false,
     });
@@ -50,7 +50,8 @@ class Rev_Auth {
         context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
-  void updatePhoneNum({String phone, String uid, BuildContext context}) async {
+  void updatePhoneNum(
+      {String? phone, String? uid, required BuildContext context}) async {
     await FirebaseFirestore.instance
         .collection("Livreur")
         .doc(uid)
@@ -83,17 +84,17 @@ class Rev_Auth {
             ));
   }
 
-  Future<String> getPhone() async {
-    String phone;
+  Future<String?> getPhone() async {
+    String? phone;
     var result = await FirebaseFirestore.instance
         .collection("Livreur")
-        .doc(FirebaseAuth.instance.currentUser.uid)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     phone = result["phone"];
     return phone;
   }
 
-  passwordReset({BuildContext context, String email}) {
+  passwordReset({required BuildContext context, required String email}) {
     FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     showDialog(
         useSafeArea: false,
@@ -120,33 +121,36 @@ class Rev_Auth {
             ));
   }
 
-  Future<bool> signIn({String email, String mdp, BuildContext context}) async {
+  Future<bool> signIn(
+      {required String email,
+      required String mdp,
+      BuildContext? context}) async {
     try {
-      String token = await FirebaseMessaging.instance.getToken();
+      String? token = await FirebaseMessaging.instance.getToken();
       var result = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: mdp);
       print("Singin result $result");
       var type = await FirebaseFirestore.instance
           .collection("Livreur")
-          .doc(result.user.uid)
+          .doc(result.user!.uid)
           .get();
       if (result != null) {
-        if (type.data()["type"] == "Livreur") {
+        if (type.data()!["type"] == "Livreur") {
           await FirebaseFirestore.instance
               .collection("Livreur")
-              .doc(result.user.uid)
+              .doc(result.user!.uid)
               .update({"token": token});
-          if (type.data()["suspendue"]) {
+          if (type.data()!["suspendue"]) {
             FirebaseAuth.instance.signOut();
             activPop(context,
                 "Votre compte est Suspendue !\nVeuillez nous contacter pour plus d'information");
 
             return false;
           } else {
-            if (result.user.emailVerified) {
-              if (type.data()["active"]) {
+            if (result.user!.emailVerified) {
+              if (type.data()!["active"]) {
                 Navigator.pushReplacement(
-                  context,
+                  context!,
                   MaterialPageRoute(builder: (context) => Rev_HomePage()),
                 );
                 return true;
@@ -158,7 +162,7 @@ class Rev_Auth {
               }
             } else {
               Navigator.pushReplacement(
-                context,
+                context!,
                 MaterialPageRoute(builder: (context) => Rev_VerifierMail()),
               );
               return true;
@@ -172,7 +176,7 @@ class Rev_Auth {
     } catch (e) {
       print("errore $e");
       showDialog(
-          context: context,
+          context: context!,
           builder: (_) => AlertDialog(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),
@@ -191,34 +195,35 @@ class Rev_Auth {
               ));
       return false;
     }
+    return false;
   }
 
   Future<bool> signUp(
-      {String wilaya,
-      String daira,
-      String name,
-      String phone,
-      String email,
-      String mdp,
-      String adresse,
-      File file,
-      BuildContext context}) async {
-    User fuser;
+      {String? wilaya,
+      String? daira,
+      String? name,
+      String? phone,
+      required String email,
+      required String mdp,
+      String? adresse,
+      File? file,
+      required BuildContext context}) async {
+    User? fuser;
     try {
-      var result = await FirebaseAuth.instance
+      dynamic result = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: mdp)
           .then((_auth) {
         fuser = _auth.user;
-        _auth.user.updateProfile(displayName: name);
+        _auth.user!.updateProfile(displayName: name);
       });
-      String token = await fcm.getToken();
+      String? token = await fcm.getToken();
 
       await FirebaseFirestore.instance
           .collection("Livreur")
-          .doc(fuser.uid)
+          .doc(fuser!.uid)
           .set({
         "type": "Livreur",
-        "id": fuser.uid,
+        "id": fuser!.uid,
         "wilaya": wilaya,
         "disponible": false,
         "daira": daira,

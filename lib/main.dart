@@ -75,7 +75,7 @@ class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     GetConnect();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   test() async {
@@ -84,7 +84,7 @@ class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
@@ -101,7 +101,7 @@ class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
       if (isdown) {
         await FirebaseFirestore.instance
             .collection("Livreur")
-            .doc(FirebaseAuth.instance.currentUser.uid)
+            .doc(FirebaseAuth.instance.currentUser!.uid)
             .update({
           "disponible": false,
         });

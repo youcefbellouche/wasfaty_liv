@@ -14,11 +14,11 @@ class Rev_ProfilePage extends StatefulWidget {
 
 class _Rev_ProfilePageState extends State<Rev_ProfilePage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  String uid = FirebaseAuth.instance.currentUser.uid;
-  User currentUser = FirebaseAuth.instance.currentUser;
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  User? currentUser = FirebaseAuth.instance.currentUser;
 
   void openDrawer() {
-    _scaffoldKey.currentState.openDrawer();
+    _scaffoldKey.currentState!.openDrawer();
   }
 
   @override
@@ -34,7 +34,7 @@ class _Rev_ProfilePageState extends State<Rev_ProfilePage> {
           Icons.menu,
           color: Theme.of(context).primaryColor,
         ),
-      ),
+      ) as PreferredSizeWidget?,
       body: Center(
         child: Container(
           child: GridView(
@@ -79,7 +79,7 @@ class _Rev_ProfilePageState extends State<Rev_ProfilePage> {
                     image: "assets/profile/phone.png",
                     label: "CHANGER VOTRE NUMERO DE TELEPHONE",
                     onpressed: () async {
-                      String oldphone;
+                      String? oldphone;
                       oldphone = await Rev_Auth().getPhone();
                       Navigator.push(
                           context,

@@ -7,9 +7,9 @@ import 'Rev_AlarmForm.dart';
 
 class Rev_AlarmList extends StatefulWidget {
   @required
-  String orderId;
+  String? orderId;
   @required
-  String patientId;
+  String? patientId;
   Rev_AlarmList({this.orderId, this.patientId});
   @override
   _Rev_AlarmListState createState() => _Rev_AlarmListState();
@@ -54,16 +54,16 @@ class _Rev_AlarmListState extends State<Rev_AlarmList> {
                 if (snapshot.hasData) {
                   return ListView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),
-                      itemCount: snapshot.data.docs.length,
+                      itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
-                        Alarm data =
-                            Alarm.fromJson(snapshot.data.docs[index].data());
+                        Alarm data = Alarm.fromJson(snapshot.data!.docs[index]
+                            .data() as Map<String, dynamic>);
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Dismissible(
                             direction: DismissDirection.endToStart,
                             background: slideLeft(),
-                            key: Key(data.medicament),
+                            key: Key(data.medicament.toString()),
                             onDismissed: (direction) {
                               if (direction == DismissDirection.endToStart) {}
                               FirebaseFirestore.instance
@@ -90,7 +90,6 @@ class _Rev_AlarmListState extends State<Rev_AlarmList> {
                     img: "assets/vide.png",
                   );
                 }
-                break;
               case ConnectionState.none:
                 Rev_vide(
                   msg: "Cette commande n'a pas d'Alarm",
@@ -101,8 +100,8 @@ class _Rev_AlarmListState extends State<Rev_AlarmList> {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
-                break;
             }
+            return Container();
           }),
     );
   }

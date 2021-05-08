@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Rev_OrderdetailsButton extends StatelessWidget {
-  String label;
-  String info;
-  String url;
-  String phone;
+  String? label;
+  String? info;
+  String? url;
+  String? phone;
   Rev_OrderdetailsButton({this.label, this.info, this.url, this.phone});
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(children: [
         Text(
-          this.label,
+          this.label!,
           textAlign: TextAlign.left,
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         ),
@@ -25,7 +25,7 @@ class Rev_OrderdetailsButton extends StatelessWidget {
                 child: Center(
                   child: TextButton(
                     child: Text(
-                      this.info,
+                      this.info!,
                       style: TextStyle(
                           color: Colors.lightBlueAccent,fontWeight: FontWeight.bold),
                     ),
@@ -34,7 +34,7 @@ class Rev_OrderdetailsButton extends StatelessWidget {
                         await _makePhoneCall("tel:${this.phone}");
                       }
                       if (url != null) {
-                        await _launchUniversalLinkIos(this.url);
+                        await _launchUniversalLinkIos(this.url!);
                       }
                     },
                   ),

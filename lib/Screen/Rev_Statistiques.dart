@@ -14,11 +14,11 @@ class Rev_Statistiques extends StatefulWidget {
 class _Rev_StatistiquesState extends State<Rev_Statistiques> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   DateFormat feild = DateFormat().add_yMMMMd();
-  DateTime time = DateTime.now();
-  DateTime _pick = new DateTime(
+  DateTime? time = DateTime.now();
+  DateTime? _pick = new DateTime(
       DateTime.now().year, DateTime.now().month, DateTime.now().day);
   void openDrawer() {
-    _scaffoldKey.currentState.openDrawer();
+    _scaffoldKey.currentState!.openDrawer();
   }
 
   MaterialColor kPrimaryColor = const MaterialColor(
@@ -49,7 +49,7 @@ class _Rev_StatistiquesState extends State<Rev_Statistiques> {
           Icons.menu,
           color: Theme.of(context).primaryColor,
         ),
-      ),
+      ) as PreferredSizeWidget?,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -60,13 +60,13 @@ class _Rev_StatistiquesState extends State<Rev_Statistiques> {
                 onTap: () async {
                   time = await showDatePicker(
                       context: context,
-                      initialDate: _pick,
+                      initialDate: _pick!,
                       firstDate: DateTime(2020, 10, 7),
                       lastDate: DateTime(DateTime.now().year,
                           DateTime.now().month, DateTime.now().day),
-                      builder: (BuildContext context, Widget child) {
+                      builder: (BuildContext context, Widget? child) {
                         return Theme(
-                          child: child,
+                          child: child!,
                           data: ThemeData.light().copyWith(
                             colorScheme: ColorScheme.fromSwatch(
                               primarySwatch: kPrimaryColor,
@@ -89,7 +89,7 @@ class _Rev_StatistiquesState extends State<Rev_Statistiques> {
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   labelText: "Choisissez un jour ",
-                  hintText: "${time.day}/${time.month}/${time.year}",
+                  hintText: "${time!.day}/${time!.month}/${time!.year}",
                   hintStyle: TextStyle(color: Colors.black),
                   labelStyle: const TextStyle(color: Colors.black),
                   border: OutlineInputBorder(
@@ -116,13 +116,13 @@ class _Rev_StatistiquesState extends State<Rev_Statistiques> {
                     msg: "Vous n\'avez pas de statistiques ce jour-ci",
                     path: FirebaseFirestore.instance
                         .collection("Livreur")
-                        .doc(FirebaseAuth.instance.currentUser.uid)
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
                         .collection('Statistique')
-                        .doc(time.year.toString())
+                        .doc(time!.year.toString())
                         .collection("month")
-                        .doc(time.month.toString())
+                        .doc(time!.month.toString())
                         .collection("day")
-                        .doc(time.day.toString())
+                        .doc(time!.day.toString())
                         .get(),
                   )
                 : Container(),
@@ -149,11 +149,11 @@ class _Rev_StatistiquesState extends State<Rev_Statistiques> {
                     msg: "Vous n\'avez pas de statistiques ce mois-ci",
                     path: FirebaseFirestore.instance
                         .collection("Livreur")
-                        .doc(FirebaseAuth.instance.currentUser.uid)
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
                         .collection('Statistique')
-                        .doc(time.year.toString())
+                        .doc(time!.year.toString())
                         .collection("month")
-                        .doc(time.month.toString())
+                        .doc(time!.month.toString())
                         .get(),
                   )
                 : Container(),
@@ -180,9 +180,9 @@ class _Rev_StatistiquesState extends State<Rev_Statistiques> {
                     msg: "Vous n\'avez pas de statistiques cette année",
                     path: FirebaseFirestore.instance
                         .collection("Livreur")
-                        .doc(FirebaseAuth.instance.currentUser.uid)
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
                         .collection('Statistique')
-                        .doc(time.year.toString())
+                        .doc(time!.year.toString())
                         .get(),
                   )
                 : Container(),

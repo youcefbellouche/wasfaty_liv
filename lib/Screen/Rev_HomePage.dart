@@ -16,7 +16,7 @@ class _Rev_HomePageState extends State<Rev_HomePage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   void openDrawer() {
-    _scaffoldKey.currentState.openDrawer();
+    _scaffoldKey.currentState!.openDrawer();
   }
 
 
@@ -37,7 +37,7 @@ class _Rev_HomePageState extends State<Rev_HomePage> {
               Icons.menu,
               color: Theme.of(context).primaryColor,
             ),
-          ),
+          ) as PreferredSizeWidget?,
           body: Rev_newOrder(
             where: "en livraison",
           )),

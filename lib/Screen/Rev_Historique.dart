@@ -15,21 +15,21 @@ class Rev_historique extends StatefulWidget {
 
 class _Rev_historiqueState extends State<Rev_historique> {
   void openDrawer() {
-    _scaffoldKey.currentState.openDrawer();
+    _scaffoldKey.currentState!.openDrawer();
   }
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   final _searchQuery = new TextEditingController();
-  String orderId;
+  String? orderId;
 
   final _sortByOptions = [
     SortBy("all", "Tout", "asc"),
     SortBy("terminer", "Terminer", "asc"),
     SortBy("annuler", "Annuler", "asc"),
   ];
-  String value;
-  String filtre;
+  String? value;
+  String? filtre;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class _Rev_historiqueState extends State<Rev_historique> {
           Icons.menu,
           color: Theme.of(context).primaryColor,
         ),
-      ),
+      ) as PreferredSizeWidget?,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -73,7 +73,7 @@ class _Rev_historiqueState extends State<Rev_historique> {
                     ),
                   ),
                   PopupMenuButton(
-                      onSelected: (sortBy) {
+                      onSelected: (dynamic sortBy) {
                         setState(() {
                           filtre = sortBy;
                         });
@@ -89,12 +89,12 @@ class _Rev_historiqueState extends State<Rev_historique> {
                 ],
               ),
             ),
-            filtre == null || filtre.contains("all")
+            filtre == null || filtre!.contains("all")
                 ? FutureBuilder<QuerySnapshot>(
                     future: FirebaseFirestore.instance
                         .collection("Commande")
                         .where("livreurId",
-                            isEqualTo: FirebaseAuth.instance.currentUser.uid)
+                            isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                         .where("OrderId",
                             isGreaterThanOrEqualTo: _searchQuery.text)
                         .get(),
@@ -106,15 +106,15 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                   .collection("Commande_etr")
                                   .where("livreurId",
                                       isEqualTo:
-                                          FirebaseAuth.instance.currentUser.uid)
+                                          FirebaseAuth.instance.currentUser!.uid)
                                   .where("OrderId",
                                       isGreaterThanOrEqualTo: _searchQuery.text)
                                   .get(),
                               builder: (context, snapshot2) {
                                 return !snapshot2.hasData
                                     ? Center(child: CircularProgressIndicator())
-                                    : snapshot2.data.docs.length == 0 &&
-                                            snapshot1.data.docs.length == 0
+                                    : snapshot2.data!.docs.length == 0 &&
+                                            snapshot1.data!.docs.length == 0
                                         ? Center(
                                             child: Column(
                                                 crossAxisAlignment:
@@ -143,12 +143,12 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                               ListView.builder(
                                                 scrollDirection: Axis.vertical,
                                                 itemCount:
-                                                    snapshot1.data.docs.length,
+                                                    snapshot1.data!.docs.length,
                                                 shrinkWrap: true,
                                                 itemBuilder: (context, index) {
                                                   Order model1 = Order.fromJson(
-                                                      snapshot1.data.docs[index]
-                                                          .data());
+                                                      snapshot1.data!.docs[index]
+                                                          .data() as Map<String, dynamic>);
                                                   return Rev_OrderCard(
                                                     order: model1,
                                                     collection: "Commande",
@@ -158,12 +158,12 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                               ListView.builder(
                                                 scrollDirection: Axis.vertical,
                                                 itemCount:
-                                                    snapshot2.data.docs.length,
+                                                    snapshot2.data!.docs.length,
                                                 shrinkWrap: true,
                                                 itemBuilder: (context, index) {
                                                   Order model2 = Order.fromJson(
-                                                      snapshot2.data.docs[index]
-                                                          .data());
+                                                      snapshot2.data!.docs[index]
+                                                          .data() as Map<String, dynamic>);
                                                   return Rev_OrderCard(
                                                     order: model2,
                                                     collection: "Commande_etr",
@@ -182,7 +182,7 @@ class _Rev_historiqueState extends State<Rev_historique> {
                             .collection("Commande")
                             .where("livreurId",
                                 isEqualTo:
-                                    FirebaseAuth.instance.currentUser.uid)
+                                    FirebaseAuth.instance.currentUser!.uid)
                             .where("status", isEqualTo: filtre)
                             .get(),
                         builder: (context, snapshot1) {
@@ -193,15 +193,15 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                       .collection("Commande_etr")
                                       .where("livreurId",
                                           isEqualTo: FirebaseAuth
-                                              .instance.currentUser.uid)
+                                              .instance.currentUser!.uid)
                                       .where("status", isEqualTo: filtre)
                                       .get(),
                                   builder: (context, snapshot2) {
                                     return !snapshot2.hasData
                                         ? Center(
                                             child: CircularProgressIndicator())
-                                        : snapshot2.data.docs.length == 0 &&
-                                                snapshot1.data.docs.length == 0
+                                        : snapshot2.data!.docs.length == 0 &&
+                                                snapshot1.data!.docs.length == 0
                                             ? Center(
                                                 child: Column(
                                                     crossAxisAlignment:
@@ -235,15 +235,15 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                                     scrollDirection:
                                                         Axis.vertical,
                                                     itemCount: snapshot1
-                                                        .data.docs.length,
+                                                        .data!.docs.length,
                                                     shrinkWrap: true,
                                                     itemBuilder:
                                                         (context, index) {
                                                       Order model1 =
                                                           Order.fromJson(
-                                                              snapshot1.data
+                                                              snapshot1.data!
                                                                   .docs[index]
-                                                                  .data());
+                                                                  .data() as Map<String, dynamic>);
                                                       return Rev_OrderCard(
                                                         order: model1,
                                                         collection: "Commande",
@@ -254,15 +254,15 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                                     scrollDirection:
                                                         Axis.vertical,
                                                     itemCount: snapshot2
-                                                        .data.docs.length,
+                                                        .data!.docs.length,
                                                     shrinkWrap: true,
                                                     itemBuilder:
                                                         (context, index) {
                                                       Order model2 =
                                                           Order.fromJson(
-                                                              snapshot2.data
+                                                              snapshot2.data!
                                                                   .docs[index]
-                                                                  .data());
+                                                                  .data() as Map<String, dynamic>);
                                                       return Rev_OrderCard(
                                                         order: model2,
                                                         collection:
@@ -281,7 +281,7 @@ class _Rev_historiqueState extends State<Rev_historique> {
                             .collection("Commande")
                             .where("livreurId",
                                 isEqualTo:
-                                    FirebaseAuth.instance.currentUser.uid)
+                                    FirebaseAuth.instance.currentUser!.uid)
                             .where("OrderId",
                                 isGreaterThanOrEqualTo: _searchQuery.text)
                             .where("status", isEqualTo: filtre)
@@ -294,7 +294,7 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                       .collection("Commande_etr")
                                       .where("livreurId",
                                           isEqualTo: FirebaseAuth
-                                              .instance.currentUser.uid)
+                                              .instance.currentUser!.uid)
                                       .where("OrderId",
                                           isGreaterThanOrEqualTo:
                                               _searchQuery.text)
@@ -304,8 +304,8 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                     return !snapshot2.hasData
                                         ? Center(
                                             child: CircularProgressIndicator())
-                                        : snapshot2.data.docs.length == 0 &&
-                                                snapshot1.data.docs.length == 0
+                                        : snapshot2.data!.docs.length == 0 &&
+                                                snapshot1.data!.docs.length == 0
                                             ? Center(
                                                 child: Column(
                                                     crossAxisAlignment:
@@ -339,15 +339,15 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                                     scrollDirection:
                                                         Axis.vertical,
                                                     itemCount: snapshot1
-                                                        .data.docs.length,
+                                                        .data!.docs.length,
                                                     shrinkWrap: true,
                                                     itemBuilder:
                                                         (context, index) {
                                                       Order model1 =
                                                           Order.fromJson(
-                                                              snapshot1.data
+                                                              snapshot1.data!
                                                                   .docs[index]
-                                                                  .data());
+                                                                  .data() as Map<String, dynamic>);
                                                       return Rev_OrderCard(
                                                         order: model1,
                                                         collection: "Commande",
@@ -358,15 +358,15 @@ class _Rev_historiqueState extends State<Rev_historique> {
                                                     scrollDirection:
                                                         Axis.vertical,
                                                     itemCount: snapshot2
-                                                        .data.docs.length,
+                                                        .data!.docs.length,
                                                     shrinkWrap: true,
                                                     itemBuilder:
                                                         (context, index) {
                                                       Order model2 =
                                                           Order.fromJson(
-                                                              snapshot2.data
+                                                              snapshot2.data!
                                                                   .docs[index]
-                                                                  .data());
+                                                                  .data() as Map<String, dynamic>);
                                                       return Rev_OrderCard(
                                                         order: model2,
                                                         collection:

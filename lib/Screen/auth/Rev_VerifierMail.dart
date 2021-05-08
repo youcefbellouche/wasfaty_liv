@@ -11,13 +11,13 @@ class Rev_VerifierMail extends StatefulWidget {
 
 class _Rev_VerifierMailState extends State<Rev_VerifierMail> {
   final auth = FirebaseAuth.instance;
-  User user;
-  Timer timer;
+  User? user;
+  late Timer timer;
 
   @override
   void initState() {
     user = auth.currentUser;
-    user.sendEmailVerification();
+    user!.sendEmailVerification();
 
     timer = Timer.periodic(Duration(seconds: 5), (timer) {
       checkEmailVerified();
@@ -27,7 +27,7 @@ class _Rev_VerifierMailState extends State<Rev_VerifierMail> {
 
   @override
   void dispose() {
-    if (!user.emailVerified) {
+    if (!user!.emailVerified) {
       auth.signOut();
     }
     timer.cancel();
@@ -64,8 +64,8 @@ class _Rev_VerifierMailState extends State<Rev_VerifierMail> {
 
   Future<void> checkEmailVerified() async {
     user = auth.currentUser;
-    await user.reload();
-    if (user.emailVerified) {
+    await user!.reload();
+    if (user!.emailVerified) {
       timer.cancel();
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => Rev_HomePage()));

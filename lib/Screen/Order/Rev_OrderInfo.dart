@@ -7,8 +7,8 @@ import 'Rev_PharmacieInfo.dart';
 import 'Rev_AlarmList.dart';
 
 class Rev_OrderInfo extends StatefulWidget {
-  Order order;
-  String collection;
+  Order? order;
+  String? collection;
 
   Rev_OrderInfo({
     this.order,
@@ -24,17 +24,17 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
     Navigator.pop(context);
   }
 
-  List<String> ord = new List<String>();
-  List<String> chif = new List<String>();
+  List<String> ord = <String>[];
+  List<String> chif = <String>[];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    widget.order.ordonnance.forEach((elementO) {
+    widget.order!.ordonnance!.forEach((elementO) {
       ord.add(elementO.toString());
     });
-    if (widget.order.carteChifa.length != 0) {
-      widget.order.carteChifa.forEach((elementC) {
+    if (widget.order!.carteChifa!.length != 0) {
+      widget.order!.carteChifa!.forEach((elementC) {
         chif.add(elementC.toString());
       });
     }
@@ -53,7 +53,7 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
               Icons.arrow_back,
               color: Theme.of(context).primaryColor,
             ),
-          ),
+          ) as PreferredSizeWidget?,
           body: Column(
             children: [
               TabBar(
@@ -77,11 +77,11 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
                       ord: ord,
                     ),
                     Rev_PharmacieInfo(
-                      pharmacieid: widget.order.pharmacieid,
+                      pharmacieid: widget.order!.pharmacieid,
                     ),
                     Rev_AlarmList(
-                      orderId: widget.order.orderId,
-                      patientId: widget.order.uid,
+                      orderId: widget.order!.orderId,
+                      patientId: widget.order!.uid,
                     ),
                   ],
                 ),

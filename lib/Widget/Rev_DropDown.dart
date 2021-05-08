@@ -4,11 +4,11 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'Rev_vide.dart';
 
 class Rev_DropDown extends StatefulWidget {
-  List<String> wil;
-  String valuew;
-  Function onchanged;
-  String hint;
-  Function validator;
+  List<String>? wil;
+  String? valuew;
+  Function? onchanged;
+  String? hint;
+  Function? validator;
 
   Rev_DropDown(
       {this.wil, this.valuew, this.onchanged, this.hint, this.validator});
@@ -23,13 +23,13 @@ class _Rev_DropDownState extends State<Rev_DropDown> {
     return Container(
       margin: const EdgeInsets.all(12),
       child: DropdownSearch<String>(
-        validator: widget.validator,
-        emptyBuilder: (BuildContext context, String test) {
+        validator: widget.validator as String? Function(String?)?,
+        emptyBuilder: (BuildContext context, String? test) {
           return Rev_vide(
             img: "assets/vide.png",
           );
         },
-        errorBuilder: (BuildContext context, String test, dynamic t) {
+        errorBuilder: (BuildContext context, String? test, dynamic t) {
           return Container();
         },
         dropdownSearchDecoration: InputDecoration(
@@ -72,7 +72,7 @@ class _Rev_DropDownState extends State<Rev_DropDown> {
         mode: Mode.DIALOG,
         items: widget.wil,
         hint: widget.hint,
-        onChanged: widget.onchanged,
+        onChanged: widget.onchanged as void Function(String?)?,
         showSearchBox: true,
         showSelectedItem: true,
         searchBoxDecoration: InputDecoration(

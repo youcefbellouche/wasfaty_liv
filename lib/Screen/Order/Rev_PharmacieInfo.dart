@@ -5,7 +5,7 @@ import 'package:wasfaty_liv/Widget/Rev_OrderdetailsButton.dart';
 import 'package:wasfaty_liv/Widget/Rev_vide.dart';
 
 class Rev_PharmacieInfo extends StatefulWidget {
-  String pharmacieid;
+  String? pharmacieid;
 
   Rev_PharmacieInfo({this.pharmacieid});
 
@@ -36,25 +36,25 @@ class _Rev_PharmacieInfoState extends State<Rev_PharmacieInfo> {
                           SizedBox(height: 30),
                           Rev_Orderdetails(
                               label: "N° de la Pharmacie :",
-                              info: snapshot.data['id']),
+                              info: snapshot.data!['id']),
                           Rev_Orderdetails(
                               label: "Nom de la Pharmacie :",
-                              info: snapshot.data['name']),
+                              info: snapshot.data!['name']),
                           Rev_OrderdetailsButton(
                             label: "Numéro de téléphone de la Pharmacie :",
-                            info: snapshot.data['phone'],
-                            phone: snapshot.data['phone'],
+                            info: snapshot.data!['phone'],
+                            phone: snapshot.data!['phone'],
                           ),
                           Rev_Orderdetails(
                             label: "Email de la Pharmacie :",
-                            info: snapshot.data['email'],
+                            info: snapshot.data!['email'],
                           ),
                           Rev_Orderdetails(
                               label: "Wilaya de la Pharmacie :",
-                              info: snapshot.data['wilaya']),
+                              info: snapshot.data!['wilaya']),
                           Rev_Orderdetails(
                               label: "Adresse de la Pharmacie :",
-                              info: snapshot.data['adresse']),
+                              info: snapshot.data!['adresse']),
                           SizedBox(height: 20),
                         ],
                       ),

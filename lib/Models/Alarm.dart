@@ -1,34 +1,34 @@
 class Alarm {
-  String medicament;
-  MedicType medicType;
-  int id;
-  List ids;
-  String note;
-  String quantity;
-  int dure;
-  int jourInterv;
-  DateTime hours;
-  int heure;
-  String alarmBy;
-  String livreurId;
-  String orderId;
-  int minute;
+  late String medicament;
+  late MedicType medicType;
+  late int id;
+  late List ids;
+  late String note;
+  late String quantity;
+  late int dure;
+  late int jourInterv;
+  late DateTime hours;
+  late int heure;
+  late String alarmBy;
+  late String livreurId;
+  late String orderId;
+  late int minute;
 
   Alarm(
-      {this.dure,
-      this.hours,
-      this.id,
-      this.ids,
-      this.alarmBy,
-      this.livreurId,
-      this.jourInterv,
-      this.note,
-      this.medicament,
-      this.quantity,
-      this.orderId,
-      this.medicType,
-      this.heure,
-      this.minute});
+      {required this.dure,
+      required this.hours,
+      required this.id,
+      required this.ids,
+      required this.alarmBy,
+      required this.livreurId,
+      required this.jourInterv,
+      required this.note,
+      required this.medicament,
+      required this.quantity,
+      required this.orderId,
+      required this.medicType,
+      required this.heure,
+      required this.minute});
   Alarm.fromJson(Map<String, dynamic> json) {
     medicament = json['nom du medicament'];
     medicType = json['type du medicament'];
@@ -42,7 +42,7 @@ class Alarm {
     dure = json['duré'];
     jourInterv = json['jourInterv'];
     hours = json['date'] == null
-        ? 0
+        ? 0 as DateTime
         : DateTime.fromMillisecondsSinceEpoch(json['date']);
     heure = json['heure'];
     minute = json['minute'];
@@ -50,8 +50,8 @@ class Alarm {
 }
 
 class Medicament {
-  String name;
-  MedicType type;
+  String? name;
+  MedicType? type;
   Medicament({this.name, this.type});
 }
 

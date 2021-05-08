@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class Rev_Orderdetails extends StatelessWidget {
-  String label;
-  String info;
+  String? label;
+  String? info;
   Rev_Orderdetails({this.label, this.info});
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(children: [
         Text(
-          this.label,
+          this.label!,
           textAlign: TextAlign.left,
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         ),
@@ -21,7 +21,7 @@ class Rev_Orderdetails extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.9,
               child: Center(
                   child: Text(
-                this.info,
+                this.info!,
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ))),

@@ -6,7 +6,7 @@ import 'package:wasfaty_liv/Widget/Card/Rev_OrderCard.dart';
 import 'package:wasfaty_liv/Widget/Rev_RoundButton.dart';
 
 class Rev_newOrder extends StatefulWidget {
-  String where;
+  String? where;
   Rev_newOrder({this.where});
 
   @override
@@ -14,7 +14,7 @@ class Rev_newOrder extends StatefulWidget {
 }
 
 class _Rev_newOrderState extends State<Rev_newOrder> {
-  Order model;
+  Order? model;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class _Rev_newOrderState extends State<Rev_newOrder> {
         stream: FirebaseFirestore.instance
             .collection("Commande")
             .where("livreurId",
-                isEqualTo: FirebaseAuth.instance.currentUser.uid)
+                isEqualTo: FirebaseAuth.instance.currentUser!.uid)
             .where("status", isEqualTo: widget.where)
             .snapshots(),
         builder: (context, snapshot1) {
@@ -34,7 +34,7 @@ class _Rev_newOrderState extends State<Rev_newOrder> {
                   future: FirebaseFirestore.instance
                       .collection("Commande_etr")
                       .where("livreurId",
-                          isEqualTo: FirebaseAuth.instance.currentUser.uid)
+                          isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                       .where("status", isEqualTo: widget.where)
                       .get(),
                   builder: (cotnext, snapshot2) {
@@ -42,8 +42,8 @@ class _Rev_newOrderState extends State<Rev_newOrder> {
                         ? Center(
                             child: CircularProgressIndicator(),
                           )
-                        : snapshot2.data.docs.length == 0 &&
-                                snapshot1.data.docs.length == 0
+                        : snapshot2.data!.docs.length == 0 &&
+                                snapshot1.data!.docs.length == 0
                             ? Center(
                                 child: Column(
                                     crossAxisAlignment:
@@ -70,11 +70,11 @@ class _Rev_newOrderState extends State<Rev_newOrder> {
                                 children: [
                                   ListView.builder(
                                     scrollDirection: Axis.vertical,
-                                    itemCount: snapshot1.data.docs.length,
+                                    itemCount: snapshot1.data!.docs.length,
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
                                       Order model1 = Order.fromJson(
-                                          snapshot1.data.docs[index].data());
+                                          snapshot1.data!.docs[index].data() as Map<String, dynamic>);
                                       return Rev_OrderCard(
                                         order: model1,
                                         collection: "Commande",
@@ -83,11 +83,11 @@ class _Rev_newOrderState extends State<Rev_newOrder> {
                                   ),
                                   ListView.builder(
                                     scrollDirection: Axis.vertical,
-                                    itemCount: snapshot2.data.docs.length,
+                                    itemCount: snapshot2.data!.docs.length,
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
                                       Order model2 = Order.fromJson(
-                                          snapshot2.data.docs[index].data());
+                                          snapshot2.data!.docs[index].data() as Map<String, dynamic>);
                                       return Rev_OrderCard(
                                         order: model2,
                                         collection: "Commande_etr",

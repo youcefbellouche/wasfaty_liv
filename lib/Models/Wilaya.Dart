@@ -5,24 +5,26 @@ import 'dart:convert' as convert;
 import 'package:wasfaty_liv/Screen/Rev_HomePageOFF.dart';
 
 class Wilaya {
-  String name;
-  String code;
-  List com;
+  late String name;
+  late String code;
+  late List com = [];
 
   Wilaya();
 
   Future<List<Wilaya>> getwilaya(BuildContext context) async {
+    List<Wilaya> wilaya = <Wilaya>[];
+    Wilaya wil = new Wilaya();
     try {
-      List<Wilaya> wilaya = <Wilaya>[];
-      Wilaya wil = new Wilaya();
       var result = await http.get(Uri.parse(
           "https://europe-west1-wasfaty-patient.cloudfunctions.net/wilaya"));
       var body = convert.jsonDecode(result.body);
-      for (var item in body) {
-        wil = Wilaya.fromJson(item);
-        wilaya.add(wil);
+      if (result != null) {
+        for (var item in body) {
+          wil = Wilaya.fromJson(item);
+          wilaya.add(wil);
+        }
+        return wilaya;
       }
-      return wilaya;
     } catch (e) {
       showDialog(
           context: context,
@@ -76,6 +78,7 @@ class Wilaya {
             );
           });
     }
+    return wilaya;
   }
 
   Wilaya.fromJson(Map<String, dynamic> json) {

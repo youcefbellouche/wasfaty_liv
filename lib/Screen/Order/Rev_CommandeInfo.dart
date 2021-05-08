@@ -12,10 +12,10 @@ import 'package:wasfaty_liv/Widget/Rev_TextFeild.dart';
 import '../Rev_HomePage.dart';
 
 class Rev_CommandeInfo extends StatefulWidget {
-  Order order;
-  String collection;
-  List<String> ord;
-  List<String> chif;
+  Order? order;
+  String? collection;
+  List<String>? ord;
+  List<String>? chif;
 
   Rev_CommandeInfo({this.order, this.collection, this.ord, this.chif});
 
@@ -28,19 +28,19 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
     Navigator.pop(context);
   }
 
-  String devis;
+  String? devis;
   final _formKey = GlobalKey<FormState>();
-  TextEditingController devisController;
-  String id;
-  String noteA;
-  TextEditingController noteController;
+  TextEditingController? devisController;
+  String? id;
+  String? noteA;
+  TextEditingController? noteController;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<DocumentSnapshot>(
       future: FirebaseFirestore.instance
           .collection('Patients')
-          .doc(widget.order.uid)
+          .doc(widget.order!.uid)
           .get(),
       builder: (c, snapshot) {
         return snapshot.hasData
@@ -51,7 +51,7 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                   children: [
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: widget.chif.isNotEmpty
+                      mainAxisAlignment: widget.chif!.isNotEmpty
                           ? MainAxisAlignment.spaceEvenly
                           : MainAxisAlignment.center,
                       children: [
@@ -73,7 +73,7 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                                     onTap: () =>
                                         verifyImage(context, widget.ord),
                                     child: CachedNetworkImage(
-                                      imageUrl: widget.ord[0],
+                                      imageUrl: widget.ord![0],
                                       placeholder: _loader,
                                       errorWidget: _error,
                                     ),
@@ -83,7 +83,7 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                             ],
                           ),
                         ),
-                        widget.chif.isNotEmpty
+                        widget.chif!.isNotEmpty
                             ? Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(0, 12, 0, 12),
@@ -105,7 +105,7 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                                           onTap: () =>
                                               verifyImage(context, widget.chif),
                                           child: CachedNetworkImage(
-                                            imageUrl: widget.chif[0],
+                                            imageUrl: widget.chif![0],
                                             placeholder: _loader,
                                             errorWidget: _error,
                                           ),
@@ -119,63 +119,63 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                       ],
                     ),
                     Rev_Orderdetails(
-                        label: "N° de Commande :", info: widget.order.orderId),
+                        label: "N° de Commande :", info: widget.order!.orderId),
                     Rev_Orderdetails(
                         label: "Prix Total :",
-                        info: "${widget.order.devis} DA + 200 DA"),
+                        info: "${widget.order!.devis} DA + 200 DA"),
                     Rev_Orderdetails(
                         label: "Nom complet du client :",
-                        info: snapshot.data['name']),
+                        info: snapshot.data!['name']),
                     Rev_OrderdetailsButton(
                         label: "Numéro de téléphone du client :",
-                        info: snapshot.data['tel'],
-                        phone: snapshot.data['tel']),
+                        info: snapshot.data!['tel'],
+                        phone: snapshot.data!['tel']),
                     Rev_Orderdetails(
                         label: "Nom complet du patient :",
-                        info: widget.order.bname),
+                        info: widget.order!.bname),
                     Rev_Orderdetails(
-                        label: "Generique", info: widget.order.generique),
+                        label: "Generique", info: widget.order!.generique),
                     Rev_Orderdetails(
                         label: "Date de Commande :",
                         info: DateTime.fromMillisecondsSinceEpoch(
-                                widget.order.date)
+                                widget.order!.date!)
                             .toString()),
                     Rev_Orderdetails(
-                        label: "Statut :", info: widget.order.status),
-                    widget.order.dateAnnuler != null
+                        label: "Statut :", info: widget.order!.status),
+                    widget.order!.dateAnnuler != null
                         ? Rev_Orderdetails(
                             label: "La Commande a été annuler le :",
                             info: DateTime.fromMillisecondsSinceEpoch(
-                                    widget.order.dateAnnuler)
+                                    widget.order!.dateAnnuler!)
                                 .toString())
                         : Container(),
-                    widget.order.dateTeminer != null
+                    widget.order!.dateTeminer != null
                         ? Rev_Orderdetails(
                             label: "La Commande a été effectuée le :",
                             info: DateTime.fromMillisecondsSinceEpoch(
-                                    widget.order.dateTeminer)
+                                    widget.order!.dateTeminer!)
                                 .toString())
                         : Container(),
-                    widget.order.annulerBy != null
+                    widget.order!.annulerBy != null
                         ? Rev_Orderdetails(
                             label: "Annuler Par :",
-                            info: widget.order.annulerBy)
+                            info: widget.order!.annulerBy)
                         : Container(),
-                    widget.order.noteAnnuler != null
+                    widget.order!.noteAnnuler != null
                         ? Rev_Orderdetails(
                             label: "Note d'annulation :",
-                            info: widget.order.noteAnnuler)
+                            info: widget.order!.noteAnnuler)
                         : Container(),
                     Rev_Orderdetails(
-                        label: "Wilaya :", info: widget.order.wilaya),
-                    widget.order.daira != null
+                        label: "Wilaya :", info: widget.order!.wilaya),
+                    widget.order!.daira != null
                         ? Rev_Orderdetails(
-                            label: "Daira :", info: widget.order.daira)
+                            label: "Daira :", info: widget.order!.daira)
                         : Container(),
                     Rev_Orderdetails(
-                        label: "Adresse :", info: widget.order.adresse),
+                        label: "Adresse :", info: widget.order!.adresse),
                     SizedBox(height: 10),
-                    widget.order.status == "en livraison"
+                    widget.order!.status == "en livraison"
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -189,8 +189,8 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                               Rev_Button(
                                 onpressed: () async {
                                   await FirebaseFirestore.instance
-                                      .collection(widget.collection)
-                                      .doc(widget.order.orderId)
+                                      .collection(widget.collection!)
+                                      .doc(widget.order!.orderId)
                                       .update({
                                     "status": "terminer",
                                     "DateTerminer":
@@ -265,7 +265,7 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                   Rev_TextFeild(
                     onChanged: (value) => noteA = value,
                     textEditingController: noteController,
-                    validator: (input) => input.isEmpty
+                    validator: (input) => input!.isEmpty
                         ? "Donner la raison de l'annulation de la commande "
                         : null,
                     label: "Note",
@@ -296,10 +296,10 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                               color: Colors.greenAccent,
                               child: Text('Envoyer'),
                               onPressed: () async {
-                                if (_formKey.currentState.validate()) {
+                                if (_formKey.currentState!.validate()) {
                                   await FirebaseFirestore.instance
-                                      .collection(widget.collection)
-                                      .doc(widget.order.orderId)
+                                      .collection(widget.collection!)
+                                      .doc(widget.order!.orderId)
                                       .update({
                                     "status": "annuler",
                                     "noteAnnuler": noteA,

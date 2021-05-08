@@ -1,7 +1,7 @@
 class Stat {
-  int caLOCAL;
-  int nbrCommandeLOCAL;
-  int nbrCommandeTerminerLOCAL;
+  int? caLOCAL;
+  int? nbrCommandeLOCAL;
+  int? nbrCommandeTerminerLOCAL;
 
 
   Stat(

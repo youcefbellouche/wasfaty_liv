@@ -5,8 +5,8 @@ import 'Rev_Appbar.dart';
 import 'Rev_Button.dart';
 
 class Rev_ViewPic extends StatefulWidget {
-  File file;
-  Function function;
+  File? file;
+  Function? function;
   Rev_ViewPic({this.file, this.function});
   @override
   _Rev_ViewPicState createState() => _Rev_ViewPicState();
@@ -29,7 +29,7 @@ class _Rev_ViewPicState extends State<Rev_ViewPic> {
           Icons.arrow_back,
           color: Theme.of(context).primaryColor,
         ),
-      ),
+      ) as PreferredSizeWidget?,
       body: Column(
         children: [
           Center(
@@ -37,7 +37,7 @@ class _Rev_ViewPicState extends State<Rev_ViewPic> {
                 padding: EdgeInsets.only(top: 15),
                 height: MediaQuery.of(context).size.height * 0.7,
                 width: MediaQuery.of(context).size.width * 0.7,
-                child: Image.file(widget.file, fit: BoxFit.cover)),
+                child: Image.file(widget.file!, fit: BoxFit.cover)),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 50, right: 50, top: 20),

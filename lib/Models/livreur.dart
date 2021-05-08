@@ -1,12 +1,12 @@
 class Livreur {
-  String name;
-  String id;
-  bool active;
-  String password;
-  String phone;
-  String adress;
-  String email;
-  bool suspendue;
+  String? name;
+  String? id;
+  bool? active;
+  String? password;
+  String? phone;
+  String? adress;
+  String? email;
+  bool? suspendue;
   Livreur(
       {this.name,
       this.suspendue,

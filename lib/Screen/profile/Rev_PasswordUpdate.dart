@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
 import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
 
-
 import '../../Widget/Rev_Button.dart';
 import '../../Widget/Rev_TextFeild.dart';
 import '../Rev_HomePage.dart';
 
 class Rev_PasswordUpdate extends StatefulWidget {
-  final User currentUser;
+  final User? currentUser;
 
   Rev_PasswordUpdate({this.currentUser});
 
@@ -18,14 +17,14 @@ class Rev_PasswordUpdate extends StatefulWidget {
 }
 
 class _Rev_PasswordUpdateState extends State<Rev_PasswordUpdate> {
-  TextEditingController controller_pass;
-  TextEditingController controller_newPass;
-  TextEditingController controller_confirmNewPass;
+  TextEditingController? controller_pass;
+  TextEditingController? controller_newPass;
+  TextEditingController? controller_confirmNewPass;
 
   final _formKey = GlobalKey<FormState>();
-  String mdp;
-  String newmdp;
-  String confirm_newmdp;
+  late String mdp;
+  String? newmdp;
+  String? confirm_newmdp;
   Rev_Auth auth = new Rev_Auth();
   void ofPage() {
     Navigator.pop(context);
@@ -42,7 +41,7 @@ class _Rev_PasswordUpdateState extends State<Rev_PasswordUpdate> {
           Icons.arrow_back,
           color: Theme.of(context).primaryColor,
         ),
-      ),
+      ) as PreferredSizeWidget?,
       body: Center(
         child: ListView(
           children: [
@@ -63,7 +62,7 @@ class _Rev_PasswordUpdateState extends State<Rev_PasswordUpdate> {
                     textEditingController: controller_newPass,
                     mdp: true,
                     onChanged: (value) => newmdp = value,
-                    validator: (input) => input.length < 6
+                    validator: (input) => input!.length < 6
                         ? "Donner un mot de passe valide"
                         : null,
                   ),
@@ -72,14 +71,14 @@ class _Rev_PasswordUpdateState extends State<Rev_PasswordUpdate> {
                     textEditingController: controller_confirmNewPass,
                     mdp: true,
                     onChanged: (value) => confirm_newmdp = value,
-                    validator: (input) => input.length < 6
+                    validator: (input) => input!.length < 6
                         ? "Donner un mot de passe valide"
                         : null,
                   ),
                   Rev_Button(
                     label: "Changer le mot de pass",
                     onpressed: () {
-                      if (_formKey.currentState.validate()) {
+                      if (_formKey.currentState!.validate()) {
                         auth.updateUserPassword(newmdp, mdp);
                         Navigator.pushReplacement(
                             context,

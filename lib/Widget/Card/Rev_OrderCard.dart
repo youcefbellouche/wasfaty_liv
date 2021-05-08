@@ -3,8 +3,8 @@ import 'package:wasfaty_liv/Models/order.dart';
 import 'package:wasfaty_liv/Screen/Order/Rev_OrderInfo.dart';
 
 class Rev_OrderCard extends StatefulWidget {
-  Order order;
-  String collection;
+  Order? order;
+  String? collection;
 
   Rev_OrderCard({this.order, this.collection});
   @override
@@ -53,7 +53,7 @@ class _Rev_OrderCardState extends State<Rev_OrderCard> {
                       )),
                   width: MediaQuery.of(context).size.width,
                   height: 180 * 0.16,
-                  child: Center(child: Text(widget.order.orderId))),
+                  child: Center(child: Text(widget.order!.orderId!))),
               Container(
                   height: 180 * 0.16,
                   child: Center(
@@ -90,7 +90,7 @@ class _Rev_OrderCardState extends State<Rev_OrderCard> {
                       borderRadius: BorderRadius.all(
                         Radius.circular(5),
                       )),
-                  child: Center(child: Text("${widget.order.devis} DA"))),
+                  child: Center(child: Text("${widget.order!.devis} DA"))),
             ],
           ),
         ),

@@ -10,9 +10,9 @@ class ForgetPage extends StatefulWidget {
 }
 
 class _ForgetPageState extends State<ForgetPage> {
-  TextEditingController controller_email;
+  TextEditingController? controller_email;
   final _formKey = GlobalKey<FormState>();
-  String email;
+  late String email;
   Rev_Auth auth = new Rev_Auth();
   bool loading = false;
 
@@ -58,7 +58,7 @@ class _ForgetPageState extends State<ForgetPage> {
                             textEditingController: controller_email,
                             mdp: false,
                             onChanged: (value) => email = value,
-                            validator: (input) => !input.contains('@')
+                            validator: (input) => !input!.contains('@')
                                 ? "L'Email doit être valide"
                                 : null,
                           ),

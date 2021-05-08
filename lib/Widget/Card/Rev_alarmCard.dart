@@ -6,8 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Rev_alarmCard extends StatefulWidget {
   @required
-  Alarm alarm;
-  String patientId;
+  Alarm? alarm;
+  String? patientId;
 
   Rev_alarmCard({this.alarm, this.patientId});
   @override
@@ -54,13 +54,13 @@ class _Rev_alarmCardState extends State<Rev_alarmCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.alarm.heure < 10 && widget.alarm.minute < 10
-                        ? "0${widget.alarm.heure}:0${widget.alarm.minute}"
-                        : widget.alarm.heure < 10
-                            ? "0${widget.alarm.heure}:${widget.alarm.minute}"
-                            : widget.alarm.minute < 10
-                                ? "${widget.alarm.heure}:0${widget.alarm.minute}"
-                                : "${widget.alarm.heure}:${widget.alarm.minute}",
+                    widget.alarm!.heure < 10 && widget.alarm!.minute < 10
+                        ? "0${widget.alarm!.heure}:0${widget.alarm!.minute}"
+                        : widget.alarm!.heure < 10
+                            ? "0${widget.alarm!.heure}:${widget.alarm!.minute}"
+                            : widget.alarm!.minute < 10
+                                ? "${widget.alarm!.heure}:0${widget.alarm!.minute}"
+                                : "${widget.alarm!.heure}:${widget.alarm!.minute}",
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -68,7 +68,7 @@ class _Rev_alarmCardState extends State<Rev_alarmCard> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    widget.alarm.medicament,
+                    widget.alarm!.medicament,
                     style: TextStyle(fontSize: 15, color: Colors.white),
                   )
                 ],
@@ -83,7 +83,7 @@ class _Rev_alarmCardState extends State<Rev_alarmCard> {
                         .collection("Patients")
                         .doc(widget.patientId)
                         .collection("Alarm")
-                        .doc(widget.alarm.id.toString())
+                        .doc(widget.alarm!.id.toString())
                         .delete();
                     Navigator.pop(context);
                   },

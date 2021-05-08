@@ -16,30 +16,30 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  TextEditingController controller_email;
-  TextEditingController controller_pass;
-  TextEditingController controller_name;
-  TextEditingController controller_pass_confirm;
-  TextEditingController controller_phone;
+  TextEditingController? controller_email;
+  TextEditingController? controller_pass;
+  TextEditingController? controller_name;
+  TextEditingController? controller_pass_confirm;
+  TextEditingController? controller_phone;
 
   final _formKey = GlobalKey<FormState>();
   Rev_Auth auth = new Rev_Auth();
 
-  String email;
-  String name;
-  String adresse;
-  String mdp_confirm;
-  String phone;
-  String mdp;
+  late String email;
+  String? name;
+  String? adresse;
+  String? mdp_confirm;
+  String? phone;
+  String? mdp;
 
-  File _imageFileO = null;
+  File? _imageFileO = null;
   bool isfileO = false;
-  String imageFileName;
+  String? imageFileName;
   bool loading = false;
 
-  bool condition = false;
-  List<String> wilaya = new List<String>();
-  List<Wilaya> wil = new List<Wilaya>();
+  bool? condition = false;
+  List<String> wilaya = <String>[];
+  List<Wilaya> wil = <Wilaya>[];
   void initState() {
     super.initState();
     getwill();
@@ -54,9 +54,9 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  List<String> dayra = new List<String>();
-  String valueW;
-  String dairaA;
+  List<String> dayra = <String>[];
+  String? valueW;
+  String? dairaA;
   bool choosewil = false;
 
   @override
@@ -99,7 +99,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 mdp: false,
                                 onChanged: (value) => name = value,
                                 validator: (input) =>
-                                    input.isEmpty ? "Donner un nom " : null,
+                                    input!.isEmpty ? "Donner un nom " : null,
                                 textInputType: TextInputType.name,
                               ),
                               Rev_TextFeild(
@@ -109,7 +109,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   textInputType: TextInputType.phone,
                                   onChanged: (value) => phone = value,
                                   validator: (input) {
-                                    if (input.isEmpty) {
+                                    if (input!.isEmpty) {
                                       return "Donner un Numéro ";
                                     }
                                     if (input.length < 10 ||
@@ -126,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       (element) => element.name == value);
 
                                   setState(() {
-                                    dayra = new List<String>();
+                                    dayra = <String>[];
                                     wil[i].com.forEach((element) {
                                       dayra.add(element);
                                     });
@@ -150,7 +150,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 textEditingController: controller_phone,
                                 mdp: false,
                                 onChanged: (value) => adresse = value,
-                                validator: (input) => input.isEmpty
+                                validator: (input) => input!.isEmpty
                                     ? "Donner une Adresse "
                                     : null,
                               ),
@@ -160,7 +160,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 mdp: false,
                                 textInputType: TextInputType.emailAddress,
                                 onChanged: (value) => email = value,
-                                validator: (input) => !input.contains('@')
+                                validator: (input) => !input!.contains('@')
                                     ? "L'Email doit être valide"
                                     : null,
                               ),
@@ -170,7 +170,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 textInputType: TextInputType.visiblePassword,
                                 mdp: true,
                                 onChanged: (value) => mdp = value,
-                                validator: (input) => input.length < 6
+                                validator: (input) => input!.length < 6
                                     ? "Donner un mot de passe valide"
                                     : null,
                               ),
@@ -180,7 +180,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 mdp: true,
                                 textInputType: TextInputType.visiblePassword,
                                 onChanged: (value) => mdp = value,
-                                validator: (input) => input.length < 6
+                                validator: (input) => input!.length < 6
                                     ? input != mdp
                                         ? "Votre mot de passe de confirmation est incorrecte "
                                         : null
@@ -211,15 +211,15 @@ class _SignUpPageState extends State<SignUpPage> {
                               Rev_Button(
                                 label: "S'inscrire",
                                 onpressed: () async {
-                                  if (_formKey.currentState.validate() &&
-                                      condition) {
+                                  if (_formKey.currentState!.validate() &&
+                                      condition!) {
                                     signUp(
                                         wilaya: valueW,
                                         daira: dairaA,
                                         name: name,
                                         phone: phone,
                                         email: email,
-                                        mdp: mdp,
+                                        mdp: mdp!,
                                         adresse: adresse,
                                         context: context);
                                   }
@@ -238,15 +238,15 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   signUp({
-    String wilaya,
-    String mdp,
-    File file,
-    String daira,
-    String email,
-    String adresse,
-    BuildContext context,
-    String name,
-    String phone,
+    String? wilaya,
+    required String mdp,
+    File? file,
+    String? daira,
+    required String email,
+    String? adresse,
+    required BuildContext context,
+    String? name,
+    String? phone,
   }) async {
     setState(() {
       loading = true;

@@ -1,25 +1,25 @@
 class Order {
-  String orderId;
-  int date;
-  int dateTeminer;
-  int dateAnnuler;
-  String bname;
-  int bDate;
-  String adresse;
-  List carteChifa;
-  String annulerBy;
-  String noteAnnuler;
-  List ordonnance;
-  String status;
-  String livraison;
-  String uid;
-  String devis;
-  String pharmacieid;
-  List<dynamic> alarmIds;
-  String wilaya;
-  String daira;
-  String livreurid;
-  String generique;
+  String? orderId;
+  int? date;
+  int? dateTeminer;
+  int? dateAnnuler;
+  String? bname;
+  int? bDate;
+  String? adresse;
+  List? carteChifa;
+  String? annulerBy;
+  String? noteAnnuler;
+  List? ordonnance;
+  String? status;
+  String? livraison;
+  String? uid;
+  String? devis;
+  String? pharmacieid;
+  List<dynamic>? alarmIds;
+  String? wilaya;
+  String? daira;
+  String? livreurid;
+  String? generique;
   Order(
       {this.bname,
       this.livreurid,
@@ -56,10 +56,10 @@ class Order {
     livraison = json['Livraison'];
     adresse = json['adresse'];
     json['carteChifa'] == null
-        ? carteChifa = new List()
+        ? carteChifa = []
         : carteChifa = json['carteChifa'];
     json['ordonnance'] == null
-        ? ordonnance = new List()
+        ? ordonnance = []
         : ordonnance = json['ordonnance'];
     status = json['status'];
     noteAnnuler = json['noteAnnuler'];

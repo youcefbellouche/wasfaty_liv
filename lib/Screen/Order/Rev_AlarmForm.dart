@@ -13,8 +13,8 @@ import 'package:intl/intl.dart';
 import '../Rev_HomePage.dart';
 
 class Rev_AlarmForm extends StatefulWidget {
-  String orderId;
-  String patientId;
+  String? orderId;
+  String? patientId;
   Rev_AlarmForm({this.orderId, this.patientId});
   @override
   _Rev_AlarmFormState createState() => _Rev_AlarmFormState();
@@ -26,11 +26,11 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
   }
 
   DateFormat feild = DateFormat().add_yMMMMd();
-  DateTime timeD = DateTime.now();
-  DateTime _pick = new DateTime(
+  DateTime? timeD = DateTime.now();
+  DateTime? _pick = new DateTime(
       DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
-  DateTime newDate;
+  DateTime? newDate;
   MaterialColor kPrimaryColor = const MaterialColor(
     0xff218171,
     const <int, Color>{
@@ -46,12 +46,12 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
       900: const Color(0xff218171),
     },
   );
-  Alarm alarm = new Alarm();
+  late Alarm alarm;
 
   final _formKey = GlobalKey<FormState>();
   List<String> wil = ['test1', 'test2'];
 
-  String valuew;
+  String? valuew;
   TimeOfDay time = TimeOfDay.now();
   TimeOfDay pick =
       new TimeOfDay(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute);
@@ -65,8 +65,8 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
     '1 jour sur 6',
     '1 jour sur 7'
   ];
-  String valuenbrFois;
-  String name;
+  String? valuenbrFois;
+  String? name;
   TextEditingController controllerTime = new TextEditingController();
   TextEditingController controllerDate = new TextEditingController();
 
@@ -81,7 +81,7 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
           Icons.arrow_back,
           color: Theme.of(context).primaryColor,
         ),
-      ),
+      ) as PreferredSizeWidget?,
       body: Form(
         key: _formKey,
         child: ListView(
@@ -91,7 +91,7 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
               mdp: false,
               onChanged: (value) => alarm.medicament = value,
               validator: (input) =>
-                  input.isEmpty ? "Donnez le nom du Medicament" : null,
+                  input!.isEmpty ? "Donnez le nom du Medicament" : null,
               textInputType: TextInputType.name,
             ),
             Rev_DropDown(
@@ -115,7 +115,7 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
               label: "Quantité a prendre",
               mdp: false,
               onChanged: (value) => alarm.quantity = value,
-              validator: (input) => input.isEmpty
+              validator: (input) => input!.isEmpty
                   ? "Donnez la quantité a prendre"
                   : int.parse(input) < 1
                       ? "Donner une quantité valide"
@@ -213,26 +213,27 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
               onChanged: (value) => alarm.dure = int.parse(value),
               textInputType: TextInputType.number,
               validator: (input) =>
-                  input.isEmpty ? "Donnez le nombre de jour" : null,
+                  input!.isEmpty ? "Donnez le nombre de jour" : null,
             ),
             Container(
               padding: EdgeInsets.all(12),
               child: TextFormField(
                 controller: controllerDate,
-                validator: (input) =>
-                    input.isEmpty ? "Donnez le date du debut de l'alarm" : null,
+                validator: (input) => input!.isEmpty
+                    ? "Donnez le date du debut de l'alarm"
+                    : null,
                 readOnly: true,
                 onTap: () async {
                   timeD = await showDatePicker(
                       context: context,
                       // initialEntryMode: DatePickerEntryMode.input,
-                      initialDate: _pick,
+                      initialDate: _pick!,
                       firstDate: DateTime(2020, 10, 7),
                       lastDate: DateTime(DateTime.now().year + 1,
                           DateTime.now().month + 12, DateTime.now().day),
-                      builder: (BuildContext context, Widget child) {
+                      builder: (BuildContext context, Widget? child) {
                         return Theme(
-                          child: child,
+                          child: child!,
                           data: ThemeData.light().copyWith(
                             colorScheme: ColorScheme.fromSwatch(
                               primarySwatch: kPrimaryColor,
@@ -248,7 +249,7 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
                     if (timeD != null) {
                       _pick = timeD;
                       controllerDate.text =
-                          "${timeD.day}/${timeD.month}/${timeD.year}";
+                          "${timeD!.day}/${timeD!.month}/${timeD!.year}";
                     } else {
                       timeD = DateTime.now();
                     }
@@ -257,7 +258,7 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   labelText: "Choisissez un jour ",
-                  hintText: "${timeD.day}/${timeD.month}/${timeD.year}",
+                  hintText: "${timeD!.day}/${timeD!.month}/${timeD!.year}",
                   hintStyle: TextStyle(color: Colors.black),
                   labelStyle: const TextStyle(color: Colors.black),
                   border: OutlineInputBorder(
@@ -290,14 +291,14 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
               child: Rev_Button(
                 label: "Valider",
                 onpressed: () async {
-                  if (_formKey.currentState.validate()) {
+                  if (_formKey.currentState!.validate()) {
                     setState(() {
                       alarm.id = Random().nextInt(10000000);
-                      newDate = new DateTime(timeD.year, timeD.month, timeD.day,
-                          time.hour, time.minute);
-                      alarm.hours = newDate;
+                      newDate = new DateTime(timeD!.year, timeD!.month,
+                          timeD!.day, time.hour, time.minute);
+                      alarm.hours = newDate!;
                     });
-                    List<int> tmpId = new List<int>();
+                    List<int> tmpId = <int>[];
                     int tmp = alarm.id;
                     tmpId.add(alarm.id);
                     for (int i = 0; i < alarm.dure; i++) {
@@ -326,7 +327,7 @@ class _Rev_AlarmFormState extends State<Rev_AlarmForm> {
                       "date": alarm.hours.millisecondsSinceEpoch,
                       "orderId": widget.orderId,
                       "alarmBy": "livreur",
-                      "livreurId": FirebaseAuth.instance.currentUser.uid,
+                      "livreurId": FirebaseAuth.instance.currentUser!.uid,
                     });
                     Navigator.pushReplacement(
                         context,

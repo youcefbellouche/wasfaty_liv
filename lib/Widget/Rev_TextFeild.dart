@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Rev_TextFeild extends StatelessWidget {
-  String label;
-  TextInputType textInputType;
-  TextEditingController textEditingController;
-  FormFieldValidator<String> validator;
-  bool mdp;
-  final ValueChanged<String> onChanged;
-  IconButton suffixIcon;
+  String? label;
+  TextInputType? textInputType;
+  TextEditingController? textEditingController;
+  FormFieldValidator<String>? validator;
+  bool? mdp;
+  final ValueChanged<String>? onChanged;
+  IconButton? suffixIcon;
   Rev_TextFeild(
       {this.label,
       this.textEditingController,
@@ -25,7 +25,7 @@ class Rev_TextFeild extends StatelessWidget {
         style: const TextStyle(color: Colors.black),
         controller: this.textEditingController,
         keyboardType: this.textInputType,
-        obscureText: this.mdp,
+        obscureText: this.mdp!,
         decoration: InputDecoration(
           suffixIcon: this.suffixIcon,
             labelStyle: const TextStyle(color: Colors.black),

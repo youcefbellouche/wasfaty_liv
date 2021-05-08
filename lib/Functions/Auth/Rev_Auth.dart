@@ -10,7 +10,7 @@ import 'package:wasfaty_liv/Screen/auth/Rev_VerifierMail.dart';
 import '../../Screen/Rev_HomePage.dart';
 
 class Rev_Auth {
-  FirebaseMessaging fcm = FirebaseMessaging();
+  FirebaseMessaging fcm = FirebaseMessaging.instance;
 
   Future<bool> validateCurrentPassword(String pass) async {
     return await validatePassword(pass);
@@ -122,9 +122,10 @@ class Rev_Auth {
 
   Future<bool> signIn({String email, String mdp, BuildContext context}) async {
     try {
-      String token = await fcm.getToken();
+      String token = await FirebaseMessaging.instance.getToken();
       var result = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: mdp);
+      print("Singin result $result");
       var type = await FirebaseFirestore.instance
           .collection("Livreur")
           .doc(result.user.uid)
@@ -169,6 +170,7 @@ class Rev_Auth {
         }
       }
     } catch (e) {
+      print("errore $e");
       showDialog(
           context: context,
           builder: (_) => AlertDialog(

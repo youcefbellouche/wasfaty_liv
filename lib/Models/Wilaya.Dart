@@ -13,10 +13,10 @@ class Wilaya {
 
   Future<List<Wilaya>> getwilaya(BuildContext context) async {
     try {
-      List<Wilaya> wilaya = new List<Wilaya>();
+      List<Wilaya> wilaya = <Wilaya>[];
       Wilaya wil = new Wilaya();
-      var result = await http.get(
-          "https://europe-west1-wasfaty-patient.cloudfunctions.net/wilaya");
+      var result = await http.get(Uri.parse(
+          "https://europe-west1-wasfaty-patient.cloudfunctions.net/wilaya"));
       var body = convert.jsonDecode(result.body);
       for (var item in body) {
         wil = Wilaya.fromJson(item);

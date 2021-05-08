@@ -46,7 +46,6 @@ class _Rev_historiqueState extends State<Rev_historique> {
         ),
       ),
       body: SingleChildScrollView(
-        physics: ScrollPhysics(),
         child: Column(
           children: [
             Padding(

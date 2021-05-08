@@ -4,7 +4,6 @@ import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
 import 'package:wasfaty_liv/Widget/Rev_Button.dart';
 import 'package:wasfaty_liv/Widget/Rev_TextFeild.dart';
 import 'Rev_ForgetPass.dart';
-import 'package:wasfaty_liv/models/Wilaya.Dart';
 
 import 'Rev_SignUp.dart';
 
@@ -120,7 +119,9 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         loading = true;
       });
-      if (!await auth.signIn(context: context, email: email, mdp: mdp)) {
+      var result = await auth.signIn(context: context, email: email, mdp: mdp);
+      print("result $result");
+      if (!result) {
         setState(() {
           loading = false;
         });

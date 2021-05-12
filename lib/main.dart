@@ -205,9 +205,9 @@ class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
 
   _launchGooglePlay() async {
     if (await canLaunch(
-        "https://play.google.com/store/apps/details?id=rev.wasfaty.patient")) {
+        "https://play.google.com/store/apps/details?id=rev.wasfaty.livreur")) {
       final bool nativeAppLaunch = await launch(
-          "https://play.google.com/store/apps/details?id=rev.wasfaty.patient",
+          "https://play.google.com/store/apps/details?id=rev.wasfaty.livreur",
           forceWebView: false,
           universalLinksOnly: true);
       print("update test $nativeAppLaunch");

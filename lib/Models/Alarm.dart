@@ -1,6 +1,6 @@
 class Alarm {
   late String medicament;
-  late MedicType medicType;
+  late MedicType? medicType;
   late int id;
   late List ids;
   late String note;
@@ -10,7 +10,7 @@ class Alarm {
   late DateTime hours;
   late int heure;
   late String alarmBy;
-  late String livreurId;
+  late String? livreurId;
   late String orderId;
   late int minute;
 
@@ -31,12 +31,14 @@ class Alarm {
       required this.minute});
   Alarm.fromJson(Map<String, dynamic> json) {
     medicament = json['nom du medicament'];
-    medicType = json['type du medicament'];
+    json['type du medicament'] != null
+        ? medicType = json['type du medicament']
+        : medicType = null;
     id = json['id'] == null ? 0 : json['id'];
     ids = json['ids'];
     orderId = json['orderId'];
     alarmBy = json['alarmBy'];
-    livreurId = json['alarmId'];
+    json['alarmId'] != null ? livreurId = json['alarmId'] : livreurId = null;
     note = json['note'];
     quantity = json['quantity'];
     dure = json['duré'];

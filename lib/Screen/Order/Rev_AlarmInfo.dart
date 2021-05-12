@@ -38,7 +38,8 @@ class _Rev_AlarmInfoState extends State<Rev_AlarmInfo> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Rev_Orderdetails(
-                    label: "N° de l'alarm :", info: widget.alarm!.id.toString()),
+                    label: "N° de l'alarm :",
+                    info: widget.alarm!.id.toString()),
                 Rev_Orderdetails(
                     label: "Nom du medicament :",
                     info: widget.alarm!.medicament),
@@ -67,7 +68,8 @@ class _Rev_AlarmInfoState extends State<Rev_AlarmInfo> {
                         label: "Note :", info: widget.alarm!.note.toString())
                     : Container(),
                 Rev_Orderdetails(
-                    label: "Duré (jour) :", info: widget.alarm!.dure.toString()),
+                    label: "Duré (jour) :",
+                    info: widget.alarm!.dure.toString()),
                 Rev_Orderdetails(
                     label: "Jour d'interval :",
                     info: widget.alarm!.jourInterv.toString()),

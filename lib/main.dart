@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
+import 'package:new_version/new_version.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wasfaty_liv/Functions/Auth/Rev_push_notification.dart';
 import 'Screen/Rev_HomePage.dart';
 import 'Screen/Rev_HomePageOFF.dart';
@@ -76,6 +79,8 @@ class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
     super.initState();
     GetConnect();
     WidgetsBinding.instance!.addObserver(this);
+    test();
+    _checkVersion();
   }
 
   test() async {
@@ -118,6 +123,95 @@ class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
               : LoginPage()
           : Rev_HomePageOFF(),
     );
+  }
+
+  void _checkVersion() async {
+    final newVersion = NewVersion(
+      androidId: "rev.wasfaty.livreur",
+    );
+    final status = await newVersion.getVersionStatus();
+    if (status!.localVersion != status.storeVersion) {
+      await Future.delayed(Duration(milliseconds: 50));
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return _popUp(context, status);
+          });
+    }
+
+    print("DEVICE : " + status.localVersion);
+    print("STORE : " + status.storeVersion);
+  }
+
+  Widget _popUp(BuildContext context, VersionStatus status) {
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: new AlertDialog(
+        title: Text("Mise à jour disponible"),
+        content: Container(
+          height: MediaQuery.of(context).size.height * 0.2,
+          child: Column(
+            children: [
+              Expanded(
+                child: Text(
+                  "Please update the app from " +
+                      "${status.localVersion}" +
+                      " to " +
+                      "${status.storeVersion}",
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(color: Colors.black),
+                ),
+              ),
+              Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    FlatButton(
+                        height: 45,
+                        color: Colors.red,
+                        minWidth: 40,
+                        child: Text("Refuser",
+                            style: const TextStyle(color: Colors.white)),
+                        shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                                color: Colors.red, style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(50)),
+                        onPressed: () async {
+                          SystemNavigator.pop();
+                        }),
+                    FlatButton(
+                        height: 45,
+                        color: Colors.green[600],
+                        minWidth: 40,
+                        child: Text("Fait les MAJ",
+                            style: const TextStyle(color: Colors.white)),
+                        shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                                color: Colors.green, style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(50)),
+                        onPressed: () async {
+                          _launchGooglePlay();
+                        }),
+                  ]),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _launchGooglePlay() async {
+    if (await canLaunch(
+        "https://play.google.com/store/apps/details?id=rev.wasfaty.patient")) {
+      final bool nativeAppLaunch = await launch(
+          "https://play.google.com/store/apps/details?id=rev.wasfaty.patient",
+          forceWebView: false,
+          universalLinksOnly: true);
+      print("update test $nativeAppLaunch");
+    }
   }
 
   // ignore: non_constant_identifier_names

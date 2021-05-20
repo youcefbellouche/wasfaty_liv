@@ -4,9 +4,17 @@ import 'package:url_launcher/url_launcher.dart';
 class Rev_OrderdetailsButton extends StatelessWidget {
   String? label;
   String? info;
-  String? url;
+  bool localisation;
+  double? lat;
+  double? long;
   String? phone;
-  Rev_OrderdetailsButton({this.label, this.info, this.url, this.phone});
+  Rev_OrderdetailsButton(
+      {this.label,
+      this.info,
+      required this.localisation,
+      this.phone,
+      this.lat,
+      this.long});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,14 +35,15 @@ class Rev_OrderdetailsButton extends StatelessWidget {
                     child: Text(
                       this.info!,
                       style: TextStyle(
-                          color: Colors.lightBlueAccent,fontWeight: FontWeight.bold),
+                          color: Colors.lightBlueAccent,
+                          fontWeight: FontWeight.bold),
                     ),
                     onPressed: () async {
                       if (phone != null) {
                         await _makePhoneCall("tel:${this.phone}");
-                      }
-                      if (url != null) {
-                        await _launchUniversalLinkIos(this.url!);
+                      } else if (localisation) {
+                        await _launchUniversalLinkIos(
+                            'https://www.google.com/maps/@${this.long},${this.lat},12z');
                       }
                     },
                   ),

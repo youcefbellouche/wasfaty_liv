@@ -127,9 +127,11 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                         label: "Nom complet du client :",
                         info: snapshot.data!['name']),
                     Rev_OrderdetailsButton(
-                        label: "Numéro de téléphone du client :",
-                        info: snapshot.data!['tel'],
-                        phone: snapshot.data!['tel']),
+                      label: "Numéro de téléphone du client :",
+                      info: snapshot.data!['tel'],
+                      phone: snapshot.data!['tel'],
+                      localisation: false,
+                    ),
                     Rev_Orderdetails(
                         label: "Nom complet du patient :",
                         info: widget.order!.bname),
@@ -172,8 +174,19 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                         ? Rev_Orderdetails(
                             label: "Daira :", info: widget.order!.daira)
                         : Container(),
-                    Rev_Orderdetails(
-                        label: "Adresse :", info: widget.order!.adresse),
+                    widget.order!.adresse != null
+                        ? Rev_Orderdetails(
+                            label: "Adresse :", info: widget.order!.adresse)
+                        : Container(),
+                    widget.order?.lat != null && widget.order?.long != null
+                        ? Rev_OrderdetailsButton(
+                            label: "Adresse  :",
+                            info: "Google Maps ->",
+                            localisation: true,
+                            lat: widget.order!.lat,
+                            long: widget.order!.long,
+                          )
+                        : Container(),
                     SizedBox(height: 10),
                     widget.order!.status == "en livraison"
                         ? Row(

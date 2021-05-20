@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:wasfaty_liv/Models/Pharmacie.dart';
 import 'package:wasfaty_liv/Widget/Rev_Orderdetails.dart';
 import 'package:wasfaty_liv/Widget/Rev_OrderdetailsButton.dart';
-import 'package:wasfaty_liv/Widget/Rev_vide.dart';
+
+import 'package:wasfaty_liv/Widget/Rev_RoundButton.dart';
 
 class Rev_PharmacieInfo extends StatefulWidget {
   String? pharmacieid;
@@ -27,6 +29,8 @@ class _Rev_PharmacieInfoState extends State<Rev_PharmacieInfo> {
                 .doc(widget.pharmacieid)
                 .get(),
             builder: (c, snapshot) {
+              Pharmacie pharmacie = Pharmacie.fromJson(
+                  snapshot.data!.data() as Map<String, dynamic>);
               return snapshot.hasData
                   ? SingleChildScrollView(
                       child: Column(
@@ -35,26 +39,31 @@ class _Rev_PharmacieInfoState extends State<Rev_PharmacieInfo> {
                         children: [
                           SizedBox(height: 30),
                           Rev_Orderdetails(
-                              label: "N° de la Pharmacie :",
-                              info: snapshot.data!['id']),
-                          Rev_Orderdetails(
                               label: "Nom de la Pharmacie :",
-                              info: snapshot.data!['name']),
+                              info: pharmacie.name),
                           Rev_OrderdetailsButton(
                             label: "Numéro de téléphone de la Pharmacie :",
-                            info: snapshot.data!['phone'],
-                            phone: snapshot.data!['phone'],
+                            info: pharmacie.phone,
+                            phone: pharmacie.phone,
+                            localisation: false,
                           ),
                           Rev_Orderdetails(
                             label: "Email de la Pharmacie :",
-                            info: snapshot.data!['email'],
+                            info: pharmacie.email,
                           ),
                           Rev_Orderdetails(
                               label: "Wilaya de la Pharmacie :",
-                              info: snapshot.data!['wilaya']),
+                              info: pharmacie.wilaya),
                           Rev_Orderdetails(
                               label: "Adresse de la Pharmacie :",
-                              info: snapshot.data!['adresse']),
+                              info: pharmacie.daira),
+                          Rev_OrderdetailsButton(
+                            label: "Adresse de la Pharmacie :",
+                            info: "Google Maps ->",
+                            localisation: true,
+                            lat: pharmacie.lat,
+                            long: pharmacie.long,
+                          ),
                           SizedBox(height: 20),
                         ],
                       ),
@@ -62,9 +71,23 @@ class _Rev_PharmacieInfoState extends State<Rev_PharmacieInfo> {
                   : Center(child: CircularProgressIndicator());
             },
           )
-        : Rev_vide(
-            msg: "Cette commande n'a pas de Pharmacie",
-            img: "assets/vide.png",
-          );
+        : Center(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                Rev_RoundButton(
+                  isfile: false,
+                  image: "assets/vide.png",
+                ),
+                Text(
+                  "Cette commande n'a pas de pharmacie",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                )
+              ]));
   }
 }

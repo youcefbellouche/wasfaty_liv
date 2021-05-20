@@ -15,9 +15,10 @@ class Order {
   String? uid;
   String? devis;
   String? pharmacieid;
-  List<dynamic>? alarmIds;
   String? wilaya;
   String? daira;
+  double? lat;
+  double? long;
   String? livreurid;
   String? generique;
   Order(
@@ -29,7 +30,6 @@ class Order {
       this.dateTeminer,
       this.annulerBy,
       this.noteAnnuler,
-      this.alarmIds,
       this.devis,
       this.date,
       this.carteChifa,
@@ -40,13 +40,14 @@ class Order {
       this.pharmacieid,
       this.daira,
       this.adresse,
+      this.lat,
+      this.long,
       this.livraison,
       this.uid});
 
   Order.fromJson(Map<String, dynamic> json) {
     orderId = json['OrderId'];
     pharmacieid = json['pharmacieId'];
-    alarmIds = json['alarmIds'];
     date = json['Time'];
     bDate = json['date de naissance du beneficiaire'];
     dateTeminer = json['DateTerminer'];
@@ -55,6 +56,8 @@ class Order {
     bname = json['bname'];
     livraison = json['Livraison'];
     adresse = json['adresse'];
+    lat = json['lat'];
+    long = json['long'];
     json['carteChifa'] == null
         ? carteChifa = []
         : carteChifa = json['carteChifa'];

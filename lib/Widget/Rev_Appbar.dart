@@ -16,28 +16,35 @@ Widget Rev_Appbar(
                   bottomLeft: Radius.circular(60),
                 )),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(width: MediaQuery.of(context).size.width * 0.05),
                 Container(
+                    margin: EdgeInsets.only(left: 20),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(40)),
-                    child: IconButton(icon: revIcon, onPressed: openDrawer as void Function()?)),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.2),
+                    child: IconButton(
+                        icon: revIcon,
+                        onPressed: openDrawer as void Function()?)),
                 Container(
+                  margin: EdgeInsets.only(right: 10),
                   child: Center(
-                    child: Text(
-                      'Wasfaty Livreur',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 17),
-                    ),
-                  ),
-                )
+                      child: Image(
+                    image: AssetImage("assets/logo.png"),
+                  )),
+                ),
+                Container(
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(40)),
+                    child: IconButton(
+                        icon: Icon(
+                          Icons.info_outline,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        onPressed: openDrawer as void Function()?)),
               ],
             ),
           ),

@@ -26,47 +26,72 @@ class _Rev_statState extends State<Rev_stat> {
                 child: CircularProgressIndicator(),
               );
             case ConnectionState.done:
-              Stat? stat = snapshot.data!.exists
-                  ? Stat.fromJson(snapshot.data!.data() as Map<String, dynamic>)
-                  : null;
-              return snapshot.data!.exists
-                  ? snapshot.hasData
-                      ? Column(
-                          children: [
-                            stat!.nbrCommandeLOCAL != null
-                                ? Rev_Orderdetails(
-                                    label: "Nombre de Commande :",
-                                    info: stat.nbrCommandeLOCAL.toString())
-                                : Container(),
-                            stat.nbrCommandeTerminerLOCAL != null
-                                ? Rev_Orderdetails(
-                                    label: "Nombre de Commande terminer :",
-                                    info: stat.nbrCommandeTerminerLOCAL
-                                        .toString())
-                                : Container(),
-                          ],
-                        )
-                      : Center(
-                          child: CircularProgressIndicator(),
-                        )
-                  : Center(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                          Rev_RoundButton(
-                            isfile: false,
-                            image: "assets/vide.png",
-                          ),
-                          Text(
-                            widget.msg!,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        ]));
+              if (snapshot.data!.exists) {
+                if (snapshot.hasData) {
+                  Stat? stat = snapshot.data!.exists
+                      ? Stat.fromJson(
+                          snapshot.data!.data() as Map<String, dynamic>)
+                      : null;
+                  int? nbrCommande =
+                      stat!.nbrCommandeETR! + stat.nbrCommandeLOCAL!;
+                  int nbrCommandeTerminer = stat.nbrCommandeTerminerETR! +
+                      stat.nbrCommandeTerminerLOCAL!;
+                  int? nbrCommandeMedic =
+                      stat.nbrCommandeETRMedic! + stat.nbrCommandeLOCALMedic!;
+                  int nbrCommandeTerminerMedic =
+                      stat.nbrCommandeTerminerETRMedic! +
+                          stat.nbrCommandeTerminerLOCALMedic!;
+                  return Column(
+                    children: [
+                      nbrCommande != null
+                          ? Rev_Orderdetails(
+                              label: "Nombre de Recherche avec Ordonnance  :",
+                              info: nbrCommande.toString())
+                          : Container(),
+                      nbrCommandeTerminer != null
+                          ? Rev_Orderdetails(
+                              label:
+                                  "Nombre de Recherche avec Ordonnance terminer :",
+                              info: nbrCommandeTerminer.toString())
+                          : Container(),
+                      nbrCommandeMedic != null
+                          ? Rev_Orderdetails(
+                              label: "Nombre de Recherche de Medicament  :",
+                              info: nbrCommandeMedic.toString())
+                          : Container(),
+                      nbrCommandeTerminerMedic != null
+                          ? Rev_Orderdetails(
+                              label:
+                                  "Nombre de Recherche Medicament terminer :",
+                              info: nbrCommandeTerminerMedic.toString())
+                          : Container(),
+                    ],
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              } else {
+                return Center(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                      Rev_RoundButton(
+                        isfile: false,
+                        image: "assets/vide.png",
+                      ),
+                      Text(
+                        widget.msg!,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ]));
+              }
 
             case ConnectionState.none:
               return Center(

@@ -16,8 +16,10 @@ class Rev_CommandeInfo extends StatefulWidget {
   String? collection;
   List<String>? ord;
   List<String>? chif;
+  List<String>? medic;
 
-  Rev_CommandeInfo({this.order, this.collection, this.ord, this.chif});
+  Rev_CommandeInfo(
+      {this.order, this.collection, this.ord, this.chif, this.medic});
 
   @override
   _Rev_CommandeInfoState createState() => _Rev_CommandeInfoState();
@@ -55,34 +57,39 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                           ? MainAxisAlignment.spaceEvenly
                           : MainAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-                          child: Column(
-                            children: [
-                              Text(
-                                "Ordonnance :",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.bold),
-                              ),
-                              Center(
-                                child: Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.2,
-                                  child: InkWell(
-                                    onTap: () =>
-                                        verifyImage(context, widget.ord),
-                                    child: CachedNetworkImage(
-                                      imageUrl: widget.ord![0],
-                                      placeholder: _loader,
-                                      errorWidget: _error,
+                        widget.ord!.length != 0
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Ordonnance :",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                  ),
+                                    Center(
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.2,
+                                        child: InkWell(
+                                          onTap: () =>
+                                              verifyImage(context, widget.ord),
+                                          child: CachedNetworkImage(
+                                            imageUrl: widget.ord![0],
+                                            placeholder: _loader,
+                                            errorWidget: _error,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
+                              )
+                            : Container(),
                         widget.chif!.isNotEmpty
                             ? Padding(
                                 padding:
@@ -115,14 +122,48 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                                   ],
                                 ),
                               )
-                            : Container()
+                            : Container(),
+                        widget.medic!.length != 0
+                            ? Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Medicament :",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.2,
+                                        child: InkWell(
+                                          onTap: () =>
+                                              verifyImage(context, widget.ord),
+                                          child: CachedNetworkImage(
+                                            imageUrl: widget.medic![0],
+                                            placeholder: _loader,
+                                            errorWidget: _error,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Container(),
                       ],
                     ),
                     Rev_Orderdetails(
                         label: "N° de Commande :", info: widget.order!.orderId),
-                    Rev_Orderdetails(
-                        label: "Prix Total :",
-                        info: "${widget.order!.devis} DA + 200 DA"),
+                    widget.order!.devis != null
+                        ? Rev_Orderdetails(
+                            label: "Prix Total :",
+                            info: "${widget.order!.devis} DA ")
+                        : Container(),
                     Rev_Orderdetails(
                         label: "Nom complet du client :",
                         info: snapshot.data!['name']),
@@ -132,16 +173,22 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                       phone: snapshot.data!['tel'],
                       localisation: false,
                     ),
-                    Rev_Orderdetails(
-                        label: "Nom complet du patient :",
-                        info: widget.order!.bname),
-                    Rev_Orderdetails(
-                        label: "Generique", info: widget.order!.generique),
-                    Rev_Orderdetails(
-                        label: "Date de Commande :",
-                        info: DateTime.fromMillisecondsSinceEpoch(
-                                widget.order!.date!)
-                            .toString()),
+                    widget.order!.bname != null
+                        ? Rev_Orderdetails(
+                            label: "Nom complet du patient :",
+                            info: widget.order!.bname)
+                        : Container(),
+                    widget.order!.generique != null
+                        ? Rev_Orderdetails(
+                            label: "Generique", info: widget.order!.generique)
+                        : Container(),
+                    widget.order!.date != null
+                        ? Rev_Orderdetails(
+                            label: "Date de Commande :",
+                            info: DateTime.fromMillisecondsSinceEpoch(
+                                    widget.order!.date!)
+                                .toString())
+                        : Container(),
                     Rev_Orderdetails(
                         label: "Statut :", info: widget.order!.status),
                     widget.order!.dateAnnuler != null

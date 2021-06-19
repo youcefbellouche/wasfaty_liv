@@ -80,7 +80,7 @@ class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
     GetConnect();
     WidgetsBinding.instance!.addObserver(this);
     test();
-    _checkVersion();
+    // _checkVersion();
   }
 
   test() async {

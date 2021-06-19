@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wasfaty_liv/Screen/Historique/Rev_HistoriqueHome.dart';
 import '../Screen/Rev_ProfilePage.dart';
 import '../Screen/Rev_HomePage.dart';
 import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
@@ -160,28 +159,6 @@ class _Rev_DrawerState extends State<Rev_Drawer> {
                             MaterialPageRoute(
                                 builder: (context) => Rev_Statistiques()),
                           );
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    Container(
-                      color: Color(0xff1b6053),
-                      child: ListTile(
-                        title: Text(
-                          "Historique",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            fontStyle: FontStyle.normal,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Rev_HistoriqueHome()));
                         },
                       ),
                     ),

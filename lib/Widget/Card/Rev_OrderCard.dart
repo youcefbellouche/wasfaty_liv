@@ -4,9 +4,9 @@ import 'package:wasfaty_liv/Screen/Order/Rev_OrderInfo.dart';
 
 class Rev_OrderCard extends StatefulWidget {
   Order? order;
-  String? collection;
+  String collection;
 
-  Rev_OrderCard({this.order, this.collection});
+  Rev_OrderCard({this.order, required this.collection});
   @override
   _Rev_OrderCardState createState() => _Rev_OrderCardState();
 }
@@ -72,8 +72,12 @@ class _Rev_OrderCardState extends State<Rev_OrderCard> {
                       )),
                   child: Center(
                       child: Text(widget.collection == "Commande"
-                          ? "Commande Local"
-                          : "Commande de l'étrenger"))),
+                          ? "Recherche avec Ordonance"
+                          : widget.collection == "Commande_etr"
+                              ? "Recherche avec Ordonance a l'etrenger"
+                              : widget.collection == 'RMedLocal'
+                                  ? ' Recherche de Medicament'
+                                  : "Recherche de Medicament a l'etrenger"))),
               Container(
                   height: 180 * 0.16,
                   child: Center(

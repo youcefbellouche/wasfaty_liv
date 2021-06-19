@@ -1,6 +1,7 @@
 class Order {
   String? orderId;
   int? date;
+  String? medic;
   int? dateTeminer;
   int? dateAnnuler;
   String? bname;
@@ -10,6 +11,7 @@ class Order {
   String? annulerBy;
   String? noteAnnuler;
   List? ordonnance;
+  List? medicPic;
   String? status;
   String? livraison;
   String? uid;
@@ -26,6 +28,7 @@ class Order {
       this.livreurid,
       this.bDate,
       this.generique,
+      this.medic,
       this.dateAnnuler,
       this.dateTeminer,
       this.annulerBy,
@@ -49,6 +52,8 @@ class Order {
     orderId = json['OrderId'];
     pharmacieid = json['pharmacieId'];
     date = json['Time'];
+    medic = json['medicament'];
+    medicPic = json['medicamentPic'];
     bDate = json['date de naissance du beneficiaire'];
     dateTeminer = json['DateTerminer'];
     dateAnnuler = json['DateAnnuler'];

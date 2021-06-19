@@ -29,46 +29,47 @@ class _Rev_PharmacieInfoState extends State<Rev_PharmacieInfo> {
                 .doc(widget.pharmacieid)
                 .get(),
             builder: (c, snapshot) {
-              Pharmacie pharmacie = Pharmacie.fromJson(
-                  snapshot.data!.data() as Map<String, dynamic>);
-              return snapshot.hasData
-                  ? SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 30),
-                          Rev_Orderdetails(
-                              label: "Nom de la Pharmacie :",
-                              info: pharmacie.name),
-                          Rev_OrderdetailsButton(
-                            label: "Numéro de téléphone de la Pharmacie :",
-                            info: pharmacie.phone,
-                            phone: pharmacie.phone,
-                            localisation: false,
-                          ),
-                          Rev_Orderdetails(
-                            label: "Email de la Pharmacie :",
-                            info: pharmacie.email,
-                          ),
-                          Rev_Orderdetails(
-                              label: "Wilaya de la Pharmacie :",
-                              info: pharmacie.wilaya),
-                          Rev_Orderdetails(
-                              label: "Adresse de la Pharmacie :",
-                              info: pharmacie.daira),
-                          Rev_OrderdetailsButton(
-                            label: "Adresse de la Pharmacie :",
-                            info: "Google Maps ->",
-                            localisation: true,
-                            lat: pharmacie.lat,
-                            long: pharmacie.long,
-                          ),
-                          SizedBox(height: 20),
-                        ],
+              if (snapshot.hasData) {
+                Pharmacie pharmacie = Pharmacie.fromJson(
+                    snapshot.data!.data() as Map<String, dynamic>);
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 30),
+                      Rev_Orderdetails(
+                          label: "Nom de la Pharmacie :", info: pharmacie.name),
+                      Rev_OrderdetailsButton(
+                        label: "Numéro de téléphone de la Pharmacie :",
+                        info: pharmacie.phone,
+                        phone: pharmacie.phone,
+                        localisation: false,
                       ),
-                    )
-                  : Center(child: CircularProgressIndicator());
+                      Rev_Orderdetails(
+                        label: "Email de la Pharmacie :",
+                        info: pharmacie.email,
+                      ),
+                      Rev_Orderdetails(
+                          label: "Wilaya de la Pharmacie :",
+                          info: pharmacie.wilaya),
+                      Rev_Orderdetails(
+                          label: "Adresse de la Pharmacie :",
+                          info: pharmacie.daira),
+                      Rev_OrderdetailsButton(
+                        label: "Adresse de la Pharmacie :",
+                        info: "Google Maps ->",
+                        localisation: true,
+                        lat: pharmacie.lat,
+                        long: pharmacie.long,
+                      ),
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                );
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
             },
           )
         : Center(

@@ -8,11 +8,11 @@ import 'Rev_AlarmList.dart';
 
 class Rev_OrderInfo extends StatefulWidget {
   Order? order;
-  String? collection;
+  String collection;
 
   Rev_OrderInfo({
     this.order,
-    this.collection,
+    required this.collection,
   });
 
   @override
@@ -26,6 +26,7 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
 
   List<String> ord = <String>[];
   List<String> chif = <String>[];
+  List<String> medic = <String>[];
   @override
   void initState() {
     // TODO: implement initState
@@ -36,6 +37,11 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
     if (widget.order!.carteChifa!.length != 0) {
       widget.order!.carteChifa!.forEach((elementC) {
         chif.add(elementC.toString());
+      });
+    }
+    if (widget.order!.medicPic!.length != 0) {
+      widget.order!.medicPic!.forEach((element) {
+        medic.add(element.toString());
       });
     }
   }
@@ -72,9 +78,10 @@ class _Rev_OrderInfoState extends State<Rev_OrderInfo> {
                   children: [
                     Rev_CommandeInfo(
                       order: widget.order,
-                      collection: "Commande",
+                      collection: widget.collection,
                       chif: chif,
                       ord: ord,
+                      medic: medic,
                     ),
                     Rev_PharmacieInfo(
                       pharmacieid: widget.order!.pharmacieid,

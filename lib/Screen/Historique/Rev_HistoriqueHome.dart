@@ -6,13 +6,17 @@ import 'package:wasfaty_liv/Widget/Rev_RoundButton.dart';
 import 'Rev_Historique.dart';
 
 class Rev_HistoriqueHome extends StatefulWidget {
+  String collectionLocal;
+  String collectionEtr;
+  Rev_HistoriqueHome(
+      {required this.collectionEtr, required this.collectionLocal});
   @override
   _Rev_HistoriqueHomeState createState() => _Rev_HistoriqueHomeState();
 }
 
 class _Rev_HistoriqueHomeState extends State<Rev_HistoriqueHome> {
-  void openDrawer() {
-    _scaffoldKey.currentState!.openDrawer();
+  void ofPage() {
+    Navigator.pop(context);
   }
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
@@ -25,9 +29,9 @@ class _Rev_HistoriqueHomeState extends State<Rev_HistoriqueHome> {
       appBar: Rev_Appbar(
         context,
         AppBar().preferredSize.height,
-        openDrawer,
+        ofPage,
         Icon(
-          Icons.menu,
+          Icons.arrow_back,
           color: Theme.of(context).primaryColor,
         ),
       ) as PreferredSizeWidget?,
@@ -48,8 +52,8 @@ class _Rev_HistoriqueHomeState extends State<Rev_HistoriqueHome> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (cotnext) =>
-                              Rev_historique(collection: "Commande")));
+                          builder: (cotnext) => Rev_historique(
+                              collection: widget.collectionLocal)));
                 },
               ),
               Text(
@@ -74,8 +78,8 @@ class _Rev_HistoriqueHomeState extends State<Rev_HistoriqueHome> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (cotnext) =>
-                                Rev_historique(collection: "Commande_etr")));
+                            builder: (cotnext) => Rev_historique(
+                                collection: widget.collectionEtr)));
                   }),
               Text(
                 "LES COMMANDE\nA L'ETRANGER",

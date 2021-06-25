@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:async' show Future;
 import 'dart:convert' as convert;
-
-import 'package:wasfaty_liv/Screen/Rev_HomePageOFF.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:patient/Screen/Rev_HomePageOFF.dart';
 
 class Wilaya {
   late String name;
@@ -11,75 +12,20 @@ class Wilaya {
 
   Wilaya();
 
-  Future<List<Wilaya>> getwilaya(BuildContext context) async {
+  Future<List<Wilaya>> getwilaya() async {
     List<Wilaya> wilaya = <Wilaya>[];
     Wilaya wil = new Wilaya();
-    try {
-      var result = await http.get(Uri.parse(
-          "https://europe-west1-wasfaty-patient.cloudfunctions.net/wilaya"));
-      var body = convert.jsonDecode(result.body);
-      if (result != null) {
+    var jsonText = await rootBundle.loadString('assets/wilaya.json');
+    var body = convert.jsonDecode(jsonText);
+
         for (var item in body) {
           wil = Wilaya.fromJson(item);
           wilaya.add(wil);
         }
+      
         return wilaya;
-      }
-    } catch (e) {
-      showDialog(
-          context: context,
-          builder: (con) {
-            return Container(
-              color: Colors.grey[300],
-              child: SimpleDialog(
-                backgroundColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                children: [
-                  Center(
-                    child: Text(
-                      "Problème de connexion !",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ButtonTheme(
-                        child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(20.0))),
-                                color: Colors.redAccent,
-                                child: Text('ok'),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Rev_HomePageOFF()));
-                                },
-                              ),
-                            ]),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          });
-    }
-    return wilaya;
   }
+
 
   Wilaya.fromJson(Map<String, dynamic> json) {
     name = json["wilaya"];

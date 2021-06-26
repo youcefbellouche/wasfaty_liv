@@ -13,7 +13,7 @@ class Order {
   List? ordonnance;
   List? medicPic;
   String? status;
-  String? livraison;
+  bool? livraison;
   String? uid;
   String? devis;
   String? pharmacieid;

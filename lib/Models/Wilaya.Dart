@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'dart:async' show Future;
 import 'dart:convert' as convert;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:patient/Screen/Rev_HomePageOFF.dart';
 
 class Wilaya {
   late String name;

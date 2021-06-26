@@ -2,32 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
 import 'package:wasfaty_liv/Widget/Rev_RoundButton.dart';
 import 'Historique/Rev_HistoriqueHome.dart';
+import 'Rev_HomePage.dart';
 import 'medicSearch/Rev_medicList.dart';
 
 // ignore: camel_case_types
-class Rev_SearchMedicHome extends StatefulWidget {
-  @override
-  _Rev_SearchMedicHomeState createState() => _Rev_SearchMedicHomeState();
-}
 
 // ignore: camel_case_types
-class _Rev_SearchMedicHomeState extends State<Rev_SearchMedicHome> {
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void ofPage() {
-    Navigator.pop(context);
-  }
-
+class Rev_SearchMedicHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    void ofPage() {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Rev_HomePage()));
+    }
+
     return Scaffold(
         backgroundColor: Colors.white,
-        key: _scaffoldKey,
         appBar: Rev_Appbar(
           context,
           AppBar().preferredSize.height,
@@ -39,6 +29,7 @@ class _Rev_SearchMedicHomeState extends State<Rev_SearchMedicHome> {
         ) as PreferredSizeWidget?,
         body: Center(
           child: Container(
+            margin: EdgeInsets.only(top: 75),
             child: GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1,

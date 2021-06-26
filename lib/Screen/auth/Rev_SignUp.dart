@@ -46,12 +46,11 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   getwill() async {
-    wil = await Wilaya().getwilaya(context);
-    if (wil != null) {
-      wil.forEach((element) {
-        wilaya.add(element.name);
-      });
-    }
+    wil = await Wilaya().getwilaya();
+
+    wil.forEach((element) {
+      wilaya.add(element.name);
+    });
   }
 
   List<String> dayra = <String>[];

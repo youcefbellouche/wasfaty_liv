@@ -1,33 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:wasfaty_liv/Screen/Rev_HomePage.dart';
 import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
 import 'package:wasfaty_liv/Widget/Rev_RoundButton.dart';
 import 'Historique/Rev_HistoriqueHome.dart';
 import 'Order/Rev_orderList.dart';
 
 // ignore: camel_case_types
-class Rev_OrderHome extends StatefulWidget {
-  @override
-  _Rev_OrderHomeState createState() => _Rev_OrderHomeState();
-}
 
 // ignore: camel_case_types
-class _Rev_OrderHomeState extends State<Rev_OrderHome> {
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void ofPage() {
-    Navigator.pop(context);
-  }
-
+class Rev_OrderHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    void ofPage() {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Rev_HomePage()));
+    }
+
     return Scaffold(
         backgroundColor: Colors.white,
-        key: _scaffoldKey,
         appBar: Rev_Appbar(
           context,
           AppBar().preferredSize.height,
@@ -39,6 +29,7 @@ class _Rev_OrderHomeState extends State<Rev_OrderHome> {
         ) as PreferredSizeWidget?,
         body: Center(
           child: Container(
+            margin: EdgeInsets.only(top: 75),
             child: GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1,

@@ -1,18 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
-import 'package:wasfaty_liv/Screen/profile/Rev_PasswordUpdate.dart';
-import 'package:wasfaty_liv/Screen/profile/Rev_phoneUpdate.dart';
 import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
 import 'package:wasfaty_liv/Widget/Rev_Drawer.dart';
 import 'package:wasfaty_liv/Widget/Rev_RoundButton.dart';
 
-class Rev_ProfilePage extends StatefulWidget {
-  @override
-  _Rev_ProfilePageState createState() => _Rev_ProfilePageState();
-}
+import 'Profile/Rev_Passwordupdate.dart';
+import 'Profile/Rev_ProfileInfo.dart';
 
-class _Rev_ProfilePageState extends State<Rev_ProfilePage> {
+class Rev_ProfilePage extends StatelessWidget {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   String uid = FirebaseAuth.instance.currentUser!.uid;
   User? currentUser = FirebaseAuth.instance.currentUser;
@@ -41,8 +37,36 @@ class _Rev_ProfilePageState extends State<Rev_ProfilePage> {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
               childAspectRatio: 2,
+              mainAxisSpacing: 30,
             ),
             children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Rev_RoundButton(
+                    isfile: false,
+                    image: "assets/profile/phone.png",
+                    label: "Profile",
+                    onpressed: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Rev_ProfileInfo(
+                                    uid: uid,
+                                  )));
+                    },
+                  ),
+                  Text(
+                    'PROFILE',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -62,36 +86,6 @@ class _Rev_ProfilePageState extends State<Rev_ProfilePage> {
                   ),
                   Text(
                     'CHANGER VOTRE\nMOT DE PASSE',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  )
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Rev_RoundButton(
-                    isfile: false,
-                    image: "assets/profile/phone.png",
-                    label: "CHANGER VOTRE NUMERO DE TELEPHONE",
-                    onpressed: () async {
-                      String? oldphone;
-                      oldphone = await Rev_Auth().getPhone();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Rev_phoneUpdate(
-                                    uid: uid,
-                                    oldphone: oldphone,
-                                  )));
-                    },
-                  ),
-                  Text(
-                    'CHANGER VOTRE\nNUM DE TELEPHONE',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

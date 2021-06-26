@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wasfaty_liv/Functions/Auth/Rev_Auth.dart';
 import 'package:wasfaty_liv/Widget/Rev_Appbar.dart';
 import 'package:wasfaty_liv/Widget/Rev_Drawer.dart';
 import 'package:wasfaty_liv/Widget/Rev_RoundButton.dart';
@@ -19,6 +22,17 @@ class _Rev_HomePageState extends State<Rev_HomePage> {
   @override
   void initState() {
     super.initState();
+    verifySuspendy();
+  }
+
+  void verifySuspendy() async {
+    var result = await FirebaseFirestore.instance
+        .collection("Livreur")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (result.data()!["suspendue"]) {
+      Rev_Auth().signOut(context: context);
+    }
   }
 
   void openDrawer() {
@@ -40,64 +54,68 @@ class _Rev_HomePageState extends State<Rev_HomePage> {
             color: Theme.of(context).primaryColor,
           ),
         ) as PreferredSizeWidget?,
-        body: Center(
-          child: GridView(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
-                childAspectRatio: 2,
-                mainAxisSpacing: 100,
-              ),
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Rev_RoundButton(
-                      isfile: false,
-                      image: "assets/home/ord.png",
-                      label: "RECHERCHE DE \nMEDICAMENTS\n AVEC ORDONNANCE",
-                      onpressed: () async {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Rev_OrderHome()));
-                      },
-                    ),
-                    Text(
-                      'RECHERCHE DE \nMEDICAMENTS\n AVEC ORDONNANCE',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    )
-                  ],
+        body: Container(
+          margin: EdgeInsets.only(top: 75),
+          child: Center(
+            child: GridView(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                  childAspectRatio: 2,
+                  mainAxisSpacing: 100,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Rev_RoundButton(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Rev_RoundButton(
                         isfile: false,
-                        image: "assets/home/medic.png",
-                        label: "RECHERCHE DE \nMEDICAMENTS",
+                        image: "assets/home/ord.png",
+                        label: "RECHERCHE DE \nMEDICAMENTS\n AVEC ORDONNANCE",
                         onpressed: () async {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Rev_SearchMedicHome()));
-                        }),
-                    Text(
-                      "RECHERCHE DE \nMEDICAMENT\n",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                                  builder: (context) => Rev_OrderHome()));
+                        },
                       ),
-                      textAlign: TextAlign.center,
-                    )
-                  ],
-                ),
-              ]),
+                      Text(
+                        'RECHERCHE DE \nMEDICAMENTS\n AVEC ORDONNANCE',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Rev_RoundButton(
+                          isfile: false,
+                          image: "assets/home/medic.png",
+                          label: "RECHERCHE DE \nMEDICAMENTS",
+                          onpressed: () async {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Rev_SearchMedicHome()));
+                          }),
+                      Text(
+                        "RECHERCHE DE \nMEDICAMENT\n",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ]),
+          ),
         ));
   }
 }

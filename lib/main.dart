@@ -11,6 +11,7 @@ import 'Screen/Rev_HomePage.dart';
 import 'Screen/Rev_HomePageOFF.dart';
 import 'Screen/auth/Rev_LoginPage.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> main() async {
@@ -73,6 +74,13 @@ class HomeConnect extends StatefulWidget {
 class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
   bool isInternetOn = true;
   var result = FirebaseAuth.instance.currentUser;
+  RateMyApp rate = RateMyApp(
+      preferencesPrefix: "rateMyApp_",
+      minDays: 3,
+      minLaunches: 7,
+      remindDays: 5,
+      remindLaunches: 5,
+      googlePlayIdentifier: "rev.wasfaty.livreur");
 
   @override
   void initState() {
@@ -80,7 +88,59 @@ class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
     GetConnect();
     WidgetsBinding.instance!.addObserver(this);
     test();
+    rateApp();
     // _checkVersion();
+  }
+
+  void rateApp() async {
+    rate.init().then((value) {
+      if (rate.shouldOpenDialog) {
+        rate.showStarRateDialog(context,
+            title: "évaluer notre application".toUpperCase(),
+            message: "Essayez de nous aider avec vos commentaires",
+            dialogStyle: DialogStyle(
+                titleAlign: TextAlign.center,
+                messageAlign: TextAlign.center,
+                messagePadding: EdgeInsets.all(10)),
+            starRatingOptions: StarRatingOptions(),
+            actionsBuilder: (context, stars) {
+          return [
+            FlatButton(
+              child: Text('Aprés'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () async {
+                if (stars != null) {
+                  await rate.save().then((v) => Navigator.pop(context));
+                  await rate.callEvent(RateMyAppEventType.rateButtonPressed);
+
+                  if (stars <= 3) {
+                    print('Navigate to Contact Us Screen');
+                    Navigator.pop(context);
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (_) => ContactUsScreen(),
+                    //   ),
+                    // );
+                  } else if (stars <= 5) {
+                    print('Leave a Review Dialog');
+                    rate.launchStore();
+                    // showDialog(...);
+                  }
+                } else {
+                  Navigator.pop(context);
+                }
+              },
+            ),
+          ];
+        });
+      }
+    });
   }
 
   test() async {

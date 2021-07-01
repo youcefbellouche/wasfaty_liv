@@ -237,10 +237,12 @@ class Rev_Auth {
         "token": token
       });
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
+      if (result != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Rev_VerifierMail()),
+        );
+      }
       return true;
     } catch (e) {
       if (e.toString().contains("[firebsa_auth/email-already-in-use]")) {

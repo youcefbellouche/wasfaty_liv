@@ -96,8 +96,8 @@ class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
     rate.init().then((value) {
       if (rate.shouldOpenDialog) {
         rate.showStarRateDialog(context,
-            title: "évaluer notre application".toUpperCase(),
-            message: "Essayez de nous aider avec vos commentaires",
+            title: "Vous avez aimé l'application wasfaty ?",
+            message: "Donner votre avis",
             dialogStyle: DialogStyle(
                 titleAlign: TextAlign.center,
                 messageAlign: TextAlign.center,
@@ -106,13 +106,13 @@ class _HomeConnectState extends State<HomeConnect> with WidgetsBindingObserver {
             actionsBuilder: (context, stars) {
           return [
             FlatButton(
-              child: Text('Aprés'),
+              child: Text('Annuler'),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             FlatButton(
-              child: Text('Ok'),
+              child: Text('Envoyer'),
               onPressed: () async {
                 if (stars != null) {
                   await rate.save().then((v) => Navigator.pop(context));

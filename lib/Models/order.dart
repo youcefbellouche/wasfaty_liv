@@ -7,6 +7,7 @@ class Order {
   String? bname;
   int? bDate;
   String? adresse;
+  String? livraisonPrice;
   List? carteChifa;
   String? annulerBy;
   String? noteAnnuler;
@@ -39,6 +40,7 @@ class Order {
       this.orderId,
       this.ordonnance,
       this.wilaya,
+      this.livraisonPrice,
       this.status,
       this.pharmacieid,
       this.daira,
@@ -52,6 +54,7 @@ class Order {
     orderId = json['OrderId'];
     pharmacieid = json['pharmacieId'];
     date = json['Time'];
+    livraisonPrice = json['livraisonPrice'];
     medic = json['medicament'];
     medicPic = json['medicamentPic'];
     bDate = json['date de naissance du beneficiaire'];

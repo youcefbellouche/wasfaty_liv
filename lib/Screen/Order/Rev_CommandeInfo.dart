@@ -164,6 +164,11 @@ class _Rev_CommandeInfoState extends State<Rev_CommandeInfo> {
                             label: "Prix Total :",
                             info: "${widget.order!.devis} DA ")
                         : Container(),
+                    widget.order!.livraisonPrice != null
+                        ? Rev_Orderdetails(
+                            label: "Prix de la livraison :",
+                            info: "${widget.order!.livraisonPrice} DA ")
+                        : Container(),
                     Rev_Orderdetails(
                         label: "Nom complet du client :",
                         info: snapshot.data!['name']),

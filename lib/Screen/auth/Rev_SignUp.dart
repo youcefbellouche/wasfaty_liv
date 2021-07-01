@@ -158,7 +158,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 textEditingController: controller_email,
                                 mdp: false,
                                 textInputType: TextInputType.emailAddress,
-                                onChanged: (value) => email = value,
+                                onChanged: (value) => email = value.trim(),
                                 validator: (input) => !input!.contains('@')
                                     ? "L'Email doit être valide"
                                     : null,

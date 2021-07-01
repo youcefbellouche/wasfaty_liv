@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                         label: "E-mail",
                         textEditingController: controller_email,
                         mdp: false,
-                        onChanged: (value) => email = value,
+                        onChanged: (value) => email = value.trim(),
                         validator: (input) => !input!.contains('@')
                             ? "L'Email doit être valide"
                             : null,
